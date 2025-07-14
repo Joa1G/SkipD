@@ -1,0 +1,140 @@
+:host {
+  display: block;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #1c1c2b;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
+
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #9b5de5;
+  padding: 0.8rem 1.5rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.insights {
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: white;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  color: #9b5de5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* LOGIN FORM */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 64px); // abaixo do header
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  label {
+    font-size: 0.85rem;
+  }
+
+  input {
+    padding: 0.6rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #1f1f1f;
+    color: white;
+    font-size: 1rem;
+  }
+
+  .forgot {
+    font-size: 0.85rem;
+    text-align: right;
+    color: #ccc;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    padding: 0.75rem;
+    background: #9b5de5;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: #a970e0;
+    }
+
+    &:disabled {
+      background: #888;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.register-link {
+  font-size: 0.85rem;
+  text-align: center;
+
+  a {
+    color: #9b5de5;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
