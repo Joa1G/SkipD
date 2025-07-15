@@ -1,17 +1,12 @@
-<div class="header">
-  <div class="logo">SkipD</div>
-  <div class="header-right">
-    <span class="insights">Insights</span>
-    <div class="avatar">
-      <i class="fa fa-user"></i>
-    </div>
-  </div>
-</div>
+<!-- Faixa roxa superior -->
+<div class="top-border"></div>
 
-<div class="login-wrapper">
+<!-- Conteúdo central -->
+<div class="login-container">
+  <h1 class="title">SkipD</h1>
+  <p class="subtitle">Bem-vindo(a) de volta!</p>
+
   <div class="login-card">
-    <h2>Bem-vindo de volta !</h2>
-
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <label for="email">Email</label>
       <input id="email" formControlName="email" type="email" placeholder="seuemail@gmail.com" />
@@ -25,7 +20,11 @@
     </form>
 
     <p class="register-link">
-      Ainda não tem uma conta?<br><a routerLink="/cadastro">Cadastre-se aqui.</a>
+      Ainda não tem uma conta?<br />
+      <a routerLink="/cadastro">Cadastre-se aqui.</a>
     </p>
   </div>
 </div>
+
+<!-- Faixa roxa inferior -->
+<div class="bottom-border"></div>
