@@ -6,6 +6,10 @@ export const routes: Routes = [
         loadComponent: () => import('../login/login.components').then((m) => m.LoginComponents)
     },
     {
+        path: 'cadastro',
+        loadComponent: () => import('../components/cadastro/cadastro.components').then((m) => m.CadastroComponents)
+    },
+    {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'
