@@ -1,13 +1,14 @@
 import { Routes } from '@angular/router';
+import { LoginComponents } from '../components/login/login.components';
+import { HomeComponent } from '../components/home/home.component';
 
 export const routes: Routes = [
     {
         path: 'login',
-        loadComponent: () => import('../login/login.components').then((m) => m.LoginComponents)
+        component: LoginComponents
     },
     {
         path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-    }
+        component: HomeComponent
+    },
 ];
