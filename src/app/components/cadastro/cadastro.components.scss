@@ -32,6 +32,8 @@ h1 {
   font-weight: bold;
   margin-bottom: 0.2rem;
   color: white;
+  text-align: center;
+  display: flex;
 }
 
 h2 {
@@ -44,6 +46,7 @@ h2 {
   font-size: .9rem;
   color: #b78fff;
   margin-bottom: 0.8rem;
+  font-weight: bold;
 }
 
 /* Card reduzido */
@@ -53,17 +56,18 @@ form {
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1rem;
   border-radius: 12px;
-  width: 100%;
-  max-width: 300px;
+  width: 210%;
+  max-width: 510px;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+  margin-left: -100px;
 }
 
 label {
   text-align: left;
-  font-size: 0.7rem;
+  font-size: 14px;
   font-weight: 600;
   margin-bottom: 0.2rem;
 }
@@ -102,11 +106,12 @@ select {
 button {
   background: linear-gradient(90deg, #9b5de5, #7c3aed);
   color: white;
+  margin: 0.55rem;
   padding: 0.55rem;
   border: none;
   border-radius: 999px;
   font-weight: bold;
-  font-size: 0.85rem;
+  font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
 
@@ -129,6 +134,7 @@ button {
   a {
     color: #9b5de5;
     text-decoration: none;
+    font-weight: bold;
 
     &:hover {
       text-decoration: none;
