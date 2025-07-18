@@ -1,8 +1,9 @@
-$primary-color: #6B2CF9;
+@use "sass:color";
+
+$primary-color: #6b2cf9;
 $font-color: #ffffff;
 
 .home-component {
-
 }
 
 .button-container {
@@ -34,6 +35,7 @@ $font-color: #ffffff;
 }
 
 .add-materia-button:hover {
-  background-color: darken($primary-color, 10%);
-  color: darken($font-color, 20%);
+  background-color: color.adjust($primary-color, $lightness: -10%);
+  color: color.adjust($font-color, $lightness: -20%);
+  cursor: pointer;
 }

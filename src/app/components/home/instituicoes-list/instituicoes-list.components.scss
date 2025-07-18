@@ -1,0 +1,17 @@
+$font-color: #C0A6FA;
+
+.instituicoes-list {
+  margin-left: 15px;
+}
+
+.instituicoes-title {
+  font-size: 1.5em;
+  color: $font-color;
+  font-family: "Roboto", sans-serif;
+}
+
+.instituicoes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, auto));
+  margin-top: 20px;
+}

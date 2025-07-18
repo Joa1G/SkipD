@@ -1,0 +1,10 @@
+<div class="instituicoes-list">
+  @for (instituicao of instituicoes; track instituicao.id) {
+    <h2 class="instituicoes-title">{{ instituicao.nome }}</h2>
+    <div class="instituicoes-grid">
+      @for (materia of instituicao.materias; track materia.id) {
+        <app-instituicoes-card  [limiteFaltas]="instituicao.percentual_limite_faltas" [materia]="materia"></app-instituicoes-card>
+      }
+    </div>
+  }
+</div>

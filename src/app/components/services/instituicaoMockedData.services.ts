@@ -5,7 +5,7 @@ export let instituicoesMockedData: Instituicao[] = [
     id: 1,
     nome: 'Instituto Federal do Amazonas',
     percentual_limite_faltas: 25,
-    materia: [
+    materias: [
       {
         id: 1,
         nome: 'Algoritmo e Estruturas de Dados II',
@@ -47,7 +47,7 @@ export let instituicoesMockedData: Instituicao[] = [
     id: 2,
     nome: 'Dx Academy',
     percentual_limite_faltas: 30,
-    materia: [
+    materias: [
       {
         id: 1,
         nome: 'Desenvolvimento Web Full Stack',
