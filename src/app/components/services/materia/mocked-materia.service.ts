@@ -139,4 +139,23 @@ export class MockedMateriaService extends AbstractMateriaService {
       return of({success: false, status: 500, message: 'Erro ao buscar instituição.'});
     }
   }
+
+  override addFalta(id: number, falta: any): Observable<OperationResult> {
+    try {
+      const materia = this._materias().find(m => m.id === id);
+      if (!materia) {
+        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+      }
+      materia.faltas += falta;
+      this._materias.update(materias => {
+        const updatedMaterias = [...materias];
+        const index = updatedMaterias.findIndex(m => m.id === id);
+        updatedMaterias[index] = materia;
+        return updatedMaterias;
+      });
+      return of({success: true, status: 200, data: materia});
+    } catch (error) {
+      return of({success: false, status: 500, message: 'Erro ao adicionar falta.'});
+    }
+  }
 }
