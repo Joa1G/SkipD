@@ -1,8 +1,9 @@
 import { Materia } from '../../models/materia/materia.model';
 import { AbstractMateriaService } from './abstract-materia.service';
 import { OperationResult } from '../../models/operation-result.model';
-import { Injectable, signal, computed, Signal, WritableSignal } from '@angular/core';
+import { Injectable, signal, computed, Signal, WritableSignal, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { AbstractInstituicaoService } from '../instituicao/abstract-instituicao.service';
 
 @Injectable()
 export class MockedMateriaService extends AbstractMateriaService {
@@ -56,6 +57,9 @@ export class MockedMateriaService extends AbstractMateriaService {
       idInstituicao: 2,
     }
   ]);
+
+  private serviceInstituicoes = inject(AbstractInstituicaoService);
+  private instituicoes = this.serviceInstituicoes.instituicoes;
 
   override materias = computed(() => this._materias());
 
@@ -147,6 +151,7 @@ export class MockedMateriaService extends AbstractMateriaService {
         return of({success: false, status: 404, message: 'Matéria não encontrada.'});
       }
       materia.faltas += falta;
+      this.updateStatus(id);
       this._materias.update(materias => {
         const updatedMaterias = [...materias];
         const index = updatedMaterias.findIndex(m => m.id === id);
@@ -156,6 +161,27 @@ export class MockedMateriaService extends AbstractMateriaService {
       return of({success: true, status: 200, data: materia});
     } catch (error) {
       return of({success: false, status: 500, message: 'Erro ao adicionar falta.'});
+    }
+  }
+
+  override updateStatus(id: number): Observable<OperationResult> {
+    try {
+      const materia = this._materias().find(m => m.id === id);
+      const limiteFaltasInsituicional = this.instituicoes().find(i => i.id === materia!.idInstituicao)?.percentual_limite_faltas || 0.25;
+      const faltasPermitidas = materia!.carga_horaria_total * limiteFaltasInsituicional;
+      if (!materia) {
+        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+      }
+      if (materia.faltas >= faltasPermitidas) {
+        materia.status = 'Reprovado';
+      } else if (materia.faltas >= (faltasPermitidas * 0.75)) {
+        materia.status = 'Risco';
+      } else {
+        materia.status = 'Aprovado';
+      }
+      return of({success: true, status: 200, data: materia});
+    } catch (error) {
+      return of({success: false, status: 500, message: 'Erro ao atualizar status.'});
     }
   }
 }

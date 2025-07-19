@@ -41,25 +41,8 @@ export class InstituicoesCardComponents {
     }
   }
 
-  quantidadeFaltasRisco(): number {
-    if (!this.materia) return 0;
-    return this.faltasPermitidas() * 0.75;
-  }
-
-  setStatus(faltas: number) {
-    if (!this.materia) return;
-    if (faltas == this.faltasPermitidas()) {
-      this.materia.status = 'Reprovado';
-    } else if (faltas >= this.quantidadeFaltasRisco()) {
-      this.materia.status = 'Risco';
-    } else {
-      this.materia.status = 'Aprovado';
-    }
-  }
-
   adicionarFalta(qtd: number) {
     if (!this.materia) return;
-    this.setStatus(this.materia.faltas + qtd);
     this.faltaAdicionada.emit({ idMateria: this.materia.id, quantidade: qtd });
   }
 }
