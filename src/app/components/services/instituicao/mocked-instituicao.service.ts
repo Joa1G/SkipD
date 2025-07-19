@@ -10,12 +10,12 @@ export class MockedInstituicaoService extends AbstractInstituicaoService {
     {
       id: 1,
       nome: 'Instituto Federal do Amazonas',
-      percentual_limite_faltas: 25,
+      percentual_limite_faltas: 0.25,
     },
     {
       id: 2,
       nome: 'Dx Academy',
-      percentual_limite_faltas: 30,
+      percentual_limite_faltas: 0.30,
     }
   ]);
 

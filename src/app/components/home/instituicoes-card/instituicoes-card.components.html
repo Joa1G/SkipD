@@ -6,7 +6,7 @@
     <p class="faltas-title">Faltas: {{ materia!.faltas }}/{{ faltasPermitidas() }}</p>
     <mat-progress-bar
       mode="determinate"
-      [value]="getFaltasPercentage()"
+      [value]="faltasPercentage()"
     ></mat-progress-bar>
     <p class="status">Status: {{ materia!.status }}</p>
   </mat-card-content>

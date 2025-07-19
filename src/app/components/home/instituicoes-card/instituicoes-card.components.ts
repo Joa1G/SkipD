@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Materia } from '../../models/instituicao/instituicao.model';
+import { Materia } from '../../models/materia/materia.model';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatProgressBar } from '@angular/material/progress-bar';
@@ -14,7 +14,7 @@ export class InstituicoesCardComponents {
   @Input() materia: Materia | null = null;
   @Input() limiteFaltas: number = 0;
 
-  getFaltasPercentage(): number {
+  faltasPercentage(): number {
     if (!this.materia || this.materia.carga_horaria_total === 0) {
       return 0;
     }
@@ -23,7 +23,7 @@ export class InstituicoesCardComponents {
 
   faltasPermitidas(): number {
     if (!this.materia) return 0;
-    return this.materia.carga_horaria_total * (this.limiteFaltas / 100);
+    return this.materia.carga_horaria_total * this.limiteFaltas;
   }
 
   getStatusClass(): string {
