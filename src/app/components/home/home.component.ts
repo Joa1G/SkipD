@@ -4,10 +4,11 @@ import { InstituicoesListComponents } from './instituicoes-list/instituicoes-lis
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home.component',
-  imports: [HeaderComponent, CommonModule, MatCardModule, MatIcon, InstituicoesListComponents],
+  imports: [HeaderComponent, CommonModule, MatCardModule, MatIcon, InstituicoesListComponents, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

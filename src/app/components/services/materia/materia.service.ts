@@ -38,4 +38,12 @@ export class MateriaService extends AbstractMateriaService {
   override getInstituicaoByMateriaId(id: number): Observable<OperationResult> {
     return of();
   }
+
+  override addFalta(id: number, falta: any): Observable<OperationResult> {
+    return of();
+  }
+
+  override updateStatus(id: number): Observable<OperationResult> {
+    return of();
+  }
 }

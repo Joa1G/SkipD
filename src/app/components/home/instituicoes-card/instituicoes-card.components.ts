@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Materia } from '../../models/materia/materia.model';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
@@ -13,6 +13,7 @@ import { MatProgressBar } from '@angular/material/progress-bar';
 export class InstituicoesCardComponents {
   @Input() materia: Materia | null = null;
   @Input() limiteFaltas: number = 0;
+  @Output() faltaAdicionada = new EventEmitter<{ idMateria: number; quantidade: number }>();
 
   faltasPercentage(): number {
     if (!this.materia || this.materia.carga_horaria_total === 0) {
@@ -40,26 +41,8 @@ export class InstituicoesCardComponents {
     }
   }
 
-  quantidadeFaltasRisco(): number {
-    if (!this.materia) return 0;
-    return this.faltasPermitidas() * 0.75;
-  }
-
-  setStatus(faltas: number) {
+  adicionarFalta(qtd: number) {
     if (!this.materia) return;
-    if (faltas == this.faltasPermitidas()) {
-      this.materia.status = 'Reprovado';
-    } else if (faltas >= this.quantidadeFaltasRisco()) {
-      this.materia.status = 'Risco';
-    } else {
-      this.materia.status = 'Aprovado';
-    }
-  }
-
-  addFalta() {
-    if (this.materia) {
-      this.materia.faltas++;
-      this.setStatus(this.materia.faltas);
-    }
+    this.faltaAdicionada.emit({ idMateria: this.materia.id, quantidade: qtd });
   }
 }
