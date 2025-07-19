@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Materia } from '../../models/instituicao.model';
+import { Materia } from '../../models/instituicao/instituicao.model';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatProgressBar } from '@angular/material/progress-bar';
@@ -8,7 +8,7 @@ import { MatProgressBar } from '@angular/material/progress-bar';
   selector: 'app-instituicoes-card',
   imports: [MatCardModule, CommonModule, MatProgressBar],
   templateUrl: './instituicoes-card.components.html',
-  styleUrl: './instituicoes-card.components.scss'
+  styleUrl: './instituicoes-card.components.scss',
 })
 export class InstituicoesCardComponents {
   @Input() materia: Materia | null = null;
@@ -40,7 +40,7 @@ export class InstituicoesCardComponents {
     }
   }
 
-  quantidadeFaltasRisco():number{
+  quantidadeFaltasRisco(): number {
     if (!this.materia) return 0;
     return this.faltasPermitidas() * 0.75;
   }
@@ -61,7 +61,5 @@ export class InstituicoesCardComponents {
       this.materia.faltas++;
       this.setStatus(this.materia.faltas);
     }
-
   }
-
 }

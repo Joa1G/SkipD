@@ -1,4 +1,4 @@
-import { Instituicao } from '../models/instituicao.model';
+import { Instituicao } from '../../models/instituicao/instituicao.model';
 
 export let instituicoesMockedData: Instituicao[] = [
   {
