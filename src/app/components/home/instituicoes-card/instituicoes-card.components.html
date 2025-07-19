@@ -11,6 +11,6 @@
     <p class="status">Status: {{ materia!.status }}</p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button [disabled]="materia?.faltas === faltasPermitidas()" (click)="addFalta()">+ Faltar</button>
+    <button mat-raised-button [disabled]="materia?.faltas === faltasPermitidas()" (click)="adicionarFalta(1)">+ Faltar</button>
   </mat-card-actions>
 </mat-card>

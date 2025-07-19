@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InstituicoesCardComponents } from '../instituicoes-card/instituicoes-card.components';
 import { AbstractInstituicaoService } from '../../services/instituicao/abstract-instituicao.service';
 import { AbstractMateriaService } from '../../services/materia/abstract-materia.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-instituicoes-list',
@@ -17,4 +18,7 @@ export class InstituicoesListComponents {
   private serviceMateria = inject(AbstractMateriaService);
   materias = this.serviceMateria.materias;
 
+  async addFalta(idMateria: number, quantidade: number) {
+    await firstValueFrom(this.serviceMateria.addFalta(idMateria, quantidade));
+  }
 }
