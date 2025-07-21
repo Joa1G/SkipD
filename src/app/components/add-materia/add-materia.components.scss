@@ -1,18 +1,1 @@
-$primary-color: #6200ea;
 
-:host {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.add-materia-container {
-  flex: 1;
-}
-
-.footer {
-  background-color: $primary-color;
-  height: 32px;
-  width: 100%;
-  margin-top: auto;;
-}
