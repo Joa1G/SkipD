@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
     {
         path: 'login',
-        loadComponent: () => import('../login/login.components').then((m) => m.LoginComponents)
+        loadComponent: () => import('../components/login/login.components').then((m) => m.LoginComponents)
     },
     {
         path: 'cadastro',
