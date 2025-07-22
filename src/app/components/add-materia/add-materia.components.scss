@@ -60,10 +60,33 @@ select {
   transition: border-color $transition-speed $transition-ease;
 }
 
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  // seta customizada (cinza claro) à direita
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23e0e0e0" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"><path d="M0 0l5 6 5-6z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 10px 6px;
+
+  // espaço extra à direita para a seta
+  padding: 14px 40px 14px 14px;
+}
+
 input:focus,
 select:focus {
   outline: none;
   border-color: $color-primary;
+}
+
+.is-invalid{
+  input[type="text"],
+  input[type="number"],
+  select {
+  border: 1px solid #ff4d4d;
+}
 }
 
 input::placeholder {
@@ -123,8 +146,8 @@ input::placeholder {
 .horas-select {
   margin-top: 8px;
   padding: 4px 6px;
-  font-size: 0.8rem;
-  width: auto;
+  font-size: 0.7rem;
+  width: 60px;
   background-color: $color-bg-light;
   border: 1px solid $color-border;
   border-radius: $radius;
@@ -170,4 +193,15 @@ input::placeholder {
     $color-gradient-end
   );
   color: white;
+}
+
+.btn-salvar:disabled {
+  background: $color-border;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-size: 0.7rem;
+  margin-top: 5px;
 }

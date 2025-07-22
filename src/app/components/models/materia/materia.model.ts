@@ -4,9 +4,14 @@ export interface Materia {
   cargaHorariaTotal: number;
   faltas: number;
   status: 'Aprovado' | 'Risco' | 'Reprovado';
-  aulasDaSemana?: {
-    dia: string;
-    horas: number;
-  }[];
+  aulasDaSemana: {
+    domingo: number;
+    segunda: number;
+    terca: number;
+    quarta: number;
+    quinta: number;
+    sexta: number;
+    sabado: number;
+  };
   idInstituicao: number;
 }

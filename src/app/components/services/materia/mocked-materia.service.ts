@@ -14,15 +14,15 @@ export class MockedMateriaService extends AbstractMateriaService {
       cargaHorariaTotal: 200,
       faltas: 25,
       status: 'Aprovado',
-      aulasDaSemana: [
-        { dia: 'domingo', horas: 0 },
-        { dia: 'segunda', horas: 3 },
-        { dia: 'terca', horas: 2 },
-        { dia: 'quarta', horas: 0 },
-        { dia: 'quinta', horas: 0 },
-        { dia: 'sexta', horas: 0 },
-        { dia: 'sabado', horas: 0 }
-      ],
+      aulasDaSemana: {
+        domingo: 0,
+        segunda: 2,
+        terca: 1,
+        quarta: 0,
+        quinta: 0,
+        sexta: 0,
+        sabado: 0
+      },
       idInstituicao: 1,
     },
     {
@@ -31,15 +31,15 @@ export class MockedMateriaService extends AbstractMateriaService {
       cargaHorariaTotal: 40,
       faltas: 2,
       status: 'Aprovado',
-      aulasDaSemana: [
-        { dia: 'domingo', horas: 0 },
-        { dia: 'segunda', horas: 1 },
-        { dia: 'terca', horas: 1 },
-        { dia: 'quarta', horas: 0 },
-        { dia: 'quinta', horas: 0 },
-        { dia: 'sexta', horas: 0 },
-        { dia: 'sabado', horas: 0 }
-      ],
+      aulasDaSemana: {
+        domingo: 0,
+        segunda: 0,
+        terca: 0,
+        quarta: 1,
+        quinta: 0,
+        sexta: 0,
+        sabado: 0
+      },
       idInstituicao: 1,
     },
     {
@@ -48,15 +48,15 @@ export class MockedMateriaService extends AbstractMateriaService {
       cargaHorariaTotal: 60,
       faltas: 14,
       status: 'Risco',
-      aulasDaSemana: [
-        { dia: 'domingo', horas: 0 },
-        { dia: 'segunda', horas: 2 },
-        { dia: 'terca', horas: 1 },
-        { dia: 'quarta', horas: 0 },
-        { dia: 'quinta', horas: 0 },
-        { dia: 'sexta', horas: 0 },
-        { dia: 'sabado', horas: 0 }
-      ],
+      aulasDaSemana: {
+        domingo: 0,
+        segunda: 0,
+        terca: 0,
+        quarta: 1,
+        quinta: 0,
+        sexta: 0,
+        sabado: 0
+      },
       idInstituicao: 1,
     },
     {
@@ -65,15 +65,15 @@ export class MockedMateriaService extends AbstractMateriaService {
       cargaHorariaTotal: 80,
       faltas: 20,
       status: 'Reprovado',
-      aulasDaSemana: [
-        { dia: 'domingo', horas: 0 },
-        { dia: 'segunda', horas: 0 },
-        { dia: 'terca', horas: 0 },
-        { dia: 'quarta', horas: 2 },
-        { dia: 'quinta', horas: 1 },
-        { dia: 'sexta', horas: 0 },
-        { dia: 'sabado', horas: 0 }
-      ],
+      aulasDaSemana: {
+        domingo: 0,
+        segunda: 0,
+        terca: 0,
+        quarta: 2,
+        quinta: 0,
+        sexta: 2,
+        sabado: 0
+      },
       idInstituicao: 1,
     },
     {
@@ -82,15 +82,15 @@ export class MockedMateriaService extends AbstractMateriaService {
       cargaHorariaTotal: 100,
       faltas: 5,
       status: 'Aprovado',
-      aulasDaSemana: [
-        { dia: 'domingo', horas: 0 },
-        { dia: 'segunda', horas: 0 },
-        { dia: 'terca', horas: 0 },
-        { dia: 'quarta', horas: 1 },
-        { dia: 'quinta', horas: 2 },
-        { dia: 'sexta', horas: 0 },
-        { dia: 'sabado', horas: 0 }
-      ],
+      aulasDaSemana: {
+        domingo: 0,
+        segunda: 0,
+        terca: 0,
+        quarta: 1,
+        quinta: 2,
+        sexta: 0,
+        sabado: 0
+      },
       idInstituicao: 1,
     },
     {
@@ -99,15 +99,15 @@ export class MockedMateriaService extends AbstractMateriaService {
       cargaHorariaTotal: 200,
       faltas: 10,
       status: 'Aprovado',
-      aulasDaSemana: [
-        { dia: 'domingo', horas: 0 },
-        { dia: 'segunda', horas: 0 },
-        { dia: 'terca', horas: 0 },
-        { dia: 'quarta', horas: 3 },
-        { dia: 'quinta', horas: 2 },
-        { dia: 'sexta', horas: 0 },
-        { dia: 'sabado', horas: 0 }
-      ],
+      aulasDaSemana: {
+        domingo: 0,
+        segunda: 0,
+        terca: 0,
+        quarta: 1,
+        quinta: 1,
+        sexta: 1,
+        sabado: 0
+      },
       idInstituicao: 2,
     }
   ]);
@@ -122,7 +122,7 @@ export class MockedMateriaService extends AbstractMateriaService {
       const materias = this.materias();
       return of({success: true, status: 200, data: materias});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao buscar matérias.'});
+      return of({success: false, status: 500, data: 'Erro ao buscar matérias.'});
     }
   }
 
@@ -130,11 +130,11 @@ export class MockedMateriaService extends AbstractMateriaService {
     try {
       const materia = this.materias().find(m => m.id === id);
       if (!materia) {
-        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+        return of({success: false, status: 404, data: 'Matéria não encontrada.'});
       }
       return of({success: true, status: 200, data: materia});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao buscar matéria.'});
+      return of({success: false, status: 500, data: 'Erro ao buscar matéria.'});
     }
   }
 
@@ -148,24 +148,29 @@ export class MockedMateriaService extends AbstractMateriaService {
       this._materias.update(materias => [...materias, newMateria]);
       return of({success: true, status: 201, data: newMateria});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao adicionar matéria.'});
+      return of({success: false, status: 500, data: 'Erro ao adicionar matéria.'});
     }
   }
 
   override updateMateria(materia: Materia): Observable<OperationResult> {
     try {
-      const index = this._materias().findIndex(m => m.id === materia.id);
-      if (index === -1) {
-        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+      let updated = false;
+      this._materias.update(list =>
+        list.map(m => {
+          if (m.id === materia.id) {
+            updated = true;
+            return { ...materia }
+          }
+          return m
+        })
+      );
+      if (updated) {
+        return of({ success: true, status: 200 });
+      } else {
+        return of({ success: false, status: 304, data: "Error to update Materia" });
       }
-      this._materias.update(materias => {
-        const updatedMaterias = [...materias];
-        updatedMaterias[index] = materia;
-        return updatedMaterias;
-      });
-      return of({success: true, status: 200, data: materia});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao atualizar matéria.'});
+      return of({ success: false, status: 500, data: error });
     }
   }
 
@@ -173,7 +178,7 @@ export class MockedMateriaService extends AbstractMateriaService {
     try {
       const index = this._materias().findIndex(m => m.id === id);
       if (index === -1) {
-        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+        return of({success: false, status: 404, data: 'Matéria não encontrada.'});
       }
       this._materias.update(materias => {
         const updatedMaterias = [...materias];
@@ -182,7 +187,7 @@ export class MockedMateriaService extends AbstractMateriaService {
       });
       return of({success: true, status: 200});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao deletar matéria.'});
+      return of({success: false, status: 500, data: 'Erro ao deletar matéria.'});
     }
   }
 
@@ -190,11 +195,11 @@ export class MockedMateriaService extends AbstractMateriaService {
     try {
       const materia = this._materias().find(m => m.id === idInstituicao);
       if (!materia) {
-        return of({success: false, status: 404, message: 'Instituição não encontrada.'});
+        return of({success: false, status: 404, data: 'Instituição não encontrada.'});
       }
       return of({success: true, status: 200, data: materia.idInstituicao});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao buscar instituição.'});
+      return of({success: false, status: 500, data: 'Erro ao buscar instituição.'});
     }
   }
 
@@ -202,7 +207,7 @@ export class MockedMateriaService extends AbstractMateriaService {
     try {
       const materia = this._materias().find(m => m.id === id);
       if (!materia) {
-        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+        return of({success: false, status: 404, data: 'Matéria não encontrada.'});
       }
       materia.faltas += falta;
       this.updateStatus(id);
@@ -214,7 +219,7 @@ export class MockedMateriaService extends AbstractMateriaService {
       });
       return of({success: true, status: 200, data: materia});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao adicionar falta.'});
+      return of({success: false, status: 500, data: 'Erro ao adicionar falta.'});
     }
   }
 
@@ -224,7 +229,7 @@ export class MockedMateriaService extends AbstractMateriaService {
       const limiteFaltasInsituicional = this.instituicoes().find(i => i.id === materia!.idInstituicao)?.percentual_limite_faltas || 0.25;
       const faltasPermitidas = materia!.cargaHorariaTotal * limiteFaltasInsituicional;
       if (!materia) {
-        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+        return of({success: false, status: 404, data: 'Matéria não encontrada.'});
       }
       if (materia.faltas >= faltasPermitidas) {
         materia.status = 'Reprovado';
@@ -235,7 +240,7 @@ export class MockedMateriaService extends AbstractMateriaService {
       }
       return of({success: true, status: 200, data: materia});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao atualizar status.'});
+      return of({success: false, status: 500, data: 'Erro ao atualizar status.'});
     }
   }
 
@@ -243,17 +248,12 @@ export class MockedMateriaService extends AbstractMateriaService {
     try {
       const materia = this._materias().find(m => m.id === id);
       if (!materia) {
-        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+        return of({success: false, status: 404, data: 'Matéria não encontrada.'});
       }
-      const aulasHoras = materia.aulasDaSemana
-      ?.filter(aula => aula.horas > 0)
-      .map(aula => ({
-        dia: aula.dia,
-        horas: aula.horas
-      }));
+      const aulasHoras = materia.aulasDaSemana;
       return of({success: true, status: 200, data: aulasHoras});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao buscar dias e horas com aula.'});
+      return of({success: false, status: 500, data: 'Erro ao buscar dias e horas com aula.'});
     }
   }
 

@@ -13,6 +13,8 @@ import { AbstractInstituicaoService } from '../services/instituicao/abstract-ins
 import { AbstractMateriaService } from '../services/materia/abstract-materia.service';
 import { Materia } from '../models/materia/materia.model';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -28,7 +30,8 @@ import { Router } from '@angular/router';
     MatIconModule,
     MatCardModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   templateUrl: './add-materia.components.html',
   styleUrl: './add-materia.components.scss'
@@ -46,80 +49,93 @@ export class AddMateriaComponents{
     nome: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     cargaHorariaTotal: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
     faltas: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    dom: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    seg: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    ter: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    qua: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    qui: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    sex: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    sab: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
-    hor_dom: new FormControl(0, {nonNullable: true, validators: [Validators.required]}),
-    hor_seg: new FormControl(0, {nonNullable: true, validators: [Validators.required]}),
-    hor_ter: new FormControl(0, {nonNullable: true, validators: [Validators.required]}),
-    hor_qua: new FormControl(0, {nonNullable: true, validators: [Validators.required]}),
-    hor_qui: new FormControl(0, {nonNullable: true, validators: [Validators.required]}),
-    hor_sex: new FormControl(0, {nonNullable: true, validators: [Validators.required]}),
-    hor_sab: new FormControl(0, {nonNullable: true, validators: [Validators.required]}),
-    idInstituicao: new FormControl(0, {nonNullable: true, validators: [Validators.required]}),
+    is_dom_checked: new FormControl(false, {nonNullable: true}),
+    is_seg_checked: new FormControl(false, {nonNullable: true}),
+    is_ter_checked: new FormControl(false, {nonNullable: true}),
+    is_qua_checked: new FormControl(false, {nonNullable: true}),
+    is_qui_checked: new FormControl(false, {nonNullable: true}),
+    is_sex_checked: new FormControl(false, {nonNullable: true}),
+    is_sab_checked: new FormControl(false, {nonNullable: true}),
+    hor_dom: new FormControl(1, {nonNullable: true}),
+    hor_seg: new FormControl(1, {nonNullable: true}),
+    hor_ter: new FormControl(1, {nonNullable: true}),
+    hor_qua: new FormControl(1, {nonNullable: true}),
+    hor_qui: new FormControl(1, {nonNullable: true}),
+    hor_sex: new FormControl(1, {nonNullable: true}),
+    hor_sab: new FormControl(1, {nonNullable: true}),
+    idInstituicao: new FormControl(1, {nonNullable: true, validators: [Validators.required]}),
   });
 
   diasDaSemana = [
-    { id: 1, value: 'domingo', viewValue: 'Dom'},
-    { id: 2, value: 'segunda', viewValue: 'Seg'},
-    { id: 3, value: 'terca', viewValue: 'Ter'},
-    { id: 4, value: 'quarta', viewValue: 'Qua'},
-    { id: 5, value: 'quinta', viewValue: 'Qui'},
-    { id: 6, value: 'sexta', viewValue: 'Sex'},
-    { id: 7, value: 'sabado', viewValue: 'Sab'},
-  ];
+    { id: 1, value: 'domingo', viewValue: 'Dom', formControlName: 'hor_dom' },
+    { id: 2, value: 'segunda', viewValue: 'Seg', formControlName: 'hor_seg' },
+    { id: 3, value: 'terca', viewValue: 'Ter', formControlName: 'hor_ter' },
+    { id: 4, value: 'quarta', viewValue: 'Qua', formControlName: 'hor_qua' },
+    { id: 5, value: 'quinta', viewValue: 'Qui', formControlName: 'hor_qui' },
+    { id: 6, value: 'sexta', viewValue: 'Sex', formControlName: 'hor_sex' },
+    { id: 7, value: 'sabado', viewValue: 'Sab', formControlName: 'hor_sab' },
+];
 
   adicionarMateria() {
+    const formValue = this.form.value; // Pega todos os valores de uma vez
+
+    const nome: string = formValue.nome!;
+    const cargaHorariaTotal: number = Number(formValue.cargaHorariaTotal!);
+    const faltas: number = Number(formValue.faltas!);
+    const idInstituicao: number = Number(formValue.idInstituicao!);
+    const status: 'Aprovado' | 'Risco' | 'Reprovado' = 'Aprovado';
+    const aulasSemana = () => {
+      return {
+        domingo: formValue.is_dom_checked ? Number(formValue.hor_dom!) : 0,
+        segunda: formValue.is_seg_checked ? Number(formValue.hor_seg!) : 0,
+        terca: formValue.is_ter_checked ? Number(formValue.hor_ter!) : 0,
+        quarta: formValue.is_qua_checked ? Number(formValue.hor_qua!) : 0,
+        quinta: formValue.is_qui_checked ? Number(formValue.hor_qui!) : 0,
+        sexta: formValue.is_sex_checked ? Number(formValue.hor_sex!) : 0,
+        sabado: formValue.is_sab_checked ? Number(formValue.hor_sab!) : 0
+      };
+    };
+
     const materia: Omit<Materia, 'id'> = {
-      nome: this.form.get('nome')!.value,
-      cargaHorariaTotal: Number(this.form.get('cargaHorariaTotal')!.value),
-      faltas: Number(this.form.get('faltas')!.value),
-      idInstituicao: this.form.get('idInstituicao')!.value,
-      aulasDaSemana: [{
-        dia: 'domingo',
-        horas: this.form.get('hor_dom')!.value
-      }, {
-        dia: 'segunda',
-        horas: this.form.get('hor_seg')!.value
-      }, {
-        dia: 'terça',
-        horas: this.form.get('hor_ter')!.value
-      }, {
-        dia: 'quarta',
-        horas: this.form.get('hor_qua')!.value
-      }, {
-        dia: 'quinta',
-        horas: this.form.get('hor_qui')!.value
-      }, {
-        dia: 'sexta',
-        horas: this.form.get('hor_sex')!.value
-      }, {
-        dia: 'sábado',
-        horas: this.form.get('hor_sab')!.value
-      }],
-      status: 'Aprovado'
+      nome: nome,
+      cargaHorariaTotal: cargaHorariaTotal,
+      faltas: faltas,
+      idInstituicao: Number(idInstituicao),
+      aulasDaSemana: aulasSemana(),
+      status: status
     };
     return materia;
-  }
+}
 
-  async onSubmit() {
-    const materia = this.adicionarMateria();
-    try {
-      const result = await this.serviceMateria.addMateria(materia).toPromise();
-      if (result!.success) {
-        const newID = result!.data.id;
-        this.serviceMateria.updateStatus(newID);
+  async onSubmit(): Promise<void> {
+      if (this.form.invalid) {
+        console.error('Formulário inválido');
+        // TODO: Exibir mensagem de erro para o usuário com um snackbar ou modal
+        return;
       }
-    } catch (error) {
-      console.error('Erro ao adicionar matéria:', error);
-    }
+      const materia = this.adicionarMateria();
+      console.log('Adicionando matéria:', materia);
+      const result = await firstValueFrom(this.serviceMateria.addMateria(materia));
+
+      if(result.success){
+        this.form.reset();
+        this.router.navigate(['/']);
+        // TODO: Exibir mensagem de sucesso para o usuário com um snackbar ou modal
+      }else{
+        console.error('Erro ao adicionar matéria:', result.data);
+      }
+
+
   }
 
   onCancel(): void{
-    this.router.navigate(['/'])
+    this.router.navigate(['/']);
+    // TODO: Exibir mensagem de cancelamento para o usuário com um snackbar ou modal
+  }
+
+  invalidSubmitClass(controlName: string){
+    return {
+      'is-invalid': this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
+    };
   }
 }
