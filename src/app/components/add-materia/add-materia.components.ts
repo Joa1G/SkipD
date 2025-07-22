@@ -16,7 +16,6 @@ import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-add-materia',
   standalone: true,
@@ -43,6 +42,7 @@ export class AddMateriaComponents{
   private serviceMateria = inject(AbstractMateriaService);
   materias = this.serviceMateria.materias;
   private router = inject(Router)
+  submitted = false;
 
   form = new FormGroup({
     id: new FormControl<number | null>(null),
@@ -105,12 +105,11 @@ export class AddMateriaComponents{
       status: status
     };
     return materia;
-}
+  }
 
   async onSubmit(): Promise<void> {
+      this.submitted = true;
       if (this.form.invalid) {
-        console.error('Formulário inválido');
-        // TODO: Exibir mensagem de erro para o usuário com um snackbar ou modal
         return;
       }
       const materia = this.adicionarMateria();
@@ -133,9 +132,12 @@ export class AddMateriaComponents{
     // TODO: Exibir mensagem de cancelamento para o usuário com um snackbar ou modal
   }
 
-  invalidSubmitClass(controlName: string){
+  invalidFieldClass(field: string) {
+    const control = this.form.get(field);
     return {
-      'is-invalid': this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
+      'is-invalid': !!(control && control.invalid && (control.touched || this.submitted))
     };
-  }
+  };
+
+
 }

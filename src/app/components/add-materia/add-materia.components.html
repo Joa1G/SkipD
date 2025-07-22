@@ -3,26 +3,17 @@
     <div class="title-container"><h1>Adicionar Matéria</h1></div>
   <div class="form-container">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <!-- Campo Nome da Matéria -->
-        <div class="form-group" [ngClass]=" invalidSubmitClass('nome')">
+
+        <div class="form-group" [ngClass]="invalidFieldClass('nome')">
             <label for="materia-nome">Matéria *</label>
             <input type="text" id="materia-nome" name="materia-nome" placeholder="Nome da Matéria" formControlName="nome" required>
-            @if (form.get('nome')?.hasError('required') && form.get('nome')?.touched) {
-              <span class="error-message">O nome da matéria é obrigatório.</span>
-            }
         </div>
 
-
-        <!-- Campo Carga Horária -->
-        <div class="form-group" [ngClass]=" invalidSubmitClass('cargaHorariaTotal')">
+        <div class="form-group" [ngClass]=" invalidFieldClass('cargaHorariaTotal')">
             <label for="carga-horaria">Carga Horária (h)*</label>
             <input type="number" id="carga-horaria" name="carga-horaria" placeholder="Carga Horária Total em Horas" formControlName="cargaHorariaTotal" required>
-            @if (form.get('cargaHorariaTotal')?.hasError('required') && form.get('cargaHorariaTotal')?.touched) {
-              <span class="error-message">A carga horária total é obrigatória.</span>
-            }
         </div>
 
-        <!-- Campo Instituição -->
         <div class="form-group">
             <label for="instituicao">Instituição*</label>
             <select id="instituicao" name="instituicao" formControlName="idInstituicao" required>
@@ -33,12 +24,9 @@
               </select>
         </div>
 
-        <div class="form-group" [ngClass]=" invalidSubmitClass('faltas')">
+        <div class="form-group" [ngClass]=" invalidFieldClass('faltas')">
             <label for="carga-horaria">Faltas*</label>
             <input type="number" id="carga-horaria" name="carga-horaria" placeholder="Faltas já existentes" formControlName="faltas" required>
-            @if (form.get('faltas')?.hasError('required') && form.get('faltas')?.touched) {
-              <span class="error-message">O número de faltas é obrigatório.</span>
-            }
         </div>
 
         <div class="form-group">
@@ -52,7 +40,7 @@
                         <select type="number"
                         class="horas-select"
                         formControlName="hor_{{dia.viewValue.toLowerCase()}}"
-                        [ngClass]="invalidSubmitClass('hor_' + dia.viewValue.toLowerCase())"
+                        [ngClass]="invalidFieldClass('hor_' + dia.viewValue.toLowerCase())"
                         required>
                           <option [value]="1">1 h</option>
                           <option [value]="2">2 h</option>
@@ -69,11 +57,16 @@
             </div>
         </div>
 
-        <!-- Botões de Ação -->
+        @if (form.invalid && submitted) {
+          <div class="error-message">
+            <span>Por favor, preencha todos os campos obrigatórios corretamente.</span><br>
+            <span>Campos marcados com * são obrigatórios.</span>
+          </div>
+        }
+
         <div class="form-buttons">
-            <!-- O type="button" impede que o botão cancele o formulário -->
             <button type="button" class="btn btn-cancelar" (click)="onCancel()">Cancelar</button>
-            <button type="submit" [disabled]="form.invalid" class="btn btn-salvar">Salvar</button>
+            <button type="submit" class="btn btn-salvar">Salvar</button>
         </div>
     </form>
   </div>
