@@ -11,49 +11,103 @@ export class MockedMateriaService extends AbstractMateriaService {
     {
       id: 1,
       nome: 'Algoritmo e Estruturas de Dados II',
-      carga_horaria_total: 200,
+      cargaHorariaTotal: 200,
       faltas: 25,
       status: 'Aprovado',
+      aulasDaSemana: [
+        { dia: 'domingo', horas: 0 },
+        { dia: 'segunda', horas: 3 },
+        { dia: 'terca', horas: 2 },
+        { dia: 'quarta', horas: 0 },
+        { dia: 'quinta', horas: 0 },
+        { dia: 'sexta', horas: 0 },
+        { dia: 'sabado', horas: 0 }
+      ],
       idInstituicao: 1,
     },
     {
       id: 2,
       nome: 'Cálculo I',
-      carga_horaria_total: 40,
+      cargaHorariaTotal: 40,
       faltas: 2,
       status: 'Aprovado',
+      aulasDaSemana: [
+        { dia: 'domingo', horas: 0 },
+        { dia: 'segunda', horas: 1 },
+        { dia: 'terca', horas: 1 },
+        { dia: 'quarta', horas: 0 },
+        { dia: 'quinta', horas: 0 },
+        { dia: 'sexta', horas: 0 },
+        { dia: 'sabado', horas: 0 }
+      ],
       idInstituicao: 1,
     },
     {
       id: 3,
       nome: 'Redes de Computadores',
-      carga_horaria_total: 60,
+      cargaHorariaTotal: 60,
       faltas: 14,
       status: 'Risco',
+      aulasDaSemana: [
+        { dia: 'domingo', horas: 0 },
+        { dia: 'segunda', horas: 2 },
+        { dia: 'terca', horas: 1 },
+        { dia: 'quarta', horas: 0 },
+        { dia: 'quinta', horas: 0 },
+        { dia: 'sexta', horas: 0 },
+        { dia: 'sabado', horas: 0 }
+      ],
       idInstituicao: 1,
     },
     {
       id: 4,
       nome: 'Inteligência Artificial',
-      carga_horaria_total: 80,
+      cargaHorariaTotal: 80,
       faltas: 20,
       status: 'Reprovado',
+      aulasDaSemana: [
+        { dia: 'domingo', horas: 0 },
+        { dia: 'segunda', horas: 0 },
+        { dia: 'terca', horas: 0 },
+        { dia: 'quarta', horas: 2 },
+        { dia: 'quinta', horas: 1 },
+        { dia: 'sexta', horas: 0 },
+        { dia: 'sabado', horas: 0 }
+      ],
       idInstituicao: 1,
     },
     {
       id: 5,
       nome: 'Banco de Dados',
-      carga_horaria_total: 100,
+      cargaHorariaTotal: 100,
       faltas: 5,
       status: 'Aprovado',
+      aulasDaSemana: [
+        { dia: 'domingo', horas: 0 },
+        { dia: 'segunda', horas: 0 },
+        { dia: 'terca', horas: 0 },
+        { dia: 'quarta', horas: 1 },
+        { dia: 'quinta', horas: 2 },
+        { dia: 'sexta', horas: 0 },
+        { dia: 'sabado', horas: 0 }
+      ],
       idInstituicao: 1,
     },
     {
       id: 6,
       nome: 'Desenvolvimento Web Full Stack',
-      carga_horaria_total: 200,
+      cargaHorariaTotal: 200,
       faltas: 10,
       status: 'Aprovado',
+      aulasDaSemana: [
+        { dia: 'domingo', horas: 0 },
+        { dia: 'segunda', horas: 0 },
+        { dia: 'terca', horas: 0 },
+        { dia: 'quarta', horas: 3 },
+        { dia: 'quinta', horas: 2 },
+        { dia: 'sexta', horas: 0 },
+        { dia: 'sabado', horas: 0 }
+      ],
       idInstituicao: 2,
     }
   ]);
@@ -168,7 +222,7 @@ export class MockedMateriaService extends AbstractMateriaService {
     try {
       const materia = this._materias().find(m => m.id === id);
       const limiteFaltasInsituicional = this.instituicoes().find(i => i.id === materia!.idInstituicao)?.percentual_limite_faltas || 0.25;
-      const faltasPermitidas = materia!.carga_horaria_total * limiteFaltasInsituicional;
+      const faltasPermitidas = materia!.cargaHorariaTotal * limiteFaltasInsituicional;
       if (!materia) {
         return of({success: false, status: 404, message: 'Matéria não encontrada.'});
       }
@@ -184,4 +238,23 @@ export class MockedMateriaService extends AbstractMateriaService {
       return of({success: false, status: 500, message: 'Erro ao atualizar status.'});
     }
   }
+
+  override getDiasHorasComAula(id: number): Observable<OperationResult> {
+    try {
+      const materia = this._materias().find(m => m.id === id);
+      if (!materia) {
+        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+      }
+      const aulasHoras = materia.aulasDaSemana
+      ?.filter(aula => aula.horas > 0)
+      .map(aula => ({
+        dia: aula.dia,
+        horas: aula.horas
+      }));
+      return of({success: true, status: 200, data: aulasHoras});
+    } catch (error) {
+      return of({success: false, status: 500, message: 'Erro ao buscar dias e horas com aula.'});
+    }
+  }
+
 }

@@ -1,8 +1,12 @@
 export interface Materia {
   id: number;
   nome: string;
-  carga_horaria_total: number;
+  cargaHorariaTotal: number;
   faltas: number;
   status: 'Aprovado' | 'Risco' | 'Reprovado';
+  aulasDaSemana?: {
+    dia: string;
+    horas: number;
+  }[];
   idInstituicao: number;
 }
