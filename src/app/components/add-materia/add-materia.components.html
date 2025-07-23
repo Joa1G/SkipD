@@ -71,3 +71,21 @@
     </form>
   </div>
 </div>
+<app-dialog
+  [title]="'Tem certeza que deseja cancelar?'"
+  [isVisible]="showCancelDialog"
+  (isVisibleChange)="showCancelDialog = $event"
+  [route]="'/home'"
+  [dialogType]="'warning'"
+  [message]="'Todas as alterações não salvas serão perdidas.'"
+></app-dialog>
+
+<app-dialog
+  [title]="'Matéria adicionada com sucesso!'"
+  [isVisible]="showSubmitDialog"
+  (isVisibleChange)="showSubmitDialog = $event"
+  [route]="'/home'"
+  [dialogType]="'confirmation'"
+  [message]="'A matéria foi adicionada com sucesso.'"
+  [showCancelButton]="false"
+></app-dialog>

@@ -15,6 +15,7 @@ import { Materia } from '../models/materia/materia.model';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-add-materia',
@@ -30,7 +31,8 @@ import { CommonModule } from '@angular/common';
     MatCardModule,
     ReactiveFormsModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    DialogComponent
   ],
   templateUrl: './add-materia.components.html',
   styleUrl: './add-materia.components.scss'
@@ -43,6 +45,8 @@ export class AddMateriaComponents{
   materias = this.serviceMateria.materias;
   private router = inject(Router)
   submitted = false;
+  showCancelDialog = false;
+  showSubmitDialog = false;
 
   form = new FormGroup({
     id: new FormControl<number | null>(null),
@@ -117,9 +121,7 @@ export class AddMateriaComponents{
       const result = await firstValueFrom(this.serviceMateria.addMateria(materia));
 
       if(result.success){
-        this.form.reset();
-        this.router.navigate(['/']);
-        // TODO: Exibir mensagem de sucesso para o usuário com um snackbar ou modal
+        this.showSubmitDialog = true;
       }else{
         console.error('Erro ao adicionar matéria:', result.data);
       }
@@ -128,8 +130,7 @@ export class AddMateriaComponents{
   }
 
   onCancel(): void{
-    this.router.navigate(['/']);
-    // TODO: Exibir mensagem de cancelamento para o usuário com um snackbar ou modal
+    this.showCancelDialog = true;
   }
 
   invalidFieldClass(field: string) {
