@@ -1,38 +1,60 @@
-@use "sass:color";
+$font-main: "Roboto", sans-serif;
 
-$primary-color: #6b2cf9;
-$font-color: #ffffff;
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #e0e0e0;
+$color-muted: #a0a0b0;
+
+$transition-speed: 0.3s;
+$transition-ease: ease-in-out;
+$radius: 12px;
+$radius-sm: 6px;
+
+.btn {
+  padding: 14px;
+  border: none;
+  border-radius: $radius;
+  font-family: $font-main;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform $transition-speed $transition-ease,
+  box-shadow $transition-speed $transition-ease;
+  display: inline-flex; // Para alinhar conteúdo como ícones
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+}
 
 .button-container {
   display: flex;
   justify-content: flex-end;
   width: 100%;
-  padding-right: 20px;
+  padding: 20px 20px 0; // Adicionado padding superior
 }
 
 .add-materia-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  border-radius: 10px;
-  width: 180px;
-  height: 40px;
-  background-color: $primary-color;
-  margin-top: 20px;
-  color: $font-color;
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  font-size: 1rem;
-  .add-icon {
-    width: 24px;
-    height: 24px;
-    font-size: 24px;
-  }
-}
+  @extend .btn; // Herda os estilos base do .btn
+  gap: 8px;
+  width: 200px;
+  height: 44px;
+  padding: 0 20px; // Ajuste no padding para altura fixa
+  background: linear-gradient(
+    90deg,
+    $color-gradient-start,
+    $color-gradient-end
+  );
+  color: white;
 
-.add-materia-button:hover {
-  background-color: color.adjust($primary-color, $lightness: -10%);
-  color: color.adjust($font-color, $lightness: -20%);
-  cursor: pointer;
+  .add-icon {
+    font-size: 24px; // Ícone um pouco maior para combinar
+  }
 }

@@ -1,4 +1,3 @@
-// Variáveis de tema
 $font-main: "Roboto", sans-serif;
 $color-primary: #8a2be2;
 $color-gradient-start: #4a00e0;
@@ -182,8 +181,8 @@ input::placeholder {
   background-color: $color-border;
 }
 .btn-cancelar:hover {
-  background-color: rbga(#6B2CF9, 0.2);
-  color: rgb(#EF4444, 0.8);
+  background-color: rgba(#6B2CF9, 0.2);
+  color: rgba(#EF4444, 0.8);
 }
 
 .btn-salvar {
