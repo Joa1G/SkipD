@@ -1,0 +1,144 @@
+:host {
+  display: block;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #1c1c2b;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
+
+/* Faixas roxas */
+.top-border,
+.bottom-border {
+  height: 24px;
+  background: linear-gradient(to right, #9b5de5, #7a29cc, #9b5de5);
+}
+
+/* Container central */
+.cadastro-container {
+  height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+}
+
+h1 {
+  font-family: 'Jaro', sans-serif;;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+  color: white;
+  text-align: center;
+  display: flex;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.2rem;
+  color: #c9aaff;
+}
+
+.subtitulo {
+  font-size: .9rem;
+  color: #b78fff;
+  margin-bottom: 0.8rem;
+  font-weight: bold;
+}
+
+/* Card reduzido */
+form {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 12px;
+  width: 210%;
+  max-width: 510px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+  margin-left: -100px;
+}
+
+label {
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+/* Inputs e selects */
+input,
+select {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background-color: #1f1f1f;
+  color: white;
+  font-size: 0.85rem;
+
+  &::placeholder {
+    color: #777;
+  }
+}
+
+/* Duas colunas com espaçamento decente */
+.row {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 0.2rem;
+}
+
+.col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botão */
+button {
+  background: linear-gradient(90deg, #9b5de5, #7c3aed);
+  color: white;
+  margin: 0.55rem;
+  padding: 0.55rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    background: #888;
+    cursor: not-allowed;
+  }
+}
+
+/* Link final */
+.login-link {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  text-align: center;
+
+  a {
+    color: #9b5de5;
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: none;
+      opacity: 0.8;
+    }
+  }
+}
