@@ -21,4 +21,8 @@ export class InstituicoesListComponents {
   async addFalta(idMateria: number, quantidade: number) {
     await firstValueFrom(this.serviceMateria.addFalta(idMateria, quantidade));
   }
+
+  getMateriasPorInstituicao(idInstituicao: number) {
+    return this.materias().filter(m => m.idInstituicao === idInstituicao);
+  }
 }
