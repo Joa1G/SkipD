@@ -22,7 +22,8 @@ $radius-sm: 6px;
 
 .materia-card {
   width: 320px;
-  margin: 15px 15px ;
+  height: 210px;
+  margin: 15px 15px;
   background-color: $color-bg-light;
   color: $color-text;
   border-radius: $radius;
@@ -30,6 +31,7 @@ $radius-sm: 6px;
   font-family: $font-main;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: all $transition-speed $transition-ease;
+  justify-content: space-between;
 
   &:hover {
     transform: translateY(-4px);
@@ -39,7 +41,7 @@ $radius-sm: 6px;
   }
 
   mat-card-title {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 700;
   }
 

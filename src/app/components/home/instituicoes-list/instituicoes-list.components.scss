@@ -1,25 +1,47 @@
 $font-color: #C0A6FA;
+$font-main: "Roboto", sans-serif;
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #e0e0e0;
+$color-muted: #a0a0b0;
+$transition-speed: 0.3s;
+$transition-ease: ease-in-out;
+$radius: 12px;
+$radius-sm: 6px;
 
-.instituicoes-list {
-  margin-left: 15px;
+.instituicoes-list{
+  width: 80%;
+  margin: 0 auto;
+  background-color: $color-bg-dark;
+  border-radius: $radius;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
-
 .instituicoes-title {
   font-size: 1.5em;
   color: $font-color;
   font-family: "Roboto", sans-serif;
+  margin-left: 25px;
 }
 
 .instituicoes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, auto));
-  margin-bottom: 20px;
-  gap: 25px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid $color-border;
+  place-items: center;
+  padding-bottom: 20px;
 }
 
 .no-materia {
   text-align: left;
-  font-size: 1.2em;
+  font-size: 1rem;
   font-family: "Roboto", sans-serif;
   color: #c62828;
   margin-top: 20px;
