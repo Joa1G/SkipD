@@ -27,6 +27,7 @@ export class DetalhesMateriaComponent {
 
   showDeleteDialog: boolean = false;
   showEditDialog: boolean = false;
+  deleteRequested: boolean = false;
 
   materiaIdParam = this.route.snapshot.paramMap.get('id');
   materiaId = Number(this.materiaIdParam);
@@ -105,6 +106,10 @@ export class DetalhesMateriaComponent {
 
   async adicionarFalta(idMateria: number, quantidade: number) {
     await firstValueFrom(this.serviceMateria.addFalta(idMateria, quantidade));
+  };
+
+  async excluirMateria(): Promise<void> {
+    await firstValueFrom(this.serviceMateria.deleteMateria(this.materiaId));
   };
 
   onClickDeleteMateria() {

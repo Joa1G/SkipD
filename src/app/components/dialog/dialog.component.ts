@@ -15,10 +15,22 @@ export class DialogComponent {
   @Input() confirmText: string = 'OK';
   @Input() isVisible: boolean = false;
   @Output() isVisibleChange = new EventEmitter<boolean>();
-  @Input() route: (string | number)[] = [];
+  @Input() route: string = '';
   @Input() dialogType: 'info' | 'warning' | 'confirmation' = 'info';
   @Input() showCancelButton: boolean = true;
+  @Output() confirmAction = new EventEmitter<boolean>();
 
+  isExcluirDialog: boolean = false;
+
+  ngOnInit() {
+    this.setExcluirDialog();
+  }
+
+  setExcluirDialog() {
+    if (this.confirmText === 'Excluir') {
+      this.isExcluirDialog = true;
+    }
+  }
 
   turnDialogVisible() {
     return this.isVisible ? 'is-visible' : '';

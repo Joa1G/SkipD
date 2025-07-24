@@ -82,16 +82,16 @@
     [dialogType]="'warning'"
     [isVisible]="showDeleteDialog"
     (isVisibleChange)="showDeleteDialog = $event"
+    (confirmAction)="excluirMateria()"
   ></app-dialog>
 
   <app-dialog
     [title]="'Editar Matéria'"
-    [message]="'Deseja editar esta matéria?'"
+    [message]="'Funcionalidade em desenvolvimento.'"
     [confirmText]="'Editar'"
     [dialogType]="'info'"
     [isVisible]="showEditDialog"
     (isVisibleChange)="showEditDialog = $event"
-    [route]="['/editar-materia/', materiaId]"
   ></app-dialog>
 
 }@else {
