@@ -11,49 +11,103 @@ export class MockedMateriaService extends AbstractMateriaService {
     {
       id: 1,
       nome: 'Algoritmo e Estruturas de Dados II',
-      carga_horaria_total: 200,
+      cargaHorariaTotal: 200,
       faltas: 25,
       status: 'Aprovado',
+      aulasDaSemana: {
+        domingo: 0,
+        segunda: 2,
+        terca: 1,
+        quarta: 0,
+        quinta: 0,
+        sexta: 0,
+        sabado: 0
+      },
       idInstituicao: 1,
     },
     {
       id: 2,
       nome: 'Cálculo I',
-      carga_horaria_total: 40,
+      cargaHorariaTotal: 40,
       faltas: 2,
       status: 'Aprovado',
+      aulasDaSemana: {
+        domingo: 0,
+        segunda: 0,
+        terca: 0,
+        quarta: 1,
+        quinta: 0,
+        sexta: 0,
+        sabado: 0
+      },
       idInstituicao: 1,
     },
     {
       id: 3,
       nome: 'Redes de Computadores',
-      carga_horaria_total: 60,
+      cargaHorariaTotal: 60,
       faltas: 14,
       status: 'Risco',
+      aulasDaSemana: {
+        domingo: 0,
+        segunda: 0,
+        terca: 0,
+        quarta: 1,
+        quinta: 0,
+        sexta: 0,
+        sabado: 0
+      },
       idInstituicao: 1,
     },
     {
       id: 4,
       nome: 'Inteligência Artificial',
-      carga_horaria_total: 80,
+      cargaHorariaTotal: 80,
       faltas: 20,
       status: 'Reprovado',
+      aulasDaSemana: {
+        domingo: 0,
+        segunda: 0,
+        terca: 0,
+        quarta: 2,
+        quinta: 0,
+        sexta: 2,
+        sabado: 0
+      },
       idInstituicao: 1,
     },
     {
       id: 5,
       nome: 'Banco de Dados',
-      carga_horaria_total: 100,
+      cargaHorariaTotal: 100,
       faltas: 5,
       status: 'Aprovado',
+      aulasDaSemana: {
+        domingo: 0,
+        segunda: 0,
+        terca: 0,
+        quarta: 1,
+        quinta: 2,
+        sexta: 0,
+        sabado: 0
+      },
       idInstituicao: 1,
     },
     {
       id: 6,
       nome: 'Desenvolvimento Web Full Stack',
-      carga_horaria_total: 200,
+      cargaHorariaTotal: 200,
       faltas: 10,
       status: 'Aprovado',
+      aulasDaSemana: {
+        domingo: 0,
+        segunda: 0,
+        terca: 0,
+        quarta: 1,
+        quinta: 1,
+        sexta: 1,
+        sabado: 0
+      },
       idInstituicao: 2,
     }
   ]);
@@ -68,7 +122,7 @@ export class MockedMateriaService extends AbstractMateriaService {
       const materias = this.materias();
       return of({success: true, status: 200, data: materias});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao buscar matérias.'});
+      return of({success: false, status: 500, data: 'Erro ao buscar matérias.'});
     }
   }
 
@@ -76,11 +130,11 @@ export class MockedMateriaService extends AbstractMateriaService {
     try {
       const materia = this.materias().find(m => m.id === id);
       if (!materia) {
-        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+        return of({success: false, status: 404, data: 'Matéria não encontrada.'});
       }
       return of({success: true, status: 200, data: materia});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao buscar matéria.'});
+      return of({success: false, status: 500, data: 'Erro ao buscar matéria.'});
     }
   }
 
@@ -94,24 +148,29 @@ export class MockedMateriaService extends AbstractMateriaService {
       this._materias.update(materias => [...materias, newMateria]);
       return of({success: true, status: 201, data: newMateria});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao adicionar matéria.'});
+      return of({success: false, status: 500, data: 'Erro ao adicionar matéria.'});
     }
   }
 
   override updateMateria(materia: Materia): Observable<OperationResult> {
     try {
-      const index = this._materias().findIndex(m => m.id === materia.id);
-      if (index === -1) {
-        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+      let updated = false;
+      this._materias.update(list =>
+        list.map(m => {
+          if (m.id === materia.id) {
+            updated = true;
+            return { ...materia }
+          }
+          return m
+        })
+      );
+      if (updated) {
+        return of({ success: true, status: 200 });
+      } else {
+        return of({ success: false, status: 304, data: "Error to update Materia" });
       }
-      this._materias.update(materias => {
-        const updatedMaterias = [...materias];
-        updatedMaterias[index] = materia;
-        return updatedMaterias;
-      });
-      return of({success: true, status: 200, data: materia});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao atualizar matéria.'});
+      return of({ success: false, status: 500, data: error });
     }
   }
 
@@ -119,7 +178,7 @@ export class MockedMateriaService extends AbstractMateriaService {
     try {
       const index = this._materias().findIndex(m => m.id === id);
       if (index === -1) {
-        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+        return of({success: false, status: 404, data: 'Matéria não encontrada.'});
       }
       this._materias.update(materias => {
         const updatedMaterias = [...materias];
@@ -128,7 +187,7 @@ export class MockedMateriaService extends AbstractMateriaService {
       });
       return of({success: true, status: 200});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao deletar matéria.'});
+      return of({success: false, status: 500, data: 'Erro ao deletar matéria.'});
     }
   }
 
@@ -136,11 +195,11 @@ export class MockedMateriaService extends AbstractMateriaService {
     try {
       const materia = this._materias().find(m => m.id === idInstituicao);
       if (!materia) {
-        return of({success: false, status: 404, message: 'Instituição não encontrada.'});
+        return of({success: false, status: 404, data: 'Instituição não encontrada.'});
       }
       return of({success: true, status: 200, data: materia.idInstituicao});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao buscar instituição.'});
+      return of({success: false, status: 500, data: 'Erro ao buscar instituição.'});
     }
   }
 
@@ -148,7 +207,7 @@ export class MockedMateriaService extends AbstractMateriaService {
     try {
       const materia = this._materias().find(m => m.id === id);
       if (!materia) {
-        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+        return of({success: false, status: 404, data: 'Matéria não encontrada.'});
       }
       materia.faltas += falta;
       this.updateStatus(id);
@@ -160,7 +219,7 @@ export class MockedMateriaService extends AbstractMateriaService {
       });
       return of({success: true, status: 200, data: materia});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao adicionar falta.'});
+      return of({success: false, status: 500, data: 'Erro ao adicionar falta.'});
     }
   }
 
@@ -168,9 +227,9 @@ export class MockedMateriaService extends AbstractMateriaService {
     try {
       const materia = this._materias().find(m => m.id === id);
       const limiteFaltasInsituicional = this.instituicoes().find(i => i.id === materia!.idInstituicao)?.percentual_limite_faltas || 0.25;
-      const faltasPermitidas = materia!.carga_horaria_total * limiteFaltasInsituicional;
+      const faltasPermitidas = materia!.cargaHorariaTotal * limiteFaltasInsituicional;
       if (!materia) {
-        return of({success: false, status: 404, message: 'Matéria não encontrada.'});
+        return of({success: false, status: 404, data: 'Matéria não encontrada.'});
       }
       if (materia.faltas >= faltasPermitidas) {
         materia.status = 'Reprovado';
@@ -181,7 +240,21 @@ export class MockedMateriaService extends AbstractMateriaService {
       }
       return of({success: true, status: 200, data: materia});
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao atualizar status.'});
+      return of({success: false, status: 500, data: 'Erro ao atualizar status.'});
     }
   }
+
+  override getDiasHorasComAula(id: number): Observable<OperationResult> {
+    try {
+      const materia = this._materias().find(m => m.id === id);
+      if (!materia) {
+        return of({success: false, status: 404, data: 'Matéria não encontrada.'});
+      }
+      const aulasHoras = materia.aulasDaSemana;
+      return of({success: true, status: 200, data: aulasHoras});
+    } catch (error) {
+      return of({success: false, status: 500, data: 'Erro ao buscar dias e horas com aula.'});
+    }
+  }
+
 }

@@ -16,7 +16,7 @@ export class InstituicoesCardComponents {
   @Output() faltaAdicionada = new EventEmitter<{ idMateria: number; quantidade: number }>();
 
   faltasPercentage(): number {
-    if (!this.materia || this.materia.carga_horaria_total === 0) {
+    if (!this.materia || this.materia.cargaHorariaTotal === 0) {
       return 0;
     }
     return (this.materia.faltas / this.faltasPermitidas()) * 100;
@@ -24,7 +24,7 @@ export class InstituicoesCardComponents {
 
   faltasPermitidas(): number {
     if (!this.materia) return 0;
-    return this.materia.carga_horaria_total * this.limiteFaltas;
+    return this.materia.cargaHorariaTotal * this.limiteFaltas;
   }
 
   getStatusClass(): string {
