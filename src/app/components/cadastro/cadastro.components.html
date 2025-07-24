@@ -2,12 +2,13 @@
 
 <!-- Conteúdo central -->
 <div class="cadastro-container">
-  <h1>SkipD</h1>
-  <h2>Cadastre-se aqui!</h2>
-  <p class="subtitulo">Comece a gerenciar a frequência das suas aulas com eficiência.</p>
 
   <div class="cadastro-card">
+
     <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+    <h1>SkipD</h1>
+    <h2>Cadastre-se aqui!</h2>
+    <p class="subtitulo">Comece a gerenciar a frequência das suas aulas com eficiência.</p>
       <div class="col">
         <label for="nome">Nome</label>
         <input type="text" id="nome" placeholder="Nome completo" formControlName="nome" />

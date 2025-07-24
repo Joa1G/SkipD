@@ -3,12 +3,13 @@
 
 <!-- Conteúdo central -->
 <div class="login-container">
-  <h1 class="title">SkipD</h1>
-  <p class="subtitle">Bem-vindo(a) de volta!</p>
+  <!-- <h1 class="title">SkipD</h1>
+  <p class="subtitle">Bem-vindo(a) de volta!</p> -->
 
   <div class="login-card">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
+      <h1 class="title">SkipD</h1>
+      <p class="subtitle">Bem-vindo(a) de volta!</p>
       <div class="col">
         <label for="email">Email</label>
         <input id="email" formControlName="email" type="email" placeholder="seuemail@gmail.com" />
