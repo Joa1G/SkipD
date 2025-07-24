@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-dialog',
@@ -15,12 +16,14 @@ export class DialogComponent {
   @Input() confirmText: string = 'OK';
   @Input() isVisible: boolean = false;
   @Output() isVisibleChange = new EventEmitter<boolean>();
-  @Input() route: string = '';
+  @Input() route: any[] = [''];
   @Input() dialogType: 'info' | 'warning' | 'confirmation' = 'info';
   @Input() showCancelButton: boolean = true;
   @Output() confirmAction = new EventEmitter<boolean>();
 
   isExcluirDialog: boolean = false;
+  router = inject(Router);
+  private location = inject(Location);
 
   ngOnInit() {
     this.setExcluirDialog();
@@ -39,6 +42,20 @@ export class DialogComponent {
   closeDialog() {
     this.isVisibleChange.emit(false);
   }
+
+  useRouter(){
+    if(this.route[0] === ''){
+      this.location.back();
+    }else{
+      this.router.navigate(this.route);
+    }
+  }
+
+  emitConfirmAction() {
+    this.confirmAction.emit(true);
+    this.location.back();
+  }
+
 
   dialogTypeClass() {
     switch (this.dialogType) {

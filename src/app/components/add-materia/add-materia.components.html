@@ -1,8 +1,8 @@
 <app-header></app-header>
 <div class="add-materia-container">
   <div class="form-container">
-    <div class="title-container"><h1>Adicionar Matéria</h1></div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="title-container"><h1>{{ isEditMode ? 'Editar Matéria' : 'Adicionar Matéria' }}</h1></div>
+    <form [formGroup]="form" (ngSubmit)="isEditMode ? onSubmitEdit() : onSubmit()">
         <div class="form-group" [ngClass]="invalidFieldClass('nome')">
             <label for="materia-nome">Matéria *</label>
             <input type="text" id="materia-nome" name="materia-nome" placeholder="Nome da Matéria" formControlName="nome" required>
@@ -65,7 +65,7 @@
 
         <div class="form-buttons">
             <button type="button" class="btn btn-cancelar" (click)="onCancel()">Cancelar</button>
-            <button type="submit" class="btn btn-salvar">Salvar</button>
+            <button type="submit" class="btn btn-salvar">{{ form.value.id ? 'Salvar' : 'Adicionar' }}</button>
         </div>
     </form>
   </div>
@@ -74,17 +74,15 @@
   [title]="'Tem certeza que deseja cancelar?'"
   [isVisible]="showCancelDialog"
   (isVisibleChange)="showCancelDialog = $event"
-  [route]="'/home'"
   [dialogType]="'warning'"
   [message]="'Todas as alterações não salvas serão perdidas.'"
 ></app-dialog>
 
 <app-dialog
-  [title]="'Matéria adicionada com sucesso!'"
+  [title]="`Matéria ${isEditMode ? 'editada' : 'adicionada'} com sucesso!`"
   [isVisible]="showSubmitDialog"
   (isVisibleChange)="showSubmitDialog = $event"
-  [route]="'/home'"
   [dialogType]="'confirmation'"
-  [message]="'A matéria foi adicionada com sucesso.'"
+  [message]="`A matéria foi ${isEditMode ? 'editada' : 'adicionada'} com sucesso.`"
   [showCancelButton]="false"
 ></app-dialog>

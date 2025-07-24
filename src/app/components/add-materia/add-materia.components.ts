@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,11 +8,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { FormBuilder, FormGroup, FormArray, FormControl, Validators, ReactiveFormsModule, FormsModule, Form } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { AbstractInstituicaoService } from '../services/instituicao/abstract-instituicao.service';
 import { AbstractMateriaService } from '../services/materia/abstract-materia.service';
 import { Materia } from '../models/materia/materia.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -43,10 +43,12 @@ export class AddMateriaComponents{
   instituicoes = this.serviceInstituicao.instituicoes;
   private serviceMateria = inject(AbstractMateriaService);
   materias = this.serviceMateria.materias;
-  private router = inject(Router)
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
   submitted = false;
   showCancelDialog = false;
   showSubmitDialog = false;
+  isEditMode = false;
 
   form = new FormGroup({
     id: new FormControl<number | null>(null),
@@ -78,10 +80,27 @@ export class AddMateriaComponents{
     { id: 5, value: 'quinta', viewValue: 'Qui', formControlName: 'hor_qui' },
     { id: 6, value: 'sexta', viewValue: 'Sex', formControlName: 'hor_sex' },
     { id: 7, value: 'sabado', viewValue: 'Sab', formControlName: 'hor_sab' },
-];
+  ];
+
+   ngOnInit(): void {
+    const idParam = this.route.snapshot.paramMap.get('id')
+    console.log(idParam)
+    const id = Number(idParam)
+
+    if(idParam){
+      this.serviceMateria.getMateriaById(id).subscribe(result => {
+        if (result.success && result.data) {
+          this.form.patchValue(result.data);
+          this.isEditMode = true;
+        }else {
+          this.router.navigate(['/home']);
+        }
+      })
+      }
+    }
 
   adicionarMateria() {
-    const formValue = this.form.value; // Pega todos os valores de uma vez
+    const formValue = this.form.value;
 
     const nome: string = formValue.nome!;
     const cargaHorariaTotal: number = Number(formValue.cargaHorariaTotal!);
@@ -111,6 +130,39 @@ export class AddMateriaComponents{
     return materia;
   }
 
+  atualizarMateria() {
+    const formValue = this.form.value;
+
+    const id: number = formValue.id!;
+    const nome: string = formValue.nome!;
+    const cargaHorariaTotal: number = Number(formValue.cargaHorariaTotal!);
+    const faltas: number = Number(formValue.faltas!);
+    const idInstituicao: number = Number(formValue.idInstituicao!);
+    const status: 'Aprovado' | 'Risco' | 'Reprovado' = 'Aprovado';
+    const aulasSemana = () => {
+      return {
+        domingo: formValue.is_dom_checked ? Number(formValue.hor_dom!) : 0,
+        segunda: formValue.is_seg_checked ? Number(formValue.hor_seg!) : 0,
+        terca: formValue.is_ter_checked ? Number(formValue.hor_ter!) : 0,
+        quarta: formValue.is_qua_checked ? Number(formValue.hor_qua!) : 0,
+        quinta: formValue.is_qui_checked ? Number(formValue.hor_qui!) : 0,
+        sexta: formValue.is_sex_checked ? Number(formValue.hor_sex!) : 0,
+        sabado: formValue.is_sab_checked ? Number(formValue.hor_sab!) : 0
+      };
+    };
+
+    const materia: Materia = {
+      id: id,
+      nome: nome,
+      cargaHorariaTotal: cargaHorariaTotal,
+      faltas: faltas,
+      idInstituicao: Number(idInstituicao),
+      aulasDaSemana: aulasSemana(),
+      status: status
+    };
+    return materia;
+  }
+
   async onSubmit(): Promise<void> {
       this.submitted = true;
       if (this.form.invalid) {
@@ -125,8 +177,25 @@ export class AddMateriaComponents{
       }else{
         console.error('Erro ao adicionar matéria:', result.data);
       }
+  }
 
-
+  async onSubmitEdit(): Promise<void> {
+      this.submitted = true;
+      if (this.form.invalid) {
+        return;
+      }
+      const materia = this.atualizarMateria();
+      console.log('Editando matéria:', materia);
+      const id = this.form.get('id')?.value;
+      if (id) {
+        const result = await firstValueFrom(this.serviceMateria.updateMateria(materia));
+        const resultSetStatus = await firstValueFrom(this.serviceMateria.updateStatus(id));
+        if(result.success && resultSetStatus.success){
+          this.showSubmitDialog = true;
+        }else{
+          console.error('Erro ao editar matéria:', result.data);
+        }
+      }
   }
 
   onCancel(): void{
