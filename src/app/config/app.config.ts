@@ -1,7 +1,7 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { instituicaoProvider } from '../components/services/instituicao/instituicao.provider.service';
-import { materiaProvider } from '../components/services/materia/materia.provider.service';
+import { instituicaoProvider } from '../services/instituicao/instituicao.provider.service';
+import { materiaProvider } from '../services/materia/materia.provider.service';
 import { routes } from '../routes/app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 

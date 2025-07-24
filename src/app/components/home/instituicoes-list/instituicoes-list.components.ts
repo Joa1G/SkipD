@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InstituicoesCardComponents } from '../instituicoes-card/instituicoes-card.components';
-import { AbstractInstituicaoService } from '../../services/instituicao/abstract-instituicao.service';
-import { AbstractMateriaService } from '../../services/materia/abstract-materia.service';
+import { AbstractInstituicaoService } from '../../../services/instituicao/abstract-instituicao.service';
+import { AbstractMateriaService } from '../../../services/materia/abstract-materia.service';
 import { firstValueFrom } from 'rxjs';
 
 @Component({

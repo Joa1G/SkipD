@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { MockedUsuarioService } from '../services/usuario/mocked-usuario.service'; 
-import { OperationResult } from '../models/operation-result.model';
+import { MockedUsuarioService } from '../../services/usuario/mocked-usuario.service';
+import { OperationResult } from '../../models/operation-result.model';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,7 @@ export class LoginComponents {
   constructor(
     private fb: FormBuilder,
     private usuarioService: MockedUsuarioService,
-    private router: Router 
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -35,7 +35,7 @@ export class LoginComponents {
       this.usuarioService.login(email, password).subscribe((result: OperationResult) => {
         if (result.success) {
           console.log('Usuário logado com sucesso:', result.data);
-          this.router.navigate(['/home']); 
+          this.router.navigate(['/home']);
         } else {
           this.errorMessage = result.message || 'Erro ao fazer login';
         }

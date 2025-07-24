@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { MockedUsuarioService } from '../services/usuario/mocked-usuario.service';
+import { MockedUsuarioService } from '../../services/usuario/mocked-usuario.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -10,7 +10,7 @@ import { MockedUsuarioService } from '../services/usuario/mocked-usuario.service
   imports: [ CommonModule, ReactiveFormsModule, RouterModule ],
   templateUrl: './cadastro.components.html',
   styleUrls: ['./cadastro.components.scss'],
-  providers: [MockedUsuarioService] 
+  providers: [MockedUsuarioService]
 })
 export class CadastroComponents {
   cadastroForm: FormGroup;
@@ -18,8 +18,8 @@ export class CadastroComponents {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router, 
-    private usuarioService: MockedUsuarioService 
+    private router: Router,
+    private usuarioService: MockedUsuarioService
   ) {
     this.cadastroForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
