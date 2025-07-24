@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponents } from '../components/login/login.components';
 import { HomeComponent } from '../components/home/home.component';
 import { AddMateriaComponents } from '../components/add-materia/add-materia.components';
+import { DetalhesMateriaComponent } from '../components/detalhes-materia/detalhes-materia.component';
 
 export const routes: Routes = [
     {
