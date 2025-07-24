@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponents } from '../components/login/login.components';
+import { CadastroComponents } from '../components/cadastro/cadastro.components';
 import { HomeComponent } from '../components/home/home.component';
 import { AddMateriaComponents } from '../components/add-materia/add-materia.components';
 import { DetalhesMateriaComponent } from '../components/detalhes-materia/detalhes-materia.component';
@@ -7,11 +8,11 @@ import { DetalhesMateriaComponent } from '../components/detalhes-materia/detalhe
 export const routes: Routes = [
     {
         path: 'login',
-        loadComponent: () => import('../components/login/login.components').then((m) => m.LoginComponents)
+        component: LoginComponents
     },
     {
         path: 'cadastro',
-        loadComponent: () => import('../components/cadastro/cadastro.components').then((m) => m.CadastroComponents)
+        component: CadastroComponents
     },
     {
         path: 'home',
@@ -19,6 +20,14 @@ export const routes: Routes = [
     },
     {
         path: 'add-materia',
+        component: AddMateriaComponents
+    },
+    {
+        path: 'detalhes-materia/:id',
+        component: DetalhesMateriaComponent
+    },
+    {
+        path: 'edit-materia/:id',
         component: AddMateriaComponents
     },
     {

@@ -1,6 +1,5 @@
 :host {
   display: block;
-  height: 100vh;
   margin: 0;
   padding: 0;
   background-color: #1c1c2b;
@@ -17,7 +16,7 @@
 
 /* Container central */
 .cadastro-container {
-  height: calc(100vh - 48px);
+  height: calc(90vh - 48px);
   display: flex;
   flex-direction: column;
   justify-content: center;
