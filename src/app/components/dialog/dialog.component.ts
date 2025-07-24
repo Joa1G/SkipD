@@ -15,7 +15,7 @@ export class DialogComponent {
   @Input() confirmText: string = 'OK';
   @Input() isVisible: boolean = false;
   @Output() isVisibleChange = new EventEmitter<boolean>();
-  @Input() route: string = '';
+  @Input() route: (string | number)[] = [];
   @Input() dialogType: 'info' | 'warning' | 'confirmation' = 'info';
   @Input() showCancelButton: boolean = true;
 

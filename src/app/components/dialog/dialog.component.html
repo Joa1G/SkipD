@@ -28,7 +28,7 @@
       @if(showCancelButton){
         <button class="dialog-btn dialog-btn--cancel" (click)="closeDialog()">Cancelar</button>
       }
-      <button class="dialog-btn dialog-btn--confirm" routerLink="{{ route }}" (click)="closeDialog()">{{ confirmText }}</button>
+      <button class="dialog-btn dialog-btn--confirm" [routerLink]="route" (click)="closeDialog()">{{ confirmText }}</button>
     </div>
 
   </div>

@@ -1,9 +1,8 @@
 <app-header></app-header>
-  <div class="add-materia-container">
-    <div class="title-container"><h1>Adicionar Matéria</h1></div>
+<div class="add-materia-container">
   <div class="form-container">
+    <div class="title-container"><h1>Adicionar Matéria</h1></div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-
         <div class="form-group" [ngClass]="invalidFieldClass('nome')">
             <label for="materia-nome">Matéria *</label>
             <input type="text" id="materia-nome" name="materia-nome" placeholder="Nome da Matéria" formControlName="nome" required>

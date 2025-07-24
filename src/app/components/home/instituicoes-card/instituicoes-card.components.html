@@ -1,4 +1,4 @@
-<mat-card class="materia-card" [ngClass]="getStatusClass()">
+<mat-card class="materia-card" [ngClass]="getStatusClass()" (click)="navigateToDetails(materia!.id)">
   <mat-card-header>
     <mat-card-title>{{ materia!.nome }}</mat-card-title>
   </mat-card-header>
@@ -11,6 +11,6 @@
     <p class="status">Status: {{ materia!.status }}</p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button [disabled]="materia?.faltas === faltasPermitidas()" (click)="adicionarFalta(1)">+ Faltar</button>
+    <button mat-raised-button [disabled]="materia?.faltas === faltasPermitidas()" (click)="adicionarFalta(1); $event.stopPropagation()">+ Faltar</button>
   </mat-card-actions>
 </mat-card>
