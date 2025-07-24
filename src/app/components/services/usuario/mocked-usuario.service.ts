@@ -10,14 +10,14 @@ export class MockedUsuarioService extends AbstractUsuarioService {
   private _usuarios: WritableSignal<Usuario[]> = signal<Usuario[]>([
     {
       id: 1,
-      nome: 'Maria Silva',
-      email: 'maria@email.com',
+      nome: 'Thayná Beatriz',
+      email: 'thayna.vidal@lgepartner.com',
       senha: '123456'
     },
     {
       id: 2,
-      nome: 'João Souza',
-      email: 'joao@email.com',
+      nome: 'João Gomes',
+      email: 'joao.gomes@lgepartner.com',
       senha: 'senha123'
     }
   ]);
