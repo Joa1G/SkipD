@@ -10,7 +10,7 @@ import { MockedUsuarioService } from '../services/usuario/mocked-usuario.service
   imports: [ CommonModule, ReactiveFormsModule, RouterModule ],
   templateUrl: './cadastro.components.html',
   styleUrls: ['./cadastro.components.scss'],
-  providers: [MockedUsuarioService] // importante
+  providers: [MockedUsuarioService] 
 })
 export class CadastroComponents {
   cadastroForm: FormGroup;
@@ -18,8 +18,8 @@ export class CadastroComponents {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router, // ✅ injetado corretamente
-    private usuarioService: MockedUsuarioService // ✅ para chamar o método de cadastro
+    private router: Router, 
+    private usuarioService: MockedUsuarioService 
   ) {
     this.cadastroForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],

@@ -20,7 +20,7 @@ export class LoginComponents {
   constructor(
     private fb: FormBuilder,
     private usuarioService: MockedUsuarioService,
-    private router: Router // ✅ injetando o Router
+    private router: Router 
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -35,7 +35,7 @@ export class LoginComponents {
       this.usuarioService.login(email, password).subscribe((result: OperationResult) => {
         if (result.success) {
           console.log('Usuário logado com sucesso:', result.data);
-          this.router.navigate(['/pagina_inicial']); // ✅ redirecionamento após login
+          this.router.navigate(['/pagina_inicial']); 
         } else {
           this.errorMessage = result.message || 'Erro ao fazer login';
         }
