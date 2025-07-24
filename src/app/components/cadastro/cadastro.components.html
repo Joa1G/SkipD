@@ -2,26 +2,29 @@
 
 <!-- Conteúdo central -->
 <div class="cadastro-container">
-    <h1>SkipD</h1>
-    <h2>Cadastre-se aqui !</h2>
-    <p class="subtitulo">Comece a gerenciar a frequência das suas aulas com eficiência.</p>
+  <h1>SkipD</h1>
+  <h2>Cadastre-se aqui!</h2>
+  <p class="subtitulo">Comece a gerenciar a frequência das suas aulas com eficiência.</p>
+
   <div class="cadastro-card">
-
     <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
-
       <div class="col">
         <label for="nome">Nome</label>
         <input type="text" id="nome" placeholder="Nome completo" formControlName="nome" />
+        <div *ngIf="isInvalid('nome')" class="error">Nome é obrigatório (mín. 3 caracteres)</div>
       </div>
-      
+
       <div class="col">
         <label for="email">Email</label>
         <input type="email" id="email" placeholder="seuemail@gmail.com" formControlName="email" />
+        <div *ngIf="isInvalid('email')" class="error">Email inválido</div>
       </div>
+
       <div class="row">
         <div class="col">
           <label for="instituicao_padrao">Instituição Padrão</label>
           <input type="text" id="instituicao_padrao" placeholder="Nome" formControlName="instituicao_padrao" />
+          <div *ngIf="isInvalid('instituicao_padrao')" class="error">Campo obrigatório</div>
         </div>
 
         <div class="col">
@@ -35,18 +38,31 @@
             <option [value]="25">25%</option>
             <option [value]="30">30%</option>
           </select>
+          <div *ngIf="isInvalid('percent_faltas')" class="error">Selecione um valor</div>
         </div>
       </div>
 
       <div class="col">
         <label for="password">Senha</label>
         <input type="password" id="password" placeholder="********" formControlName="password" />
+        <div *ngIf="isInvalid('password')" class="error">Senha obrigatória</div>
       </div>
 
       <div class="col">
         <label for="confirm_password">Confirme a senha</label>
         <input type="password" id="confirm_password" placeholder="********" formControlName="confirm_password" />
+        <div *ngIf="isInvalid('confirm_password')" class="error">Confirme a senha</div>
       </div>
+
+      <div *ngIf="cadastroForm.errors?.['passwordsMismatch'] && cadastroForm.touched" class="error">
+        As senhas não coincidem
+      </div>
+
+      <!-- 🔥 Mensagem global de erro -->
+      <div *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+      </div>
+
       <button type="submit" [disabled]="cadastroForm.invalid">Criar conta</button>
     </form>
 
@@ -54,5 +70,4 @@
   </div>
 </div>
 
-<!-- Faixa inferior roxa -->
 <div class="bottom-border"></div>
