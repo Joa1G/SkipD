@@ -177,11 +177,13 @@ input::placeholder {
 }
 
 .btn-cancelar {
-  background-color: $color-border;
+  background-color: $color-bg-dark;
+  color: white;
+  border: 1px solid $color-border;
 }
 .btn-cancelar:hover {
-  background-color: rgba(#6B2CF9, 0.2);
-  color: rgba(#EF4444, 0.8);
+  border: 1px solid $color-primary;
+  background-color: rgba($color-primary, 0.1);
 }
 
 .btn-salvar {

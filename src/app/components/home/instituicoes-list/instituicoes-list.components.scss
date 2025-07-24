@@ -34,7 +34,7 @@ $radius-sm: 6px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, auto));
   margin-bottom: 10px;
-  border-bottom: 1px solid $color-border;
+   border-bottom: 1px solid $color-border;
   place-items: center;
   padding-bottom: 20px;
 }
