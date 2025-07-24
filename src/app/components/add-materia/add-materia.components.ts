@@ -82,6 +82,8 @@ export class AddMateriaComponents{
     { id: 7, value: 'sabado', viewValue: 'Sab', formControlName: 'hor_sab' },
   ];
 
+  aulasSemanaData: Record<string, number> = {};
+
    ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id')
     console.log(idParam)
@@ -91,13 +93,33 @@ export class AddMateriaComponents{
       this.serviceMateria.getMateriaById(id).subscribe(result => {
         if (result.success && result.data) {
           this.form.patchValue(result.data);
+
+          this.aulasSemanaData = result.data.aulasDaSemana;
+          this.applyAulasSemanaToForm(this.aulasSemanaData);
+
           this.isEditMode = true;
         }else {
           this.router.navigate(['/home']);
         }
       })
       }
-    }
+  }
+
+  private applyAulasSemanaToForm(aulas: Record<string, number>): void {
+    // monta um objeto { 'is_dom_checked': true, 'hor_dom': 2, … }
+    const patch = Object.entries(aulas).reduce((acc, [dia, horas]) => {
+      // supondo que o sufixo seja sempre os 3 primeiros caracteres
+      const suf = dia.slice(0, 3);
+      return {
+        ...acc,
+        [`is_${suf}_checked`]: horas > 0,
+        [`hor_${suf}`]: horas > 0 ? horas : 1
+      };
+    }, {} as Record<string, any>);
+
+    // aplica tudo de uma vez
+    this.form.patchValue(patch);
+  }
 
   adicionarMateria() {
     const formValue = this.form.value;
