@@ -1,0 +1,30 @@
+<!-- Faixa roxa superior -->
+<div class="top-border"></div>
+
+<!-- Conteúdo central -->
+<div class="login-container">
+  <h1 class="title">SkipD</h1>
+  <p class="subtitle">Bem-vindo(a) de volta!</p>
+
+  <div class="login-card">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" placeholder="seuemail@gmail.com" />
+
+      <label for="password">Senha</label>
+      <input id="password" formControlName="password" type="password" placeholder="********" />
+
+      <a class="forgot" routerLink="/esqueci-senha">Esqueci minha senha</a>
+
+      <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
+    </form>
+
+    <p class="register-link">
+      Ainda não tem uma conta?<br />
+      <a routerLink="/cadastro">Cadastre-se aqui.</a>
+    </p>
+  </div>
+</div>
+
+<!-- Faixa roxa inferior -->
+<div class="bottom-border"></div>
