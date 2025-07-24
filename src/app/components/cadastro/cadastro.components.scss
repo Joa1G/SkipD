@@ -1,3 +1,6 @@
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+
 :host {
   display: block;
   margin: 0;
@@ -8,10 +11,13 @@
 }
 
 /* Faixas roxas */
-.top-border,
-.bottom-border {
-  height: 24px;
-  background: linear-gradient(to right, #9b5de5, #7a29cc, #9b5de5);
+.top-border{
+  height: 32px;
+  background: linear-gradient(
+    90deg,
+    $color-gradient-start,
+    $color-gradient-end
+  );
 }
 
 /* Container central */
