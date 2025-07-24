@@ -1,44 +1,65 @@
 @use "sass:color";
 
-$green-color: #22c55e;
-$yellow-color: #eab308;
-$red-color: #dc2626;
-$primary-color: #6b2cf9;
-$card-color: #374151;
-$font-color: #e5e7eb;
+$font-main: "Roboto", sans-serif;
+
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #fff;
+$color-muted: #a0a0b0;
+
+$color-success: #22c55e;
+$color-warning: #eab308;
+$color-danger: #dc2626;
+
+$transition-speed: 0.3s;
+$transition-ease: ease-in-out;
+$radius: 12px;
+$radius-sm: 6px;
 
 .materia-card {
   width: 320px;
-  margin: 16px;
-  background-color: rgba($card-color, 0.3);
-  color: $font-color;
-  border-radius: 20px;
-  border: 5px solid $card-color;
+  margin: 15px 15px ;
+  background-color: $color-bg-light;
+  color: $color-text;
+  border-radius: $radius;
+  border: 1px solid $color-border;
+  font-family: $font-main;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all $transition-speed $transition-ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: $color-primary;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+  }
 
   mat-card-title {
     font-size: 1.1rem;
     font-weight: 700;
-    font-family: "Roboto", sans-serif;
   }
 
   mat-card-content {
     p {
       margin-top: 16px;
       margin-bottom: 8px;
-      font-family: "Roboto", sans-serif;
     }
-    .status {
-      font-weight: 500;
-      font-size: 0.875rem;
-    }
+    .status,
     .faltas-title {
       font-weight: 500;
       font-size: 0.875rem;
+      color: $color-text;
     }
+
     mat-progress-bar {
       margin-top: 8px;
-      border-radius: 10px;
-      background-color: $card-color;
+      border-radius: $radius-sm;
+      height: 8px;
+      background-color: $color-border;
     }
   }
 
@@ -48,41 +69,47 @@ $font-color: #e5e7eb;
     padding: 0 16px 16px;
 
     button {
-      width: 84px;
-      height: 30px;
-      border-radius: 25px;
-      background-color: $primary-color;
+      flex-grow: 0;
+      width: auto;
+      padding: 6px 20px;
+      border: none;
+      border-radius: $radius;
+      background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
       color: white;
-      font-family: "Roboto", sans-serif;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 0.875rem;
-    }
-
-    button:hover {
-      background-color: color.adjust($primary-color, $lightness: -10%);
-      color: color.adjust(white, $lightness: -10%);
       cursor: pointer;
-    }
+      transition: transform $transition-speed $transition-ease, box-shadow $transition-speed $transition-ease;
 
-    button:disabled {
-      background-color: #9ca3af;
-      color: #6b7280;
-      cursor: not-allowed;
-    }
-    button:disabled:hover {
-    background-color: #9ca3af;
-    color: #6b7280;
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      &:disabled {
+        background: $color-border;
+        color: $color-muted;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
     }
   }
 
+  // Modificadores de Status
   // Status Aprovado
   &.status-aprovado {
     mat-card-title,
     .status,
     mat-progress-bar {
-      color: $green-color;
+      color: $color-success;
     }
-    --mdc-linear-progress-active-indicator-color: $green-color;
+    mat-card-content {
+      .status{
+        color: $color-success;
+      }
+    }
+
   }
 
   // Status Risco
@@ -90,9 +117,13 @@ $font-color: #e5e7eb;
     mat-card-title,
     .status,
     mat-progress-bar {
-      color: $yellow-color;
+      color: $color-warning;
     }
-    --mdc-linear-progress-active-indicator-color: $yellow-color;
+    mat-card-content {
+      .status{
+        color: $color-warning;
+      }
+    }
   }
 
   // Status Reprovado
@@ -100,16 +131,12 @@ $font-color: #e5e7eb;
     mat-card-title,
     .status,
     mat-progress-bar {
-      color: $red-color;
+      color: $color-danger;
     }
-    --mdc-linear-progress-active-indicator-color: $red-color;
+    mat-card-content {
+      .status{
+        color: $color-danger;
+      }
+    }
   }
-
-  --mdc-linear-progress-track-color: $card-color;
-}
-
-.materia-card:hover {
-  background-color: rgba($card-color, 0.7);
-  border: 5px solid color.adjust($card-color, $lightness: 10%);
-  cursor: pointer;
 }

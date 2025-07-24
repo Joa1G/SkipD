@@ -46,4 +46,8 @@ export class MateriaService extends AbstractMateriaService {
   override updateStatus(id: number): Observable<OperationResult> {
     return of();
   }
+
+  override getDiasHorasComAula(id: number): Observable<OperationResult> {
+    return of();
+  }
 }

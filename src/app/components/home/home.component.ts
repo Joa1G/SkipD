@@ -8,7 +8,13 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home.component',
-  imports: [HeaderComponent, CommonModule, MatCardModule, MatIcon, InstituicoesListComponents, RouterModule],
+  imports: [HeaderComponent,
+    CommonModule,
+    MatCardModule,
+    MatIcon,
+    InstituicoesListComponents,
+    RouterModule,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

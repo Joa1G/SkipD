@@ -1,4 +1,5 @@
-$primary-color: #6B2CF9;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
 $font-color: #ffffff;
 $hover-color: #C0A6FA;
 
@@ -7,7 +8,11 @@ a {
 }
 
 ::ng-deep mat-toolbar.header-component {
-  background-color: $primary-color;
+  background: linear-gradient(
+    90deg,
+    $color-gradient-start,
+    $color-gradient-end
+  );
   height: 64px;
   display: flex;
   align-items: center;

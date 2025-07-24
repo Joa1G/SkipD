@@ -1,0 +1,115 @@
+@use "sass:color";
+
+$green-color: #22c55e;
+$yellow-color: #eab308;
+$red-color: #dc2626;
+$primary-color: #6b2cf9;
+$card-color: #374151;
+$font-color: #e5e7eb;
+
+.materia-card {
+  width: 320px;
+  margin: 16px;
+  background-color: rgba($card-color, 0.3);
+  color: $font-color;
+  border-radius: 20px;
+  border: 5px solid $card-color;
+
+  mat-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: "Roboto", sans-serif;
+  }
+
+  mat-card-content {
+    p {
+      margin-top: 16px;
+      margin-bottom: 8px;
+      font-family: "Roboto", sans-serif;
+    }
+    .status {
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+    .faltas-title {
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+    mat-progress-bar {
+      margin-top: 8px;
+      border-radius: 10px;
+      background-color: $card-color;
+    }
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 16px 16px;
+
+    button {
+      width: 84px;
+      height: 30px;
+      border-radius: 25px;
+      background-color: $primary-color;
+      color: white;
+      font-family: "Roboto", sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    button:hover {
+      background-color: color.adjust($primary-color, $lightness: -10%);
+      color: color.adjust(white, $lightness: -10%);
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: #9ca3af;
+      color: #6b7280;
+      cursor: not-allowed;
+    }
+    button:disabled:hover {
+    background-color: #9ca3af;
+    color: #6b7280;
+    }
+  }
+
+  // Status Aprovado
+  &.status-aprovado {
+    mat-card-title,
+    .status,
+    mat-progress-bar {
+      color: $green-color;
+    }
+    --mdc-linear-progress-active-indicator-color: $green-color;
+  }
+
+  // Status Risco
+  &.status-risco {
+    mat-card-title,
+    .status,
+    mat-progress-bar {
+      color: $yellow-color;
+    }
+    --mdc-linear-progress-active-indicator-color: $yellow-color;
+  }
+
+  // Status Reprovado
+  &.status-reprovado {
+    mat-card-title,
+    .status,
+    mat-progress-bar {
+      color: $red-color;
+    }
+    --mdc-linear-progress-active-indicator-color: $red-color;
+  }
+
+  --mdc-linear-progress-track-color: $card-color;
+}
+
+.materia-card:hover {
+  background-color: rgba($card-color, 0.7);
+  border: 5px solid color.adjust($card-color, $lightness: 10%);
+  cursor: pointer;
+}
