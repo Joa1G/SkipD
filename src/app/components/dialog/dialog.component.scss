@@ -214,3 +214,17 @@ $radius-sm: 8px; // Raio menor para botões de diálogo
     background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
   }
 }
+
+.dialog-box--logo {
+  .dialog-icon {
+    font-size: 3rem;
+    background-color: transparent;
+    font-family: "Jaro", sans-serif;
+  }
+  .dialog-btn--confirm {
+    background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
+  }
+  h2 {
+    color: $color-success;
+  }
+}

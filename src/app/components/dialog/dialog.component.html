@@ -2,20 +2,20 @@
 
   <div class="dialog-box" [ngClass]="dialogTypeClass()" role="dialog" aria-modal="true" aria-labelledby="dialog-title-1">
 
-    @if(dialogType !== 'confirmation'){
+    @if(dialogType !== 'confirmation' && dialogType !== 'logo') {
       <button class="dialog-close-btn" (click)="closeDialog()" aria-label="Fechar">&times;</button>
     }
-
 
     <div class="dialog-icon">
       @if(dialogType === 'info'){
         <mat-icon>info</mat-icon>
-      }
-      @if(dialogType === 'warning'){
+      }@else if(dialogType === 'warning'){
         <mat-icon>warning</mat-icon>
       }
-      @if(dialogType === 'confirmation'){
+      @else if(dialogType === 'confirmation'){
         <mat-icon>check_circle</mat-icon>
+      }@else if(dialogType === 'logo'){
+          SkipD
       }
     </div>
 

@@ -17,7 +17,7 @@ export class DialogComponent {
   @Input() isVisible: boolean = false;
   @Output() isVisibleChange = new EventEmitter<boolean>();
   @Input() route: any[] = [''];
-  @Input() dialogType: 'info' | 'warning' | 'confirmation' = 'info';
+  @Input() dialogType: 'info' | 'warning' | 'confirmation' | 'logo' = 'info';
   @Input() showCancelButton: boolean = true;
   @Output() confirmAction = new EventEmitter<boolean>();
 
@@ -65,6 +65,8 @@ export class DialogComponent {
         return 'dialog-box--warning';
       case 'confirmation':
         return 'dialog-box--success';
+      case 'logo':
+        return 'dialog-box--logo';
     }
   }
 }

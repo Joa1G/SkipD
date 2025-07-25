@@ -6,11 +6,12 @@ import { MockedUsuarioService } from '../../services/usuario/mocked-usuario.serv
 import { OperationResult } from '../../models/operation-result.model';
 import { AbstractUsuarioService } from '../../services/usuario/abstract-usuario.service';
 import { MatIcon } from '@angular/material/icon';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, FormsModule, MatIcon],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, FormsModule, MatIcon, DialogComponent],
   templateUrl: './login.components.html',
   styleUrl: './login.components.scss',
   providers: [MockedUsuarioService]
@@ -23,6 +24,7 @@ export class LoginComponents {
   submitted = false;
   incorretLogin = false;
   errorLogin = false;
+  showDialog = false;
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -50,7 +52,8 @@ export class LoginComponents {
     this.usuarioService.login(email, password).subscribe({
       next: (result: OperationResult) => {
         if (result.success) {
-          this.router.navigate(['/home']);
+          this.showDialog = true;
+          console.log('Login successful:', result.message);
         } else {
           this.incorretLogin = true;
           this.submitted = false;
