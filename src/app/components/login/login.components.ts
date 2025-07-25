@@ -11,7 +11,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, FormsModule, MatIcon, DialogComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, FormsModule, MatIcon],
   templateUrl: './login.components.html',
   styleUrl: './login.components.scss',
 })
