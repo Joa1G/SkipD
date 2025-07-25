@@ -51,7 +51,7 @@ export class LoginComponents {
     this.usuarioService.login(email, password).subscribe({
       next: (result: OperationResult) => {
         if (result.success) {
-          this.showDialog = true;
+          this.router.navigate(['/home'])
           console.log('Login successful:', result.message);
         } else {
           this.incorretLogin = true;

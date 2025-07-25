@@ -12,6 +12,13 @@ $transition-ease: ease-in-out;
 $radius: 12px;
 $radius-sm: 6px;
 
+.add-materia-container{
+  height: calc(100vh - 96px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 .title-container {
   text-align: center;
