@@ -14,7 +14,6 @@ import { DialogComponent } from '../dialog/dialog.component';
   imports: [CommonModule, ReactiveFormsModule, RouterModule, FormsModule, MatIcon, DialogComponent],
   templateUrl: './login.components.html',
   styleUrl: './login.components.scss',
-  providers: [MockedUsuarioService]
 })
 export class LoginComponents {
   private usuarioService = inject(AbstractUsuarioService);

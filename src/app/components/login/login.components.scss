@@ -11,6 +11,7 @@ $color-bg-dark: #1e1e2f;
 $color-bg-light: #2a2a41;
 $color-border: #383854;
 $color-text: #e0e0e0;
+$color-title-accent: #c0a6fa;
 $color-muted: #a0a0b0;
 $transition-speed: 0.3s;
 $transition-ease: ease-in-out;
@@ -71,7 +72,7 @@ $radius-sm: 6px;
 
 .subtitle {
   font-size: 1.25rem;
-  color: $color-muted;
+  color: $color-title-accent;
   margin-bottom: 30px;
   font-weight: 400;
 }
