@@ -4,6 +4,7 @@ import { instituicaoProvider } from '../services/instituicao/instituicao.provide
 import { materiaProvider } from '../services/materia/materia.provider.service';
 import { routes } from '../routes/app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { usuarioProvider } from '../services/usuario/usuario.provider.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,6 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     instituicaoProvider,
-    materiaProvider
+    materiaProvider,
+    usuarioProvider
   ]
 };

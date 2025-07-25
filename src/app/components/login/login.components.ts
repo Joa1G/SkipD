@@ -1,47 +1,79 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, Validators, FormsModule, FormControl } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MockedUsuarioService } from '../../services/usuario/mocked-usuario.service';
 import { OperationResult } from '../../models/operation-result.model';
+import { AbstractUsuarioService } from '../../services/usuario/abstract-usuario.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, FormsModule, MatIcon],
   templateUrl: './login.components.html',
   styleUrl: './login.components.scss',
   providers: [MockedUsuarioService]
 })
 export class LoginComponents {
-  loginForm: FormGroup;
-  errorMessage: string | null = null;
+  private usuarioService = inject(AbstractUsuarioService);
+  private router = inject(Router);
 
-  constructor(
-    private fb: FormBuilder,
-    private usuarioService: MockedUsuarioService,
-    private router: Router
-  ) {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
+  showPassword = false;
+  submitted = false;
+  incorretLogin = false;
+  errorLogin = false;
+
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)])
+  })
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   onSubmit() {
-    if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
+    this.submitted = true;
+    this.incorretLogin = false;
+    this.errorLogin = false;
 
-      this.usuarioService.login(email, password).subscribe((result: OperationResult) => {
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    const formValue = this.loginForm.value;
+
+    const email = formValue.email!;
+    const password = formValue.password!;
+
+    this.usuarioService.login(email, password).subscribe({
+      next: (result: OperationResult) => {
         if (result.success) {
-          console.log('Usuário logado com sucesso:', result.data);
           this.router.navigate(['/home']);
         } else {
-          this.errorMessage = result.message || 'Erro ao fazer login';
+          this.incorretLogin = true;
+          this.submitted = false;
+          console.error('Login failed:', result.message, this.incorretLogin);
         }
-      });
-    } else {
-      this.errorMessage = 'Preencha todos os campos corretamente';
+      },
+      error: (error) => {
+        this.errorLogin = true;
+        this.submitted = false;
+        console.error('Login error:', error, this.errorLogin);
+      }
+    });
+  }
+
+  invalidFieldClass(fieldName: string) {
+    const field = this.loginForm.get(fieldName);
+    if ((field!.invalid && this.submitted) || this.incorretLogin) {
+      return `is-invalid-${fieldName}`;
+    }else if (field!.valid && this.submitted) {
+      return `is-valid-${fieldName}`;
+    }else {
+      return '';
     }
   }
+
 }

@@ -24,7 +24,6 @@ h1 {
   font-weight: 700;
   color: $color-title-accent;
   margin: 0;
-  margin-left: 170px;
 }
 
 .btn {
@@ -50,8 +49,9 @@ h1 {
 .button-container {
   display: flex;
   justify-content: flex-end;
-  width: 100%;
-  padding: 20px 20px 0; // Adicionado padding superior
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px 0 0 0; // Adicionado padding superior
   gap: 15px
 }
 
