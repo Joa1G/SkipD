@@ -7,8 +7,8 @@ export abstract class AbstractInstituicaoService {
   abstract instituicoes: Signal<Instituicao[]>;
   abstract getInstituicoes(): Observable<OperationResult>;
   abstract getInstituicaoById(id: number): Observable<OperationResult>;
-  abstract addInstituicao(instituicao: Instituicao): Observable<OperationResult>;
+  abstract addInstituicao(instituicao: Omit<Instituicao, 'id'>): Observable<OperationResult>;
   abstract updateInstituicao(instituicao: Instituicao): Observable<OperationResult>;
   abstract deleteInstituicao(id: number): Observable<OperationResult>;
-  abstract getInstituicaoByUsuarioId(id: number): Observable<OperationResult>;
+  abstract getInstituicaoByUsuarioId(userId: number): Observable<OperationResult>;
 }

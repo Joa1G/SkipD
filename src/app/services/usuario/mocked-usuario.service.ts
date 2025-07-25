@@ -56,10 +56,10 @@ export class MockedUsuarioService extends AbstractUsuarioService {
     }
   }
 
-  override addUsuario(usuario: Omit<Usuario, 'id'>): Observable<OperationResult> {
+  override addUsuario(usuario: Omit<Usuario, 'id' | 'isPremium' | 'urlFoto'>): Observable<OperationResult> {
     try {
       const newId = this._usuarios().length > 0 ? Math.max(...this._usuarios().map(u => u.id)) + 1 : 1;
-      const newUsuario: Usuario = { id: newId, ...usuario };
+      const newUsuario: Usuario = { id: newId, isPremium: false, urlFoto: '', ...usuario };
       this._usuarios.update(usuarios => [...usuarios, newUsuario]);
       return of({ success: true, status: 201, data: newUsuario });
     } catch {

@@ -7,7 +7,7 @@ export abstract class AbstractUsuarioService {
   abstract usuarios:  Signal<Usuario[]>;
   abstract getUsuarios(): Observable<OperationResult>;
   abstract getUsuarioById(id: number): Observable<OperationResult>;
-  abstract addUsuario(usuario: Omit<Usuario, 'id'>): Observable<OperationResult>;
+  abstract addUsuario(usuario: Omit<Usuario, 'id' | 'isPremium' | 'urlFoto'>): Observable<OperationResult>;
   abstract updateUsuario(usuario: Usuario): Observable<OperationResult>;
   abstract deleteUsuario(id: number): Observable<OperationResult>;
   abstract getInstituicoesByUsuarioId(id: number): Observable<OperationResult>;

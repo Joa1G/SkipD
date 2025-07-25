@@ -165,7 +165,7 @@ export class MockedMateriaService extends AbstractMateriaService {
         })
       );
       if (updated) {
-        return of({ success: true, status: 200 });
+        return of({ success: true, status: 200 , message: 'Matéria atualizada com sucesso.' });
       } else {
         return of({ success: false, status: 304, data: "Error to update Materia" });
       }

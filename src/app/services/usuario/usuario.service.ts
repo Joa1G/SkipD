@@ -23,7 +23,7 @@ export class UsuarioService extends AbstractUsuarioService {
     return of();
   }
 
-  override addUsuario(usuario: Omit<Usuario, 'id'>): Observable<OperationResult> {
+  override addUsuario(usuario: Omit<Usuario, 'id' | 'isPremium' | 'urlFoto'>): Observable<OperationResult> {
     return of();
   }
 

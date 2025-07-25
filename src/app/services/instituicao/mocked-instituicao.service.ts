@@ -53,8 +53,8 @@ export class MockedInstituicaoService extends AbstractInstituicaoService {
         id: newId,
         ...instituicao,
       };
-      this._instituicoes.set([...instituicoes, newInstituicao]);
-      return of({success: true, status: 201});
+      this._instituicoes.update(instituicoes => [...instituicoes, newInstituicao]);
+      return of({success: true, status: 201, data: newInstituicao});
     } catch (error) {
       return of({success: false, status: 500, message: 'Erro ao adicionar instituição.'});
     }
@@ -62,12 +62,18 @@ export class MockedInstituicaoService extends AbstractInstituicaoService {
 
   override updateInstituicao(instituicao: Instituicao): Observable<OperationResult> {
     try {
-      const instituicoes = this._instituicoes();
-      const index = instituicoes.findIndex(i => i.id === instituicao.id);
-      if (index !== -1) {
-        instituicoes[index] = instituicao;
-        this._instituicoes.set(instituicoes);
-        return of({success: true, status: 200});
+      let updated = false;
+      this._instituicoes.update(list =>
+        list.map(i => {
+          if (i.id === instituicao.id) {
+            updated = true;
+            return { ...instituicao };
+          }
+          return i;
+        })
+      );
+      if (updated) {
+        return of({success: true, status: 200, message: 'Instituição atualizada com sucesso.'});
       } else {
         return of({success: false, status: 404, message: 'Instituição não encontrada.'});
       }
@@ -78,23 +84,24 @@ export class MockedInstituicaoService extends AbstractInstituicaoService {
 
   override deleteInstituicao(id: number): Observable<OperationResult> {
     try {
-      const instituicoes = this._instituicoes();
-      const index = instituicoes.findIndex(i => i.id === id);
-      if (index !== -1) {
-        instituicoes.splice(index, 1);
-        this._instituicoes.set(instituicoes);
-        return of({success: true, status: 200});
-      } else {
+      const index = this._instituicoes().findIndex(i => i.id === id);
+      if (index === -1) {
         return of({success: false, status: 404, message: 'Instituição não encontrada.'});
       }
+      this._instituicoes.update(instituicoes => {
+        const updatedInstituicoes = [...instituicoes];
+        updatedInstituicoes.splice(index, 1);
+        return updatedInstituicoes;
+      });
+      return of({success: true, status: 200, message: 'Instituição deletada com sucesso.'});
     } catch (error) {
       return of({success: false, status: 500, message: 'Erro ao deletar instituição.'});
     }
   }
 
-  override getInstituicaoByUsuarioId(id: number): Observable<OperationResult> {
+  override getInstituicaoByUsuarioId(userId: number): Observable<OperationResult> {
     try {
-      const instituicao = this._instituicoes().find(i => i.id_usuario === id);
+      const instituicao = this._instituicoes().find(i => i.id_usuario === userId);
       if (instituicao) {
         return of({success: true, status: 200, data: instituicao});
       } else {
