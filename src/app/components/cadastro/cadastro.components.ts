@@ -51,7 +51,7 @@ export class CadastroComponents {
       this.usuarioService.cadastrar({
         nome,
         email,
-        senha: password
+        senha: password,
       }).subscribe(result => {
         if (result.success) {
           console.log('Usuário cadastrado com sucesso:', result.data);

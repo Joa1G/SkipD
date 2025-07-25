@@ -185,7 +185,7 @@ export class MockedMateriaService extends AbstractMateriaService {
         updatedMaterias.splice(index, 1);
         return updatedMaterias;
       });
-      return of({success: true, status: 200});
+      return of({success: true, status: 200, message: 'Matéria deletada com sucesso.'});
     } catch (error) {
       return of({success: false, status: 500, data: 'Erro ao deletar matéria.'});
     }

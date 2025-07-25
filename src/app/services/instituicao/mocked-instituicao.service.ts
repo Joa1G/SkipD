@@ -11,11 +11,13 @@ export class MockedInstituicaoService extends AbstractInstituicaoService {
       id: 1,
       nome: 'Instituto Federal do Amazonas',
       percentual_limite_faltas: 0.25,
+      id_usuario: 1
     },
     {
       id: 2,
       nome: 'Dx Academy',
       percentual_limite_faltas: 0.30,
+      id_usuario: 2
     }
   ]);
 
@@ -87,6 +89,19 @@ export class MockedInstituicaoService extends AbstractInstituicaoService {
       }
     } catch (error) {
       return of({success: false, status: 500, message: 'Erro ao deletar instituição.'});
+    }
+  }
+
+  override getInstituicaoByUsuarioId(id: number): Observable<OperationResult> {
+    try {
+      const instituicao = this._instituicoes().find(i => i.id_usuario === id);
+      if (instituicao) {
+        return of({success: true, status: 200, data: instituicao});
+      } else {
+        return of({success: false, status: 404, message: 'Instituição não encontrada.'});
+      }
+    } catch (error) {
+      return of({success: false, status: 500, message: 'Erro ao buscar instituição por usuário.'});
     }
   }
 }

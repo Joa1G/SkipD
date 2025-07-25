@@ -34,4 +34,7 @@ export class InstituicaoService extends AbstractInstituicaoService {
   override deleteInstituicao(id: number): Observable<OperationResult> {
     return of();
   }
+  override getInstituicaoByUsuarioId(id: number): Observable<OperationResult> {
+    return of();
+  }
 }
