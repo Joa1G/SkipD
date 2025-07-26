@@ -94,6 +94,14 @@ select:focus {
 }
 }
 
+.is-valid{
+  input[type="text"],
+  input[type="number"],
+  select {
+  border: 1px solid #4caf50;
+  }
+}
+
 input::placeholder {
   color: $color-muted;
 }
@@ -146,6 +154,10 @@ input::placeholder {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.dia-checkbox:hover {
+  border-color: $color-primary;
 }
 
 .horas-select {

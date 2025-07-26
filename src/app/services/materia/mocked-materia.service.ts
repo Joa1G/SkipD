@@ -4,113 +4,11 @@ import { OperationResult } from '../../models/operation-result.model';
 import { Injectable, signal, computed, Signal, WritableSignal, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AbstractInstituicaoService } from '../instituicao/abstract-instituicao.service';
+import { mockedMateria } from './mocked-materia';
 
 @Injectable()
 export class MockedMateriaService extends AbstractMateriaService {
-  private _materias: WritableSignal<Materia[]> = signal<Materia[]>([
-    {
-      id: 1,
-      nome: 'Algoritmo e Estruturas de Dados II',
-      cargaHorariaTotal: 200,
-      faltas: 25,
-      status: 'Aprovado',
-      aulasDaSemana: {
-        domingo: 0,
-        segunda: 2,
-        terca: 1,
-        quarta: 0,
-        quinta: 0,
-        sexta: 0,
-        sabado: 0
-      },
-      idInstituicao: 1,
-    },
-    {
-      id: 2,
-      nome: 'Cálculo I',
-      cargaHorariaTotal: 40,
-      faltas: 2,
-      status: 'Aprovado',
-      aulasDaSemana: {
-        domingo: 0,
-        segunda: 0,
-        terca: 0,
-        quarta: 1,
-        quinta: 0,
-        sexta: 0,
-        sabado: 0
-      },
-      idInstituicao: 1,
-    },
-    {
-      id: 3,
-      nome: 'Redes de Computadores',
-      cargaHorariaTotal: 60,
-      faltas: 14,
-      status: 'Risco',
-      aulasDaSemana: {
-        domingo: 0,
-        segunda: 0,
-        terca: 0,
-        quarta: 1,
-        quinta: 0,
-        sexta: 0,
-        sabado: 0
-      },
-      idInstituicao: 1,
-    },
-    {
-      id: 4,
-      nome: 'Inteligência Artificial',
-      cargaHorariaTotal: 80,
-      faltas: 20,
-      status: 'Reprovado',
-      aulasDaSemana: {
-        domingo: 0,
-        segunda: 0,
-        terca: 0,
-        quarta: 2,
-        quinta: 0,
-        sexta: 2,
-        sabado: 0
-      },
-      idInstituicao: 1,
-    },
-    {
-      id: 5,
-      nome: 'Banco de Dados',
-      cargaHorariaTotal: 100,
-      faltas: 5,
-      status: 'Aprovado',
-      aulasDaSemana: {
-        domingo: 0,
-        segunda: 0,
-        terca: 0,
-        quarta: 1,
-        quinta: 2,
-        sexta: 0,
-        sabado: 0
-      },
-      idInstituicao: 1,
-    },
-    {
-      id: 6,
-      nome: 'Desenvolvimento Web Full Stack',
-      cargaHorariaTotal: 200,
-      faltas: 10,
-      status: 'Aprovado',
-      aulasDaSemana: {
-        domingo: 0,
-        segunda: 0,
-        terca: 0,
-        quarta: 1,
-        quinta: 1,
-        sexta: 1,
-        sabado: 0
-      },
-      idInstituicao: 2,
-    }
-  ]);
+  private _materias: WritableSignal<Materia[]> = signal<Materia[]>(mockedMateria);
 
   private serviceInstituicoes = inject(AbstractInstituicaoService);
   private instituicoes = this.serviceInstituicoes.instituicoes;
@@ -191,15 +89,15 @@ export class MockedMateriaService extends AbstractMateriaService {
     }
   }
 
-  override getInstituicaoByMateriaId(idInstituicao: number): Observable<OperationResult> {
+  override getMateriasByInstituicaoId(idInstituicao: number): Observable<OperationResult> {
     try {
-      const materia = this._materias().find(m => m.id === idInstituicao);
-      if (!materia) {
-        return of({success: false, status: 404, data: 'Instituição não encontrada.'});
+      const materias = this._materias().filter(m => m.idInstituicao === idInstituicao);
+      if (materias.length === 0) {
+        return of({success: false, status: 404, data: 'Nenhuma materia encontrada.'});
       }
-      return of({success: true, status: 200, data: materia.idInstituicao});
+      return of({success: true, status: 200, data: materias});
     } catch (error) {
-      return of({success: false, status: 500, data: 'Erro ao buscar instituição.'});
+      return of({success: false, status: 500, data: 'Erro ao buscar matérias por instituição.'});
     }
   }
 

@@ -2,11 +2,9 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, Validators, FormsModule, FormControl } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { MockedUsuarioService } from '../../services/usuario/mocked-usuario.service';
 import { OperationResult } from '../../models/operation-result.model';
 import { AbstractUsuarioService } from '../../services/usuario/abstract-usuario.service';
 import { MatIcon } from '@angular/material/icon';
-import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-login',

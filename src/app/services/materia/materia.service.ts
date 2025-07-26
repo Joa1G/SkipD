@@ -35,7 +35,7 @@ export class MateriaService extends AbstractMateriaService {
     return of();
   }
 
-  override getInstituicaoByMateriaId(id: number): Observable<OperationResult> {
+  override getMateriasByInstituicaoId(idInstituicao: number): Observable<OperationResult> {
     return of();
   }
 
