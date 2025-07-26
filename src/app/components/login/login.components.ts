@@ -67,6 +67,10 @@ export class LoginComponents {
     });
   }
 
+  changeIncorrectFormField() {
+    this.incorretLogin = false;
+  }
+
   invalidFieldClass(fieldName: string) {
     const field = this.loginForm.get(fieldName);
     if ((field!.invalid && this.submitted) || this.incorretLogin) {
