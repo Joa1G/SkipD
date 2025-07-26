@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-instituicoes-card',
   imports: [MatCardModule, CommonModule, MatProgressBar],
-  templateUrl: './instituicoes-card.components.html',
-  styleUrl: './instituicoes-card.components.scss',
+  templateUrl: './instituicoes-card.component.html',
+  styleUrl: './instituicoes-card.component.scss',
 })
 export class InstituicoesCardComponents {
   @Input() materia: Materia | null = null;

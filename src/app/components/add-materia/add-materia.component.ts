@@ -34,8 +34,8 @@ import { DialogComponent } from '../dialog/dialog.component';
     CommonModule,
     DialogComponent
   ],
-  templateUrl: './add-materia.components.html',
-  styleUrl: './add-materia.components.scss'
+  templateUrl: './add-materia.component.html',
+  styleUrl: './add-materia.component.scss'
 })
 export class AddMateriaComponents{
 

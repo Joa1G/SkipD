@@ -19,8 +19,8 @@ export const passwordMatchValidator: ValidatorFn = (group: AbstractControl): Val
   selector: 'app-cadastro',
   standalone: true,
   imports: [ CommonModule, ReactiveFormsModule, RouterModule, MatIcon, DialogComponent],
-  templateUrl: './cadastro.components.html',
-  styleUrls: ['./cadastro.components.scss'],
+  templateUrl: './cadastro.component.html',
+  styleUrls: ['./cadastro.component.scss'],
 })
 export class CadastroComponents {
 

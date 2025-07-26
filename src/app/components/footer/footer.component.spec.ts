@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FooterComponents } from './footer.components';
+import { FooterComponents } from './footer.component';
 
 describe('FooterComponents', () => {
   let component: FooterComponents;
@@ -8,9 +8,8 @@ describe('FooterComponents', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FooterComponents]
-    })
-    .compileComponents();
+      imports: [FooterComponents],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FooterComponents);
     component = fixture.componentInstance;

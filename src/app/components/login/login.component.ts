@@ -10,8 +10,8 @@ import { MatIcon } from '@angular/material/icon';
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule, FormsModule, MatIcon],
-  templateUrl: './login.components.html',
-  styleUrl: './login.components.scss',
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
 })
 export class LoginComponents {
   private usuarioService = inject(AbstractUsuarioService);
