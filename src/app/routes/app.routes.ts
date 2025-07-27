@@ -5,6 +5,7 @@ import { HomeComponent } from '../components/home/home.component';
 import { AddMateriaComponents } from '../components/add-materia/add-materia.component';
 import { DetalhesMateriaComponent } from '../components/detalhes-materia/detalhes-materia.component';
 import { authGuard, guestGuard } from '../guards/auth.guard';
+import { materiaGuard } from '../guards/materia.guard';
 
 export const routes: Routes = [
   {
@@ -30,12 +31,12 @@ export const routes: Routes = [
   {
     path: 'detalhes-materia/:id',
     component: DetalhesMateriaComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard, materiaGuard]
   },
   {
     path: 'edit-materia/:id',
     component: AddMateriaComponents,
-    canActivate: [authGuard]
+    canActivate: [authGuard, materiaGuard]
   },
   {
     path: '',
