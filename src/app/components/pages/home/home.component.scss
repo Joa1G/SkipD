@@ -1,0 +1,74 @@
+$font-main: "Roboto", sans-serif;
+
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #e0e0e0;
+$color-muted: #a0a0b0;
+$color-title-accent: #c0a6fa;
+
+$transition-speed: 0.3s;
+$transition-ease: ease-in-out;
+$radius: 12px;
+$radius-sm: 6px;
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: $color-title-accent;
+  margin: 0;
+}
+
+.btn {
+  padding: 14px;
+  border: none;
+  border-radius: $radius;
+  font-family: $font-main;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform $transition-speed $transition-ease,
+  box-shadow $transition-speed $transition-ease;
+  display: inline-flex; // Para alinhar conteúdo como ícones
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px 0 0 0; // Adicionado padding superior
+  gap: 15px
+}
+
+.add-materia-button {
+  @extend .btn; // Herda os estilos base do .btn
+  gap: 8px;
+  width: 205px;
+  height: 44px;
+  padding: 0 20px; // Ajuste no padding para altura fixa
+  background: linear-gradient(
+    90deg,
+    $color-gradient-start,
+    $color-gradient-end
+  );
+  color: white;
+
+  .add-icon {
+    font-size: 24px; // Ícone um pouco maior para combinar
+  }
+}

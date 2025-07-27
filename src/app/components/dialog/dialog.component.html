@@ -1,0 +1,35 @@
+<div class="dialog-overlay" [ngClass]="turnDialogVisible()">
+
+  <div class="dialog-box" [ngClass]="dialogTypeClass()" role="dialog" aria-modal="true" aria-labelledby="dialog-title-1">
+
+    @if(dialogType !== 'confirmation' && dialogType !== 'logo') {
+      <button class="dialog-close-btn" (click)="closeDialog()" aria-label="Fechar">&times;</button>
+    }
+
+    <div class="dialog-icon">
+      @if(dialogType === 'info'){
+        <mat-icon>info</mat-icon>
+      }@else if(dialogType === 'warning'){
+        <mat-icon>warning</mat-icon>
+      }
+      @else if(dialogType === 'confirmation'){
+        <mat-icon>check_circle</mat-icon>
+      }@else if(dialogType === 'logo'){
+          SkipD
+      }
+    </div>
+
+    <div class="dialog-header">
+      <h2 class="dialog-title" id="dialog-title-1">{{ title }}</h2>
+      <p class="dialog-message">{{ message }}</p>
+    </div>
+
+    <div class="dialog-footer">
+      @if(showCancelButton){
+        <button class="dialog-btn dialog-btn--cancel" (click)="closeDialog()">Cancelar</button>
+      }
+      <button class="dialog-btn dialog-btn--confirm" (click)="isExcluirDialog ? emitConfirmAction() : useRouter()">{{ confirmText }}</button>
+    </div>
+
+  </div>
+</div>

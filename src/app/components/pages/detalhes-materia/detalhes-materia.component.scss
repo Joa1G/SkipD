@@ -1,0 +1,230 @@
+$font-main: "Roboto";
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-bg-page: #12121e;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #e0e0e0;
+$color-muted: #a0a0b0;
+$transition-speed: 0.3s;
+$transition-ease: ease-in-out;
+$radius: 12px;
+$radius-sm: 6px;
+
+$color-blue-accent: #0091ea;
+$color-green-accent: #2e7d32;
+$color-green-text: #fff;
+$color-warning: #eab308;
+$color-warning-text: #fff;
+$color-danger: #dc2626;
+$color-danger-text: #fff;
+$color-red-accent: #c62828;
+$color-title-accent: #c0a6fa;
+
+:host {
+  display: grid;
+  grid-template-rows: auto 1fr; // header + área de conteúdo
+  min-height: 95vh;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.details-card {
+  margin: 40px auto;
+  background-color: $color-bg-dark;
+  border-radius: $radius;
+  padding: 24px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-family: $font-main;
+}
+
+.details-header {
+  text-align: center;
+  border-bottom: 1px solid $color-border;
+  padding-bottom: 16px;
+  h1 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: $color-title-accent;
+    margin: 0;
+  }
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 8px 0 0 0;
+    color: $color-text;
+  }
+}
+
+.details-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  color: $color-text;
+}
+
+.info-box {
+  background-color: $color-bg-light;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  padding: 16px;
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 500;
+  h3{
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: $color-title-accent;
+  }
+}
+
+.info-status {
+  grid-column: 1 / -1;
+  border: none;
+  &.status-aprovado {
+    background-color: $color-green-accent;
+    color: $color-green-text;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  &.status-reprovado {
+    background-color: $color-danger;
+    color: $color-danger-text;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  &.status-risco {
+    background-color: $color-warning;
+    color: $color-warning-text;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+.weekly-schedule {
+  .schedule-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    color: $color-muted;
+    h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+}
+
+.day-cell {
+  background-color: $color-bg-light;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: $color-muted;
+
+  .material-icons {
+    font-size: 24px;
+  }
+  .day-hours {
+    font-weight: 500;
+  }
+  .day-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: $color-text;
+  }
+
+  &.has-class {
+    background-color: $color-green-accent;
+    border-color: $color-green-accent;
+    color: $color-green-text;
+    .day-name {
+      color: white;
+    }
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: $radius;
+  font-family: $font-main;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all $transition-speed $transition-ease;
+  color: white;
+  text-decoration: none;
+
+  .material-icons {
+    font-size: 20px;
+  }
+
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  &:disabled{
+    background: $color-border;
+    color: $color-muted;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.btn-primary,
+.btn-edit {
+  background: linear-gradient(45deg, $color-gradient-start, $color-primary);
+}
+
+.btn-delete {
+  background-color: $color-red-accent;
+}
+
+.btn-full-width {
+  width: 100%;
+}
+
+.details-footer {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+
+  .btn {
+    flex-grow: 1;
+  }
+}

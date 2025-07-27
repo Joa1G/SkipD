@@ -1,0 +1,88 @@
+<app-header></app-header>
+<div class="add-materia-container">
+  <div class="form-container">
+    <div class="title-container"><h1>{{ isEditMode ? 'Editar Matéria' : 'Adicionar Matéria' }}</h1></div>
+    <form [formGroup]="form" (ngSubmit)="isEditMode ? onSubmitEdit() : onSubmit()">
+        <div class="form-group" [ngClass]="invalidFieldClass('nome')">
+            <label for="materia-nome">Matéria *</label>
+            <input type="text" id="materia-nome" name="materia-nome" placeholder="Nome da Matéria" formControlName="nome" required>
+        </div>
+
+        <div class="form-group" [ngClass]=" invalidFieldClass('cargaHorariaTotal')">
+            <label for="carga-horaria">Carga Horária (h)*</label>
+            <input type="number" id="carga-horaria" name="carga-horaria" placeholder="Carga Horária Total em Horas" formControlName="cargaHorariaTotal" required>
+        </div>
+
+        <div class="form-group" [ngClass]=" invalidFieldClass('idInstituicao')">
+            <label for="instituicao">Instituição*</label>
+            <select id="instituicao" name="instituicao" formControlName="idInstituicao" required>
+                <option value="" disabled>Selecione a Instituição</option>
+                @for(instituicao of instituicoesDoUsuario(); track instituicao.id){
+                    <option [value]="instituicao.id">{{ instituicao.nome }}</option>
+                }
+              </select>
+        </div>
+
+        <div class="form-group" [ngClass]=" invalidFieldClass('faltas')">
+            <label for="carga-horaria">Faltas*</label>
+            <input type="number" id="carga-horaria" name="carga-horaria" placeholder="Faltas já existentes" formControlName="faltas" required>
+        </div>
+
+        <div class="form-group">
+            <label>Aulas na Semana</label>
+            <div class="dias-semana-grid">
+                @for(dia of diasDaSemana; track dia.id){
+                    <div class="dia-item" >
+                      <span>{{ dia.viewValue }}</span>
+                      <input type="checkbox" class="dia-checkbox" formControlName="is_{{dia.viewValue.toLowerCase()}}_checked">
+                      @if(form.get(`is_${dia.viewValue.toLowerCase()}_checked`)?.value){
+                        <select type="number"
+                        class="horas-select"
+                        formControlName="hor_{{dia.viewValue.toLowerCase()}}"
+                        [ngClass]="invalidFieldClass('hor_' + dia.viewValue.toLowerCase())"
+                        required>
+                          <option [value]="1">1 h</option>
+                          <option [value]="2">2 h</option>
+                          <option [value]="3">3 h</option>
+                          <option [value]="4">4 h</option>
+                          <option [value]="5">5 h</option>
+                          <option [value]="6">6 h</option>
+                          <option [value]="7">7 h</option>
+                          <option [value]="8">8 h</option>
+                        </select>
+                      }
+                  </div>
+                }
+            </div>
+        </div>
+
+        @if (form.invalid && submitted) {
+          <div class="error-message">
+            <span>Por favor, preencha todos os campos obrigatórios corretamente.</span><br>
+            <span>Campos marcados com * são obrigatórios.</span>
+          </div>
+        }
+
+        <div class="form-buttons">
+            <button type="button" class="btn btn-cancelar" (click)="onCancel()">Cancelar</button>
+            <button type="submit" class="btn btn-salvar">{{ form.value.id ? 'Salvar' : 'Adicionar' }}</button>
+        </div>
+    </form>
+  </div>
+</div>
+<app-dialog
+  [title]="'Tem certeza que deseja cancelar?'"
+  [isVisible]="showCancelDialog"
+  (isVisibleChange)="showCancelDialog = $event"
+  [dialogType]="'warning'"
+  [message]="'Todas as alterações não salvas serão perdidas.'"
+></app-dialog>
+
+<app-dialog
+  [title]="`Matéria ${isEditMode ? 'editada' : 'adicionada'} com sucesso!`"
+  [isVisible]="showSubmitDialog"
+  (isVisibleChange)="showSubmitDialog = $event"
+  [dialogType]="'confirmation'"
+  [message]="`A matéria foi ${isEditMode ? 'editada' : 'adicionada'} com sucesso.`"
+  [showCancelButton]="false"
+></app-dialog>

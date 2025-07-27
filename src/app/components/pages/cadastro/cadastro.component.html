@@ -1,0 +1,126 @@
+<div class="top-border"></div>
+<div class="cadastro-container">
+  <div class="cadastro-card">
+    <div class="header-form">
+      <h1>SkipD</h1>
+      <h2>Cadastre-se aqui!</h2>
+      <p class="subtitulo">Comece a gerenciar a frequência das suas aulas com eficiência.</p>
+      @if(errorForm) {
+        <div class="error-message">
+          Ocorreu um erro ao tentar cadastrar. Por favor, tente novamente.
+        </div>
+      }@else if(incorretFormField){
+        <div class="error-message">
+          Por favor, preencha todos os campos corretamente.
+        </div>
+      }
+    </div>
+    <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+      <div class="form-group" [ngClass]="invalidFieldClass('name')">
+        <label for="nome">Nome *</label>
+        <input type="text" id="nome" formControlName="name" placeholder="Nome completo" (ngModelChange)="changeIncorrectFormField()"/>
+        @if (cadastroForm.get('name')?.invalid && cadastroForm.get('name')?.dirty) {
+          <div class="error-message">
+            @if(cadastroForm.get('name')?.errors?.['required']) {
+              O nome é obrigatório.
+            }@else if (cadastroForm.get('name')?.errors?.['minlength'] || cadastroForm.get('name')?.errors?.['maxlength']) {
+              O nome deve ter entre 3 e 30 caracteres.
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group" [ngClass]="invalidFieldClass('email')">
+        <label for="email">Email *</label>
+        <input type="email" id="email" formControlName="email" placeholder="Digite seu email" (ngModelChange)="changeIncorrectFormField()"/>
+        @if (cadastroForm.get('email')?.invalid && cadastroForm.get('email')?.dirty) {
+          <div class="error-message">
+            @if(cadastroForm.get('email')?.errors?.['required']) {
+              O email é obrigatório.
+            }@else if (cadastroForm.get('email')?.errors?.['email']) {
+              O email deve ser válido.
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" [ngClass]="invalidFieldClass('instituicaoPadrao')">
+          <label for="instituicao_padrao">Instituição Padrão *</label>
+          <input type="text" id="instituicao_padrao" formControlName="instituicaoPadrao" placeholder="Nome" (ngModelChange)="changeIncorrectFormField()"/>
+          @if (cadastroForm.get('instituicaoPadrao')?.invalid && cadastroForm.get('instituicaoPadrao')?.dirty) {
+            <div class="error-message">
+              @if(cadastroForm.get('instituicaoPadrao')?.errors?.['required']) {
+                A instituição é obrigatória.
+              }@else if (cadastroForm.get('instituicaoPadrao')?.errors?.['minlength'] || cadastroForm.get('instituicaoPadrao')?.errors?.['maxlength']) {
+                A instituição deve ter entre 3 e 50 caracteres.
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group" [ngClass]="invalidFieldClass('percentFaltas')">
+          <label for="percent_faltas">Limite de Faltas % *</label>
+          <input type="number" id="percent_faltas" formControlName="percentFaltas" placeholder="%" (ngModelChange)="changeIncorrectFormField()"/>
+          @if (cadastroForm.get('percentFaltas')?.invalid && cadastroForm.get('percentFaltas')?.dirty) {
+            <div class="error-message">
+              @if(cadastroForm.get('percentFaltas')?.errors?.['required']) {
+                O limite de faltas é obrigatório.
+              }@else if (cadastroForm.get('percentFaltas')?.errors?.['min']) {
+                O limite de faltas não pode ser negativo.
+              }@else if (cadastroForm.get('percentFaltas')?.errors?.['max']) {
+                O limite de faltas não pode ser maior que 100%.
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="form-group password-container" [ngClass]="invalidFieldClass('password')">
+        <label for="password">Senha *</label>
+        <div class="input-group">
+          <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Digite sua senha" (ngModelChange)="changeIncorrectFormField()"/>
+          <button type="button" class="toggle-password-visibility" (click)="togglePasswordVisibility()">
+            <mat-icon class="password-icon">{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+          @if(cadastroForm.get('password')?.invalid && cadastroForm.get('password')?.dirty) {
+            <div class="error-message">
+              @if(cadastroForm.get('password')?.errors?.['required']) {
+                A senha é obrigatória.
+              }@else if (cadastroForm.get('password')?.errors?.['minlength'] || cadastroForm.get('password')?.errors?.['maxlength']) {
+                A senha deve ter entre 6 e 20 caracteres.
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="form-group password-container" [ngClass]="invalidFieldClass('confirmPassword')">
+        <label for="confirm_password">Confirme a senha *</label>
+        <div class="input-group">
+          <input [type]="showPassword ? 'text' : 'password'" id="confirm_password" formControlName="confirmPassword" placeholder="Digite novamente sua senha" (ngModelChange)="changeIncorrectFormField()"/>
+          <button type="button" class="toggle-password-visibility" (click)="togglePasswordVisibility()">
+            <mat-icon class="password-icon">{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+            <div class="error-message">
+              @if (this.cadastroForm.hasError('passwordMismatch') && cadastroForm.get('confirmPassword')?.dirty) {
+                As senhas não conferem.
+              }
+            </div>
+        </div>
+      </div>
+
+      <button type="submit">Criar conta</button>
+    </form>
+
+    <p class="login-link">Já possui cadastro? <a routerLink="/login">Entre aqui.</a></p>
+  </div>
+</div>
+<app-dialog
+  [title]="'Cadastro realizado com sucesso!'"
+  [message]="'Você pode acessar sua conta agora.'"
+  [isVisible]="showSuccessDialog"
+  [dialogType]="'logo'"
+  [showCancelButton]="false"
+  [route]="['/login']"
+></app-dialog>

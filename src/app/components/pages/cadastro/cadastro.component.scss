@@ -1,0 +1,249 @@
+/* =================================================================== */
+/* 1. VARIÁVEIS DO GUIA DE ESTILO (BASE DO DESIGN)
+/* =================================================================== */
+$font-main: "Roboto", sans-serif;
+$font-logo: "Jaro", sans-serif;
+
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #e0e0e0;
+$color-title-accent: #c0a6fa;
+$color-muted: #a0a0b0;
+$transition-speed: 0.3s;
+$transition-ease: ease-in-out;
+$radius: 12px;
+$radius-sm: 6px;
+
+/* =================================================================== */
+/* 2. ESTILOS GLOBAIS E DE LAYOUT
+/* =================================================================== */
+.top-border {
+  height: 32px;
+  width: 100%;
+  background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
+}
+
+.cadastro-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  min-height: calc(100vh - 64px);
+}
+
+
+/* =================================================================== */
+/* 3. CARD DE CADASTRO E SEU CONTEÚDO
+/* =================================================================== */
+.cadastro-card {
+  background-color: $color-bg-dark;
+  padding: 35px 40px;
+  border-radius: $radius;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  color: $color-text;
+  font-family: $font-main;
+  text-align: center;
+
+  h1 {
+    font-family: $font-logo;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: $color-text;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    color: $color-text;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .subtitulo {
+    font-size: 1.1rem;
+    color: $color-title-accent;
+    margin-bottom: 10px;
+    font-weight: 400;
+  }
+}
+
+
+/* =================================================================== */
+/* 4. FORMULÁRIO E SEUS ELEMENTOS
+/* =================================================================== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+
+  .form-group {
+    &:first-child {
+      flex: 7;
+    }
+    &:last-child {
+      flex: 3;
+    }
+  }
+
+  input {
+    width: 100%;
+  }
+}
+
+.form-group {
+  label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: $color-text;
+  }
+}
+
+// Estilo unificado para inputs e select
+input[type="email"],
+input[type="password"],
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 14px;
+  background-color: $color-bg-light;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  color: $color-text;
+  font-size: 1rem;
+  font-family: $font-main;
+  box-sizing: border-box;
+  transition: border-color $transition-speed $transition-ease;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+
+  &::placeholder {
+    color: $color-muted;
+  }
+}
+
+// Garante que o select com valor nulo (placeholder) use a cor muted
+select:invalid {
+  color: $color-muted;
+}
+
+button[type="submit"] {
+  padding: 14px;
+  border: none;
+  border-radius: $radius;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform $transition-speed $transition-ease,
+    box-shadow $transition-speed $transition-ease;
+  margin-top: 15px;
+  background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
+  color: white;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  &:disabled {
+    background: $color-border;
+    color: $color-muted;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+
+/* =================================================================== */
+/* 5. LINKS AUXILIARES
+/* =================================================================== */
+.login-link {
+  margin-top: 25px;
+  font-size: 0.95rem;
+  color: $color-muted;
+  line-height: 1.5;
+
+  a {
+    color: $color-primary;
+    text-decoration: none;
+    font-weight: 600;
+    transition: filter $transition-speed $transition-ease;
+
+    &:hover {
+      filter: brightness(1.2);
+      text-decoration: underline;
+    }
+  }
+}
+
+.password-container {
+  .input-group {
+    position: relative;
+
+    input {
+      width: 100%;
+      padding-right: 2.5rem; // espaço para o ícone
+    }
+
+    .toggle-password-visibility {
+      position: absolute;
+      top: 50%;
+      right: 0.75rem;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: $color-muted;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      mat-icon {
+        font-size: 1.25rem;
+      }
+
+      &:hover {
+        color: $color-text;
+      }
+    }
+  }
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-size: 0.875rem;
+  margin-bottom: 10px;
+}
+
+.is-invalid {
+  input {
+    border: 1px solid #ff4d4d;
+  }
+}
+
+.is-valid {
+  input {
+    border: 1px solid #4caf50;
+  }
+}
+
+

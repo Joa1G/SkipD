@@ -1,0 +1,266 @@
+/* =================================================================== */
+/* 1. VARIÁVEIS DO GUIA DE ESTILO (BASE DO DESIGN)
+/* =================================================================== */
+$font-main: "Roboto", sans-serif;
+$font-logo: "Jaro", sans-serif;
+
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #e0e0e0;
+$color-title-accent: #c0a6fa;
+$color-muted: #a0a0b0;
+$transition-speed: 0.3s;
+$transition-ease: ease-in-out;
+$radius: 12px;
+$radius-sm: 6px;
+
+/* =================================================================== */
+/* 2. ESTILOS GLOBAIS E DE LAYOUT
+/* =================================================================== */
+
+// Estilo base para o componente/página
+// Container que centraliza o card de login na tela
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  height: calc(100vh - 64px);
+}
+
+// Barra superior com gradiente
+.top-border {
+  height: 32px; // Um pouco mais sutil
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    $color-gradient-start,
+    $color-gradient-end
+  );
+}
+
+
+/* =================================================================== */
+/* 3. CARD DE LOGIN E SEU CONTEÚDO
+/* =================================================================== */
+
+// O card principal, estilizado como o .form-container original
+.login-card {
+  background-color: $color-bg-dark;
+  padding: 35px 40px;
+  border-radius: $radius;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  color: $color-text;
+  font-family: $font-main;
+  text-align: center;
+}
+
+// Título e subtítulo
+.title {
+  font-family: $font-logo;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: $color-text;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: $color-title-accent;
+  margin-bottom: 30px;
+  font-weight: 400;
+}
+
+
+/* =================================================================== */
+/* 4. FORMULÁRIO E SEUS ELEMENTOS
+/* =================================================================== */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; // Espaçamento consistente
+  text-align: left;
+}
+
+.col label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: $color-text;
+}
+
+// Inputs de texto e senha, seguindo o padrão original
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 14px;
+  background-color: $color-bg-light;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  color: $color-text;
+  font-size: 1rem;
+  font-family: $font-main;
+  box-sizing: border-box;
+  transition: border-color $transition-speed $transition-ease;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+  }
+
+  &::placeholder {
+    color: $color-muted;
+  }
+}
+
+.is-invalid-email {
+  input[type="email"] {
+    border: 1px solid #ff4d4d; // Cor de erro
+  }
+}
+
+.is-invalid-password {
+  input[type="password"],
+  input[type="text"] {
+    border: 1px solid #ff4d4d; // Cor de erro
+  }
+}
+
+.is-valid-email {
+  input[type="email"] {
+    border: 1px solid #4caf50; // Cor de sucesso
+  }
+}
+
+.is-valid-password {
+  input[type="password"],
+  input[type="text"] {
+    border: 1px solid #4caf50; // Cor de sucesso
+  }
+}
+
+// Botão de submissão, usando as classes .btn e .btn-salvar
+button[type="submit"] {
+  // Estilos base do .btn
+  flex-grow: 1;
+  padding: 14px;
+  border: none;
+  border-radius: $radius;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform $transition-speed $transition-ease,
+  box-shadow $transition-speed $transition-ease;
+  margin-top: 15px; // Espaço antes do botão
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  // Estilo específico do .btn-salvar
+  background: linear-gradient(
+    90deg,
+    $color-gradient-start,
+    $color-gradient-end
+  );
+  color: white;
+
+  &:disabled {
+    background: $color-border;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* =================================================================== */
+/* 5. LINKS AUXILIARES
+/* =================================================================== */
+
+// Links para "esqueci a senha" e "cadastre-se"
+.forgot,
+.register-link a {
+  color: $color-primary;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: filter $transition-speed $transition-ease;
+  font-weight: 600;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+}
+
+.forgot-password-container {
+  display: flex;
+  justify-content: flex-end; // Alinha o link à direita
+  // Puxa para mais perto do campo de senha
+}
+
+.forgot {
+  text-align: right;
+  margin-top: -10px; // Puxa para mais perto do campo de senha
+  max-width: 140px;
+}
+
+.register-link {
+  margin-top: 25px;
+  font-size: 0.95rem;
+  color: $color-muted;
+  line-height: 1.5;
+
+  a {
+    font-weight: 600;
+  }
+}
+
+.password-container {
+  .input-group {
+    position: relative;
+
+    input {
+      width: 100%;
+      padding-right: 2.5rem; // espaço para o ícone
+    }
+
+    .toggle-password-visibility {
+      position: absolute;
+      top: 50%;
+      right: 0.75rem;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: $color-muted;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      mat-icon {
+        font-size: 1.25rem;
+      }
+
+      &:hover {
+        color: $color-text;
+      }
+    }
+  }
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-size: 0.875rem;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
