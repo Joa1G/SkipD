@@ -47,3 +47,27 @@ $radius-sm: 6px;
   margin-top: 20px;
   margin-left: 15px;
 }
+
+.no-institutions,
+.not-authenticated {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+
+  p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+}
+
+.no-institutions {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #dee2e6;
+}
+
+.not-authenticated {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+}

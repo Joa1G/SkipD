@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, Validators, FormsModule, FormControl } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { OperationResult } from '../../models/operation-result.model';
-import { AbstractUsuarioService } from '../../services/usuario/abstract-usuario.service';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
+import { OperationResult } from '../../../models/operation-result.model';
+import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { MatIcon } from '@angular/material/icon';
+import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,9 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './login.component.scss',
 })
 export class LoginComponents {
-  private usuarioService = inject(AbstractUsuarioService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private authService = inject(MockedAuthService);
 
   showPassword = false;
   submitted = false;
@@ -32,7 +34,7 @@ export class LoginComponents {
     this.showPassword = !this.showPassword;
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
     this.incorretLogin = false;
     this.errorLogin = false;
@@ -46,7 +48,7 @@ export class LoginComponents {
     const email = formValue.email!;
     const password = formValue.password!;
 
-    this.usuarioService.login(email, password).subscribe({
+    this.authService.login(email, password).subscribe({
       next: (result: OperationResult) => {
         if (result.success) {
           this.router.navigate(['/home'])

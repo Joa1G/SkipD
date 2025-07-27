@@ -1,20 +1,23 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { Materia } from '../../../models/materia/materia.model';
+import { Materia } from '../../../../models/materia/materia.model';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-instituicoes-card',
+  selector: 'app-materias-card',
   imports: [MatCardModule, CommonModule, MatProgressBar],
-  templateUrl: './instituicoes-card.component.html',
-  styleUrl: './instituicoes-card.component.scss',
+  templateUrl: './materias-card.component.html',
+  styleUrl: './materias-card.component.scss',
 })
-export class InstituicoesCardComponents {
+export class MateriasCardComponents {
   @Input() materia: Materia | null = null;
   @Input() limiteFaltas: number = 0;
-  @Output() faltaAdicionada = new EventEmitter<{ idMateria: number; quantidade: number }>();
+  @Output() faltaAdicionada = new EventEmitter<{
+    idMateria: number;
+    quantidade: number;
+  }>();
 
   router = inject(Router);
 

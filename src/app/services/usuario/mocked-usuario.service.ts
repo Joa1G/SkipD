@@ -13,7 +13,7 @@ export class MockedUsuarioService extends AbstractUsuarioService {
       nome: 'Thayná Beatriz',
       email: 'thayna.vidal@lgepartner.com',
       senha: '123456',
-      urlFoto: 'https://example.com/thayna.jpg',
+      urlFoto: 'https://material.angular.dev/assets/img/examples/shiba2.jpg',
       isPremium: false
     },
     {
@@ -21,7 +21,7 @@ export class MockedUsuarioService extends AbstractUsuarioService {
       nome: 'João Gomes',
       email: 'joao.gomes@lgepartner.com',
       senha: 'senha123',
-      urlFoto: 'https://example.com/joao.jpg',
+      urlFoto: 'https://material.angular.dev/assets/img/examples/shiba2.jpg',
       isPremium: true
     }
   ]);
