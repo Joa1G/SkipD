@@ -70,6 +70,9 @@ a {
         &:hover {
             color: $hover-color;
         }
+        border: none;
+        background: none;
+        cursor: pointer;
     }
 
     .user-profile-button {

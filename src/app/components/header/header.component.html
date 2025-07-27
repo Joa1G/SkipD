@@ -10,17 +10,16 @@
       <mat-icon class="insights-icon">auto_awesome</mat-icon> <span>Insights</span>
     </a>
 
-    <a mat-icon-button
+    <button mat-icon-button
       matTooltip="Ver Perfil"
       (click)="hideLogoutButton()"
       aria-label="Link para a página de perfil do usuário"
       class="profile-link"> <mat-icon class="user-profile-button">account_circle</mat-icon>
-    </a>
+  </button>
 
     @if(isLogoutButtonVisible){
-      <button (click)="logout()" style="cursor: pointer;">
-        <mat-icon class="logout-icon">logout</mat-icon>
-        <span>Logout</span>
+      <button mat-icon-button (click)="logout()" class="profile-link" style="border-radius: 12px;background-color: #c62828;">
+        <mat-icon>logout</mat-icon>
       </button>
     }
   </div>
