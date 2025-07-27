@@ -13,11 +13,11 @@
             <input type="number" id="carga-horaria" name="carga-horaria" placeholder="Carga Horária Total em Horas" formControlName="cargaHorariaTotal" required>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" [ngClass]=" invalidFieldClass('idInstituicao')">
             <label for="instituicao">Instituição*</label>
             <select id="instituicao" name="instituicao" formControlName="idInstituicao" required>
                 <option value="" disabled>Selecione a Instituição</option>
-                @for(instituicao of instituicoes(); track instituicao.id){
+                @for(instituicao of instituicoesDoUsuario(); track instituicao.id){
                     <option [value]="instituicao.id">{{ instituicao.nome }}</option>
                 }
               </select>

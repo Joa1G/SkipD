@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import { Component, computed, inject} from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,6 +16,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { DialogComponent } from '../dialog/dialog.component';
+import { MockedAuthService } from '../../services/auth/mocked-auth.service';
 
 @Component({
   selector: 'app-add-materia',
@@ -40,7 +41,20 @@ import { DialogComponent } from '../dialog/dialog.component';
 export class AddMateriaComponents{
 
   private serviceInstituicao = inject(AbstractInstituicaoService);
-  instituicoes = this.serviceInstituicao.instituicoes;
+
+  authService = inject(MockedAuthService);
+
+  instituicoesDoUsuario = computed(() => {
+    const currentUser = this.authService.currentUser();
+    const todasInstituicoes = this.serviceInstituicao.instituicoes();
+
+    if(!currentUser) {
+      return [];
+    }
+
+    return todasInstituicoes.filter(instituicao => instituicao.id_usuario === currentUser.id);
+  });
+
   private serviceMateria = inject(AbstractMateriaService);
   materias = this.serviceMateria.materias;
   private router = inject(Router);
@@ -69,7 +83,7 @@ export class AddMateriaComponents{
     hor_qui: new FormControl(1, {nonNullable: true}),
     hor_sex: new FormControl(1, {nonNullable: true}),
     hor_sab: new FormControl(1, {nonNullable: true}),
-    idInstituicao: new FormControl(1, {nonNullable: true, validators: [Validators.required]}),
+    idInstituicao: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
   });
 
   diasDaSemana = [
@@ -85,6 +99,7 @@ export class AddMateriaComponents{
   aulasSemanaData: Record<string, number> = {};
 
    ngOnInit(): void {
+    this.loadUserInstituicoes();
     const idParam = this.route.snapshot.paramMap.get('id')
     console.log(idParam)
     const id = Number(idParam)
@@ -103,6 +118,17 @@ export class AddMateriaComponents{
         }
       })
       }
+  }
+
+  private async loadUserInstituicoes() {
+    const currentUser = this.authService.currentUser();
+    if (currentUser) {
+      try {
+        await firstValueFrom(this.serviceInstituicao.getInstituicaoByUsuarioId(currentUser.id));
+      } catch (error) {
+        console.error('Error loading user institutions:', error);
+      }
+    }
   }
 
   private applyAulasSemanaToForm(aulas: Record<string, number>): void {
