@@ -1,19 +1,19 @@
 <div class="instituicoes-list">
-  @for (instituicao of instituicoes(); track instituicao.id) {
+  @for (instituicao of instituicoesDoUsuario(); track instituicao.id) {
     <h2 class="instituicoes-title">{{ instituicao.nome }}</h2>
     @if(getMateriasPorInstituicao(instituicao.id).length === 0) {
       <p class="no-materia">Nenhuma matéria cadastrada para esta instituição.</p>
     }
     <div class="instituicoes-grid">
-    @for (materia of materias(); track materia.id) {
-      @if (materia.idInstituicao === instituicao.id) {
-        <app-instituicoes-card
-        [materia]="materia"
-        [limiteFaltas]="instituicao.percentual_limite_faltas"
-        (faltaAdicionada)="addFalta($event.idMateria, $event.quantidade)"
-        ></app-instituicoes-card>
+      @for (materia of materias(); track materia.id) {
+        @if (materia.idInstituicao === instituicao.id) {
+          <app-instituicoes-card
+            [materia]="materia"
+            [limiteFaltas]="instituicao.percentual_limite_faltas"
+            (faltaAdicionada)="addFalta($event.idMateria, $event.quantidade)"
+          ></app-instituicoes-card>
+        }
       }
-    }
     </div>
   }
 </div>
