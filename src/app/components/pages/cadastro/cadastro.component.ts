@@ -3,11 +3,11 @@ import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-import { AbstractInstituicaoService } from '../../services/instituicao/abstract-instituicao.service';
-import { AbstractUsuarioService } from '../../services/usuario/abstract-usuario.service';
+import { AbstractInstituicaoService } from '../../../services/instituicao/abstract-instituicao.service';
+import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { firstValueFrom } from 'rxjs';
-import { Instituicao } from '../../models/instituicao/instituicao.model';
-import { DialogComponent } from '../dialog/dialog.component';
+import { Instituicao } from '../../../models/instituicao/instituicao.model';
+import { DialogComponent } from '../../dialog/dialog.component';
 
 export const passwordMatchValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
   const password = group.get('password')?.value;

@@ -7,11 +7,11 @@
     <div class="instituicoes-grid">
       @for (materia of materias(); track materia.id) {
         @if (materia.idInstituicao === instituicao.id) {
-          <app-instituicoes-card
+          <app-materias-card
             [materia]="materia"
             [limiteFaltas]="instituicao.percentual_limite_faltas"
             (faltaAdicionada)="addFalta($event.idMateria, $event.quantidade)"
-          ></app-instituicoes-card>
+          ></app-materias-card>
         }
       }
     </div>

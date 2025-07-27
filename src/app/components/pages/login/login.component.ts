@@ -2,10 +2,10 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, Validators, FormsModule, FormControl } from '@angular/forms';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
-import { OperationResult } from '../../models/operation-result.model';
-import { AbstractUsuarioService } from '../../services/usuario/abstract-usuario.service';
+import { OperationResult } from '../../../models/operation-result.model';
+import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { MatIcon } from '@angular/material/icon';
-import { MockedAuthService } from '../../services/auth/mocked-auth.service';
+import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 
 @Component({
   selector: 'app-login',

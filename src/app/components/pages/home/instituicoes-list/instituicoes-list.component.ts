@@ -1,14 +1,14 @@
 import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InstituicoesCardComponents } from '../instituicoes-card/instituicoes-card.component';
-import { AbstractInstituicaoService } from '../../../services/instituicao/abstract-instituicao.service';
-import { AbstractMateriaService } from '../../../services/materia/abstract-materia.service';
+import { MateriasCardComponents } from '../materias-card/materias-card.component';
+import { AbstractInstituicaoService } from '../../../../services/instituicao/abstract-instituicao.service';
+import { AbstractMateriaService } from '../../../../services/materia/abstract-materia.service';
 import { firstValueFrom } from 'rxjs';
-import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
+import { MockedAuthService } from '../../../../services/auth/mocked-auth.service';
 
 @Component({
   selector: 'app-instituicoes-list',
-  imports: [CommonModule, InstituicoesCardComponents],
+  imports: [CommonModule, MateriasCardComponents],
   templateUrl: './instituicoes-list.component.html',
   styleUrl: './instituicoes-list.component.scss',
 })
@@ -24,11 +24,13 @@ export class InstituicoesListComponents {
     const currentUser = this.authService.currentUser();
     const todasInstituicoes = this.serviceInstituicao.instituicoes();
 
-    if(!currentUser) {
+    if (!currentUser) {
       return [];
     }
 
-    return todasInstituicoes.filter(instituicao => instituicao.id_usuario === currentUser.id);
+    return todasInstituicoes.filter(
+      (instituicao) => instituicao.id_usuario === currentUser.id
+    );
   });
 
   ngOnInit() {
@@ -39,7 +41,9 @@ export class InstituicoesListComponents {
     const currentUser = this.authService.currentUser();
     if (currentUser) {
       try {
-        await firstValueFrom(this.serviceInstituicao.getInstituicaoByUsuarioId(currentUser.id));
+        await firstValueFrom(
+          this.serviceInstituicao.getInstituicaoByUsuarioId(currentUser.id)
+        );
       } catch (error) {
         console.error('Error loading user institutions:', error);
       }

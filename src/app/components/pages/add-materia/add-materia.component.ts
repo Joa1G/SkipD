@@ -1,5 +1,5 @@
 import { Component, computed, inject} from '@angular/core';
-import { HeaderComponent } from '../header/header.component';
+import { HeaderComponent } from '../../header/header.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -9,14 +9,14 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule} from '@angular/forms';
-import { AbstractInstituicaoService } from '../../services/instituicao/abstract-instituicao.service';
-import { AbstractMateriaService } from '../../services/materia/abstract-materia.service';
-import { Materia } from '../../models/materia/materia.model';
+import { AbstractInstituicaoService } from '../../../services/instituicao/abstract-instituicao.service';
+import { AbstractMateriaService } from '../../../services/materia/abstract-materia.service';
+import { Materia } from '../../../models/materia/materia.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { DialogComponent } from '../dialog/dialog.component';
-import { MockedAuthService } from '../../services/auth/mocked-auth.service';
+import { DialogComponent } from '../../dialog/dialog.component';
+import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 
 @Component({
   selector: 'app-add-materia',
