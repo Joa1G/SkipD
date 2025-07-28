@@ -24,7 +24,7 @@ $radius-sm: 6px;
   text-align: center;
   font-family: $font-main;
   color: #c0a6fa;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 .form-container {
@@ -123,7 +123,16 @@ select:focus {
   color: #ff4d4d;
   font-size: 1rem;
   margin-top: 5px;
+  text-align: left;
+}
+
+
+.error-message-title {
+  color: #ff4d4d;
+  font-size: 1rem;
+  margin-top: 5px;
   text-align: center;
+  margin-bottom: 15px;
 }
 
 .is-invalid{
