@@ -5,10 +5,12 @@ import { AbstractInstituicaoService } from '../../../../services/instituicao/abs
 import { AbstractMateriaService } from '../../../../services/materia/abstract-materia.service';
 import { firstValueFrom } from 'rxjs';
 import { MockedAuthService } from '../../../../services/auth/mocked-auth.service';
+import { MatIcon } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-instituicoes-list',
-  imports: [CommonModule, MateriasCardComponents],
+  imports: [CommonModule, MateriasCardComponents, MatIcon, RouterModule],
   templateUrl: './instituicoes-list.component.html',
   styleUrl: './instituicoes-list.component.scss',
 })
