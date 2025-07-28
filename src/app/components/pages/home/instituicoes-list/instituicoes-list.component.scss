@@ -94,20 +94,22 @@ $radius-sm: 6px;
 .add-instituicao-button {
   @extend .btn; // Herda os estilos base do .btn
   gap: 8px;
-  width: 205px;
+  width: 300px;
   height: 44px;
   margin-left: 20px;
   margin-top: 10px;
+  font-size: 1.25rem;
   padding: 0 20px; // Ajuste no padding para altura fixa
   background: linear-gradient(
     90deg,
     $color-gradient-start,
     $color-gradient-end
   );
-  color: white;
+  color: $color-text;
 
   .add-icon {
-    font-size: 24px; // Ícone um pouco maior para combinar
+    font-size: 1.5rem;
+    font-weight: 700;
   }
 }
 

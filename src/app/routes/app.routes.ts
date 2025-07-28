@@ -6,6 +6,7 @@ import { AddMateriaComponents } from '../components/pages/add-materia/add-materi
 import { DetalhesMateriaComponent } from '../components/pages/detalhes-materia/detalhes-materia.component';
 import { authGuard, guestGuard } from '../guards/auth.guard';
 import { materiaGuard } from '../guards/materia.guard';
+import { AddInstituicaoComponent } from '../components/pages/add-instituicao/add-instituicao.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,11 @@ export const routes: Routes = [
   {
     path: 'add-materia/:id',
     component: AddMateriaComponents,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'add-instituicao',
+    component: AddInstituicaoComponent,
     canActivate: [authGuard],
   },
   {
