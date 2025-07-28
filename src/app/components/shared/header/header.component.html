@@ -11,16 +11,10 @@
     </a>
 
     <button mat-icon-button
+      routerLink="/usuario"
       matTooltip="Ver Perfil"
-      (click)="hideLogoutButton()"
       aria-label="Link para a página de perfil do usuário"
       class="profile-link"> <mat-icon class="user-profile-button">account_circle</mat-icon>
-  </button>
-
-    @if(isLogoutButtonVisible){
-      <button mat-icon-button (click)="logout()" class="profile-link" style="border-radius: 12px;background-color: #c62828;">
-        <mat-icon>logout</mat-icon>
-      </button>
-    }
+    </button>
   </div>
 </mat-toolbar>

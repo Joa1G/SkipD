@@ -18,17 +18,4 @@ import { Router } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  isLogoutButtonVisible = false;
-
-  authService = inject(MockedAuthService);
-  private router = inject(Router)
-
-  hideLogoutButton() {
-    this.isLogoutButtonVisible = !this.isLogoutButtonVisible;
-  }
-
-  logout(){
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
 }

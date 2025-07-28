@@ -7,6 +7,7 @@ import { DetalhesMateriaComponent } from '../components/pages/detalhes-materia/d
 import { authGuard, guestGuard } from '../guards/auth.guard';
 import { materiaGuard } from '../guards/materia.guard';
 import { AddInstituicaoComponent } from '../components/pages/add-instituicao/add-instituicao.component';
+import { PaginaUsuarioComponent } from '../components/pages/pagina-usuario/pagina-usuario.component';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,11 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'usuario',
+    component: PaginaUsuarioComponent,
     canActivate: [authGuard],
   },
   {
