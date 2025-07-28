@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production --optimization --build-optimizer --vendor-chunk=false --common-chunk=false",
+    "build": "ng build --configuration production --optimization",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:SkipD": "node dist/SkipD/server/server.mjs"
