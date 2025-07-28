@@ -43,7 +43,7 @@ export class CadastroComponents {
     password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
     confirmPassword: new FormControl('', [Validators.required]),
     instituicaoPadrao: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
-    percentFaltas: new FormControl<number>(0, [Validators.required, Validators.min(0), Validators.max(100)])
+    percentFaltas: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)])
   }, {validators: passwordMatchValidator});
 
   async adicionarUsuario(){
@@ -65,7 +65,7 @@ export class CadastroComponents {
   }
 
   async adicionarInstituicaoPadrao(usuarioId: number) {
-    const limite_faltas = this.cadastroForm.value.percentFaltas!;
+    const limite_faltas = Number(this.cadastroForm.value.percentFaltas!);
     const instituicao: Omit<Instituicao, 'id'> = {
       nome: this.cadastroForm.value.instituicaoPadrao!,
       id_usuario: usuarioId,

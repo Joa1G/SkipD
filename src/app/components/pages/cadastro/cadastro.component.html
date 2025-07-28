@@ -60,8 +60,8 @@
         </div>
 
         <div class="form-group" [ngClass]="invalidFieldClass('percentFaltas')">
-          <label for="percent_faltas">Limite de Faltas % *</label>
-          <input type="number" id="percent_faltas" formControlName="percentFaltas" placeholder="%" (ngModelChange)="changeIncorrectFormField()"/>
+          <label for="percent_faltas">Limite de Faltas *</label>
+          <input type="number" id="percent_faltas" formControlName="percentFaltas" placeholder="0 a 100%" (ngModelChange)="changeIncorrectFormField()"/>
           @if (cadastroForm.get('percentFaltas')?.invalid && cadastroForm.get('percentFaltas')?.dirty) {
             <div class="error-message">
               @if(cadastroForm.get('percentFaltas')?.errors?.['required']) {

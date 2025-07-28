@@ -1,6 +1,6 @@
 <div class="instituicoes-list">
   @for (instituicao of instituicoesDoUsuario(); track instituicao.id) {
-    <h2 class="instituicoes-title">{{ instituicao.nome }}</h2>
+    <h2 class="instituicoes-title"><mat-icon>school</mat-icon> {{ instituicao.nome }}</h2>
     <div class="instituicoes-grid">
       @for (materia of materias(); track materia.id) {
         @if (materia.idInstituicao === instituicao.id) {

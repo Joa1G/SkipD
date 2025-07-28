@@ -1,1 +1,66 @@
 <app-header></app-header>
+<div class="add-instituicao-container">
+  <div class="form-container">
+    <div class="title-container">
+      <h1>Adicionar Instituição</h1>
+    </div>
+    @if(incorretFormField){
+        <div class="error-message-title">
+          Por favor, preencha todos os campos corretamente.
+        </div>
+      }
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <div class="form-group" [ngClass]="invalidFieldClass('instituicao_name')">
+        <label for="instituicao_name">Nome da Instituição*</label>
+        <input id="instituicao_name" formControlName="instituicao_name" type="text" placeholder="Insira o nome da Instituição" (ngModelChange)="changeIncorrectFormField()"/>
+        @if (form.get('instituicao_name')?.invalid && form.get('instituicao_name')?.dirty) {
+              <div class="error-message">
+                @if(form.get('instituicao_name')?.errors?.['required']) {
+                  A instituição é obrigatória.
+                }@else if (form.get('instituicao_name')?.errors?.['minlength'] || form.get('instituicao_name')?.errors?.['maxlength']) {
+                  A instituição deve ter entre 3 e 50 caracteres.
+                }
+              </div>
+          }
+      </div>
+
+      <div class="form-group" [ngClass]="invalidFieldClass('percentFaltas')">
+        <label for="percentFaltas">Percentual de Faltas*</label>
+        <input id="percentFaltas" formControlName="percentFaltas" type="number" placeholder="0 a 100%" (ngModelChange)="changeIncorrectFormField()">
+        @if (form.get('percentFaltas')?.invalid && form.get('percentFaltas')?.dirty) {
+            <div class="error-message">
+              @if(form.get('percentFaltas')?.errors?.['required']) {
+                O limite de faltas é obrigatório.
+              }@else if (form.get('percentFaltas')?.errors?.['min']) {
+                O limite de faltas não pode ser negativo.
+              }@else if (form.get('percentFaltas')?.errors?.['max']) {
+                O limite de faltas não pode ser maior que 100%.
+              }
+            </div>
+          }
+      </div>
+
+      <div class="form-buttons">
+        <button type="button" class="btn btn-cancelar" (click)="onCancel()">Cancelar</button>
+        <button type="submit" class="btn btn-salvar">Adicionar</button>
+      </div>
+    </form>
+  </div>
+</div>
+<app-dialog
+  [title]="'Tem certeza que deseja cancelar?'"
+  [isVisible]="showCancelDialog"
+  (isVisibleChange)="showCancelDialog = $event"
+  [dialogType]="'warning'"
+  [message]="'Todas as alterações não salvas serão perdidas.'"
+></app-dialog>
+
+<app-dialog
+  [title]="'Instituição adicionada com sucesso!'"
+  [isVisible]="showSubmitDialog"
+  (isVisibleChange)="showSubmitDialog = $event"
+  [dialogType]="'confirmation'"
+  [message]="'A instituição foi adicionada com sucesso.'"
+  [showCancelButton]="false"
+></app-dialog>
