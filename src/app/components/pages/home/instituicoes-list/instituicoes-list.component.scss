@@ -24,13 +24,14 @@ $radius-sm: 6px;
   margin-bottom: 30px;
 }
 .instituicoes-title {
-  font-size: 1.5em;
+  font-size: 1.5rem;
+  gap: 10px;
   color: $font-color;
   font-family: "Roboto", sans-serif;
   margin-left: 25px;
   display: flex;
   align-items: center;
-  gap: 10px;
+
 
 }
 
