@@ -1,0 +1,143 @@
+$font-main: "Roboto", sans-serif;
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #e0e0e0;
+$color-muted: #a0a0b0;
+$transition-speed: 0.3s;
+$transition-ease: ease-in-out;
+$radius: 12px;
+$radius-sm: 6px;
+
+.add-instituicao-container{
+  min-height: calc(100vh - 96px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-container {
+  text-align: center;
+  font-family: $font-main;
+  color: #c0a6fa;
+  margin-bottom: 15px;
+}
+
+.form-container {
+  background-color: $color-bg-dark;
+  padding: 35px;
+  border-radius: $radius;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  color: $color-text;
+  font-family: $font-main;
+  margin: 20px auto;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: $color-text;
+}
+
+input[type="text"],
+input[type="number"]
+{
+  width: 100%;
+  padding: 14px;
+  background-color: $color-bg-light;
+  border: 1px solid $color-border;
+  border-radius: $radius;
+  color: $color-text;
+  font-size: 1rem;
+  font-family: $font-main;
+  box-sizing: border-box;
+  transition: border-color $transition-speed $transition-ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: $color-primary;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.btn {
+  flex-grow: 1;
+  padding: 14px;
+  border: none;
+  border-radius: $radius;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform $transition-speed $transition-ease,
+  box-shadow $transition-speed $transition-ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-cancelar {
+  background-color: $color-bg-dark;
+  color: white;
+  border: 1px solid $color-border;
+}
+.btn-cancelar:hover {
+  border: 1px solid $color-primary;
+  background-color: rgba($color-primary, 0.1);
+}
+
+.btn-salvar {
+  background: linear-gradient(
+    90deg,
+    $color-gradient-start,
+    $color-gradient-end
+  );
+  color: white;
+}
+
+.btn-salvar:disabled {
+  background: $color-border;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-size: 1rem;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.is-invalid{
+  input[type="text"],
+  input[type="number"],
+  select {
+  border: 1px solid #ff4d4d;
+}
+}
+
+.is-valid{
+  input[type="text"],
+  input[type="number"],
+  select {
+  border: 1px solid #4caf50;
+  }
+}

@@ -1,1 +1,23 @@
 <app-header></app-header>
+<div class="add-instituicao-container">
+  <div class="form-container">
+    <div class="title-container"><h1>Adicionar Instituição</h1></div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="instituicao_name">Nome da Instituição*</label>
+        <input id="instituicao_name" formControlName="instituicao_name" type="text" placeholder="Insira o nome da Instituição" required>
+      </div>
+
+      <div class="form-group">
+        <label for="percentFaltas">Percentual de Faltas*</label>
+        <input id="percentFaltas" formControlName="percentFaltas" type="number" placeholder="0 a 100%">
+      </div>
+
+      <div class="form-buttons">
+        <button type="button" class="btn btn-cancelar" (click)="onCancel()">Cancelar</button>
+        <button type="submit" class="btn btn-salvar">Adicionar</button>
+      </div>
+    </form>
+  </div>
+</div>
