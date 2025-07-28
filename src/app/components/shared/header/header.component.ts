@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MockedAuthService } from '../../services/auth/mocked-auth.service';
+import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 import { Router } from '@angular/router';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, computed, inject} from '@angular/core';
-import { HeaderComponent } from '../../header/header.component';
+import { HeaderComponent } from '../../shared/header/header.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -15,7 +15,7 @@ import { Materia } from '../../../models/materia/materia.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { DialogComponent } from '../../dialog/dialog.component';
+import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 
 @Component({

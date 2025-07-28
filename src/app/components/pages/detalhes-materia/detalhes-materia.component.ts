@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractMateriaService } from '../../../services/materia/abstract-materia.service';
 import { AbstractInstituicaoService } from '../../../services/instituicao/abstract-instituicao.service';
-import { HeaderComponent } from '../../header/header.component';
+import { HeaderComponent } from '../../shared/header/header.component';
 import { Materia } from '../../../models/materia/materia.model';
 import { Instituicao } from '../../../models/instituicao/instituicao.model';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { DialogComponent } from '../../dialog/dialog.component';
+import { DialogComponent } from '../../shared/dialog/dialog.component';
 
 @Component({
   selector: 'app-detalhes-materia',
