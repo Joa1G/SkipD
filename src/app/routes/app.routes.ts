@@ -7,6 +7,7 @@ import { DetalhesMateriaComponent } from '../components/pages/detalhes-materia/d
 import { authGuard, guestGuard } from '../guards/auth.guard';
 import { materiaGuard } from '../guards/materia.guard';
 import { AddInstituicaoComponent } from '../components/pages/add-instituicao/add-instituicao.component';
+import { InsightsComponent } from '../components/pages/insights/insights.component';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,11 @@ export const routes: Routes = [
     path: 'edit-materia/:id',
     component: AddMateriaComponents,
     canActivate: [authGuard, materiaGuard],
+  },
+  {
+    path: 'insights',
+    component: InsightsComponent,
+    canActivate: [authGuard],
   },
   {
     path: '',

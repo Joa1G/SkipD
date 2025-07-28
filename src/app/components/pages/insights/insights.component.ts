@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-insights.component',
-  imports: [],
+  selector: 'app-insights',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './insights.component.html',
-  styleUrl: './insights.component.scss'
+  styleUrls: ['./insights.component.scss'],
 })
 export class InsightsComponent {
 

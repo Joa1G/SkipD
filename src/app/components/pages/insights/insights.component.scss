@@ -1,0 +1,114 @@
+$font-color: #C0A6FA;
+$font-main: "Roboto", sans-serif;
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #e0e0e0;
+$color-muted: #a0a0b0;
+$transition-speed: 0.3s;
+$transition-ease: ease-in-out;
+$radius: 12px;
+$radius-sm: 6px;
+
+.insights-container {
+  width: 80%;
+  margin: 20px auto;
+  font-family: $font-main;
+  color: $font-color;
+}
+
+.header-cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+
+  .card {
+    flex: 1;
+    background-color: $color-bg-dark;
+    border-radius: $radius;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
+
+    h3 {
+      color: $color-primary;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 0.9rem;
+      color: $color-text;
+      font-weight: 400;
+    }
+  }
+
+  .pattern-analysis {
+    color: #bb86fc;
+  }
+
+  .secure-window {
+    color: #c7d8a7;
+  }
+}
+
+.calendar-section {
+  h2 {
+    margin-bottom: 15px;
+    color: $color-primary;
+  }
+
+  .calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: $color-bg-dark;
+    border-radius: $radius;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+    th, td {
+      padding: 12px 8px;
+      border: 1px solid $color-border;
+      text-align: center;
+      font-size: 0.85rem;
+      color: $color-text;
+      vertical-align: top;
+      min-width: 90px;
+    }
+
+    thead {
+      background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
+
+      th {
+        color: white;
+        font-weight: 700;
+      }
+    }
+
+    tbody {
+      tr:hover {
+        background-color: $color-bg-light;
+      }
+
+      .event {
+        background-color: $color-bg-light;
+        margin: 4px 0;
+        padding: 4px 6px;
+        border-radius: $radius-sm;
+        color: $font-color;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .event.warning {
+        background: linear-gradient(90deg, #d93a3a, #ff7f7f);
+        color: #fff;
+        font-weight: 700;
+      }
+    }
+  }
+}
