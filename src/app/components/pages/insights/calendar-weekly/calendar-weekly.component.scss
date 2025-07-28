@@ -1,0 +1,70 @@
+@use "sass:color";
+
+$font-color: #C0A6FA;
+$font-main: "Roboto", sans-serif;
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #e0e0e0;
+$color-muted: #a0a0b0;
+$radius: 12px;
+$radius-sm: 6px;
+
+.calendar-section {
+  margin-top: 40px;
+
+  h2 {
+    color: $color-primary;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: $color-bg-dark;
+    border-radius: $radius;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+    th, td {
+      padding: 12px 8px;
+      border: 1px solid $color-border;
+      text-align: center;
+      font-size: 0.85rem;
+      color: $color-text;
+      vertical-align: top;
+      min-width: 90px;
+    }
+
+    thead {
+      background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
+
+      th {
+        color: white;
+        font-weight: 700;
+      }
+    }
+
+    .event {
+      background-color: $color-bg-light;
+      margin: 4px 0;
+      padding: 4px 6px;
+      border-radius: $radius-sm;
+      color: $font-color;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .event.warning {
+      background: linear-gradient(90deg, #d93a3a, #ff7f7f);
+      color: #fff;
+      font-weight: 700;
+    }
+  }
+}
