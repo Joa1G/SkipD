@@ -63,6 +63,7 @@ export class AddMateriaComponents{
   showCancelDialog = false;
   showSubmitDialog = false;
   isEditMode = false;
+  currentRoute = '';
 
   form = new FormGroup({
     id: new FormControl<number | null>(null),
@@ -100,24 +101,67 @@ export class AddMateriaComponents{
 
    ngOnInit(): void {
     this.loadUserInstituicoes();
-    const idParam = this.route.snapshot.paramMap.get('id')
-    console.log(idParam)
-    const id = Number(idParam)
+    this.identifyRoute();
+    this.handleRouteParams();
+  }
 
-    if(idParam){
-      this.serviceMateria.getMateriaById(id).subscribe(result => {
-        if (result.success && result.data) {
-          this.form.patchValue(result.data);
+  private identifyRoute(): void {
+    const url = this.router.url;
 
-          this.aulasSemanaData = result.data.aulasDaSemana;
-          this.applyAulasSemanaToForm(this.aulasSemanaData);
+    if (url.includes('/edit-materia')) {
+      this.currentRoute = 'edit';
+      this.isEditMode = true;
+    } else if (url.includes('/add-materia')) {
+      this.currentRoute = 'add';
+      this.isEditMode = false;
+    } else {
+      this.currentRoute = 'unknown';
+    }
+  }
 
-          this.isEditMode = true;
-        }else {
+  private handleRouteParams(): void {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    console.log('ID Param:', idParam, ' Current Route:', this.currentRoute);
+
+    if (idParam) {
+      const id = Number(idParam);
+
+      switch (this.currentRoute) {
+        case 'edit':
+          this.loadMateriaForEdit(id);
+          break;
+        case 'add':
+          this.loadInstituicaoForAdd(id);
+          break;
+        default:
+          console.warn('Rota não reconhecida:', this.currentRoute);
           this.router.navigate(['/home']);
-        }
-      })
       }
+    }
+  }
+
+  private loadMateriaForEdit(id: number): void {
+    this.serviceMateria.getMateriaById(id).subscribe(result => {
+      if (result.success && result.data) {
+        this.form.patchValue(result.data);
+        this.aulasSemanaData = result.data.aulasDaSemana;
+        this.applyAulasSemanaToForm(this.aulasSemanaData);
+        this.isEditMode = true;
+      } else {
+        console.error('Erro ao carregar a matéria:', result.data || 'Dados não encontrados.');
+        this.router.navigate(['/home']);
+      }
+    });
+  }
+
+  private loadInstituicaoForAdd(id: number): void {
+    this.serviceInstituicao.getInstituicaoById(id).subscribe(result => {
+      if (result.success && result.data) {
+        this.form.patchValue({ idInstituicao: result.data.id });
+      } else {
+        console.error('Erro ao carregar a instituição:', result.data || 'Dados não encontrados.');
+      }
+    });
   }
 
   private async loadUserInstituicoes() {
@@ -211,7 +255,16 @@ export class AddMateriaComponents{
     return materia;
   }
 
+
   async onSubmit(): Promise<void> {
+    if (this.currentRoute === 'edit') {
+      await this.onSubmitEdit();
+    } else {
+      await this.onSubmitAdd();
+    }
+  }
+
+  async onSubmitAdd(): Promise<void> {
       this.submitted = true;
       if (this.form.invalid) {
         return;

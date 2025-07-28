@@ -24,7 +24,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'add-materia',
+    path: 'add-materia/:id',
     component: AddMateriaComponents,
     canActivate: [authGuard],
   },
