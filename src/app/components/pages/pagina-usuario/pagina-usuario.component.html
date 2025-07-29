@@ -1,1 +1,48 @@
 <app-header></app-header>
+<div class="user-profile-container">
+  <div class="profile-content">
+    <h1 class="page-title">Perfil do Usuário</h1>
+
+    <div class="profile-avatar">
+      <div class="avatar-circle">
+        <mat-icon class="user-icon">person</mat-icon>
+      </div>
+      <div class="camera-icon">
+        <mat-icon>camera_alt</mat-icon>
+      </div>
+    </div>
+
+    <h2 class="user-name">Thayná Beatriz</h2>
+
+    <div class="menu-options">
+      <button class="privacy-link">
+        Configurações de Privacidade
+      </button>
+
+      <button class="menu-button primary">
+        <mat-icon class="school-icon">school</mat-icon>
+        Gerenciar Instituições
+      </button>
+
+      <button class="menu-button premium">
+        <mat-icon class="crown-icon">diamond</mat-icon>
+        Torne-se Premium
+      </button>
+    </div>
+
+    <button class="logout-button" (click)="showLogoutDialog()">
+      <mat-icon class="logout-icon">logout</mat-icon>
+      Sair
+    </button>
+  </div>
+</div>
+
+<app-dialog
+  [title]="'Confirmação'"
+  [message]="'Você tem certeza que deseja sair?'"
+  [confirmText]="'Sair'"
+  [dialogType]="'warning'"
+  [isVisible]="isDialogVisible"
+  (isVisibleChange)="isDialogVisible = $event"
+  (confirmAction)="logout()"
+></app-dialog>

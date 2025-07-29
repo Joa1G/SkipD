@@ -22,6 +22,7 @@ export class DialogComponent {
   @Output() confirmAction = new EventEmitter<boolean>();
 
   isExcluirDialog: boolean = false;
+  isLogoutDialog: boolean = false;
   router = inject(Router);
   private location = inject(Location);
 
@@ -32,6 +33,8 @@ export class DialogComponent {
   setExcluirDialog() {
     if (this.confirmText === 'Excluir') {
       this.isExcluirDialog = true;
+    } else if (this.confirmText === 'Sair') {
+      this.isLogoutDialog = true;
     }
   }
 
@@ -54,6 +57,10 @@ export class DialogComponent {
   emitConfirmAction() {
     this.confirmAction.emit(true);
     this.location.back();
+  }
+
+  emitConfirmActionInLogout(){
+    this.confirmAction.emit(true);
   }
 
 
