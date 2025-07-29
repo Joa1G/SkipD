@@ -14,7 +14,12 @@
       routerLink="/usuario"
       matTooltip="Ver Perfil"
       aria-label="Link para a página de perfil do usuário"
-      class="profile-link"> <mat-icon class="user-profile-button">account_circle</mat-icon>
+      class="profile-link">
+      @if(this.urlImage === ''){
+        <mat-icon class="user-profile-button">account_circle</mat-icon>
+      } @else {
+        <img [src]="this.urlImage" alt="User Photo" class="user-profile-image">
+      }
     </button>
   </div>
 </mat-toolbar>

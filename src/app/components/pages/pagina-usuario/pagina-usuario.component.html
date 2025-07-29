@@ -4,15 +4,19 @@
     <h1 class="page-title">Perfil do Usuário</h1>
 
     <div class="profile-avatar">
-      <div class="avatar-circle">
-        <mat-icon class="user-icon">person</mat-icon>
-      </div>
+      @if(urlImage === ''){
+        <div class="avatar-circle">
+          <mat-icon class="user-icon">person</mat-icon>
+        </div>
+      }@else {
+        <img src="{{ urlImage }}" alt="Foto do Usuário" class="camera-icon-img">
+      }
       <div class="camera-icon">
         <mat-icon>camera_alt</mat-icon>
       </div>
     </div>
 
-    <h2 class="user-name">Thayná Beatriz</h2>
+    <h2 class="user-name">{{ userName }}</h2>
 
     <div class="menu-options">
       <button class="privacy-link">

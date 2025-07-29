@@ -47,6 +47,14 @@ $radius-sm: 6px;
   position: relative;
   display: inline-block;
   margin-bottom: 1.5rem;
+  img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform $transition-speed $transition-ease;
+  }
 }
 
 .avatar-circle {
@@ -80,6 +88,7 @@ $radius-sm: 6px;
   justify-content: center;
   border: 2px solid #2d3748;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 
   mat-icon {
     width: 16px;

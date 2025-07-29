@@ -13,4 +13,5 @@ export abstract class AbstractUsuarioService {
   abstract getInstituicoesByUsuarioId(id: number): Observable<OperationResult>;
   abstract login(email: string, senha: string): Observable<OperationResult>;
   abstract changePremium(id: number): Observable<OperationResult>;
+  abstract getUrlFotoById(id: number): Observable<OperationResult>;
 }
