@@ -12,7 +12,7 @@
         <img src="{{ urlImage() }}" alt="Foto do Usuário" class="camera-icon-img">
       }
 
-      <div class="camera-icon edit">
+      <div class="camera-icon edit" (click)="showEditUrlPhotoDialog()">
         <mat-icon>edit</mat-icon>
       </div>
 
@@ -83,5 +83,34 @@
   (confirmAction)="deleteUrlPhoto()"
   [route]="['photo_delete']"
 ></app-dialog>
+
+@if(isEditUrlPhotoDialogVisible) {
+  <div class="dialog-overlay">
+
+    <div class="dialog-box" role="dialog" aria-modal="true" aria-labelledby="dialog-title-1">
+
+      <div class="dialog-header">
+        <h2 class="dialog-title" id="dialog-title-1">Adicionar Foto do Usuário</h2>
+      </div>
+
+      <div class="dialog-content">
+        <form [formGroup]="formUrl">
+          <label for="url">URL da Foto:</label>
+          <input id="url" formControlName="url" type="text" placeholder="Insira a URL da foto" required>
+          @if (formUrl.get('url')?.invalid && formUrl.get('url')?.touched){
+            <div class="error-message">
+              URL inválida. Por favor, insira uma URL válida.
+            </div>
+          }
+          <button type="submit" class="dialog-btn dialog-btn--confirm">Salvar</button>
+          <button type="button" class="dialog-btn dialog-btn--cancel" (click)="closeEditUrlPhotoDialog()">Cancelar</button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+}
+
 
 

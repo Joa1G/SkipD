@@ -6,10 +6,11 @@ import { Router } from '@angular/router';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { UserImageService } from '../../../services/urlState.service';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule, FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-pagina-usuario.component',
-  imports: [HeaderComponent, MatIcon, DialogComponent],
+  imports: [HeaderComponent, MatIcon, DialogComponent, ReactiveFormsModule, FormsModule],
   templateUrl: './pagina-usuario.component.html',
   styleUrl: './pagina-usuario.component.scss',
 })
@@ -22,14 +23,16 @@ export class PaginaUsuarioComponent {
   isDialogLogoutVisible = false;
   isDialogPremiumVisible = false;
   isDeleteUrlPhotoDialogVisible = false;
-  isCameraIconClicked = false;
+  isEditUrlPhotoDialogVisible = false;
 
   // Use o signal do serviço
   urlImage = this.userImageService.userImageUrl;
   userName: string = this.authService.currentUser()?.nome || 'Usuário';
-  isPremiumUser = computed(
-    () => this.authService.currentUser()?.isPremium ?? false
-  );
+  isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
+
+  formUrl = new FormGroup({
+    url: new FormControl('', [Validators.required])
+  });
 
   ngOnInit() {
     this.getUserUrlImage();
@@ -111,11 +114,23 @@ export class PaginaUsuarioComponent {
     }
   }
 
+  updateUrlPhoto(){
+
+  }
+
   showLogoutDialog() {
     this.isDialogLogoutVisible = true;
   }
 
   showDeleteUrlPhotoDialog() {
     this.isDeleteUrlPhotoDialogVisible = true;
+  }
+
+  showEditUrlPhotoDialog() {
+    this.isEditUrlPhotoDialogVisible = true;
+  }
+
+  closeEditUrlPhotoDialog() {
+    this.isEditUrlPhotoDialogVisible = false;
   }
 }
