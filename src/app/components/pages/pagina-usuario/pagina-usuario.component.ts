@@ -6,11 +6,23 @@ import { Router } from '@angular/router';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { UserImageService } from '../../../services/urlState.service';
-import { FormControl, FormGroup, Validators, ReactiveFormsModule, FormsModule} from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-pagina-usuario.component',
-  imports: [HeaderComponent, MatIcon, DialogComponent, ReactiveFormsModule, FormsModule],
+  imports: [
+    HeaderComponent,
+    MatIcon,
+    DialogComponent,
+    ReactiveFormsModule,
+    FormsModule,
+  ],
   templateUrl: './pagina-usuario.component.html',
   styleUrl: './pagina-usuario.component.scss',
 })
@@ -29,13 +41,19 @@ export class PaginaUsuarioComponent {
   // Use o signal do serviço
   urlImage = this.userImageService.userImageUrl;
   userName: string = this.authService.currentUser()?.nome || 'Usuário';
-  isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
+  isPremiumUser = computed(
+    () => this.authService.currentUser()?.isPremium ?? false
+  );
 
   formUrl = new FormGroup({
-    url: new FormControl('', [Validators.required])
+    url: new FormControl('', [Validators.required]),
   });
 
   ngOnInit() {
+    const user = this.authService.currentUser();
+    if (user && user.urlFoto) {
+      this.userImageService.updateUserImageUrl(user.urlFoto);
+    }
     this.getUserUrlImage();
   }
 
@@ -102,6 +120,9 @@ export class PaginaUsuarioComponent {
             console.log('User image URL deleted successfully');
             // Atualiza o serviço compartilhado
             this.userImageService.clearUserImageUrl();
+            // Atualiza o currentUser no authService
+            const updatedUser = { ...user, urlFoto: '' };
+            this.authService.updateCurrentUser(updatedUser);
           } else {
             console.error('Failed to delete user image URL:', result.message);
           }
@@ -115,25 +136,42 @@ export class PaginaUsuarioComponent {
     }
   }
 
-  submitUrlPhoto(){
+  submitUrlPhoto() {
     this.submitted = true;
     if (this.formUrl.valid) {
       const user = this.authService.currentUser();
       if (user) {
-        this.userService.updateUrlFoto(user.id, this.formUrl.value.url!).subscribe({
-          next: (result) => {
-            if (result.success) {
-              console.log('User image URL updated successfully');
-              this.userImageService.updateUserImageUrl(this.formUrl.value.url!);
-              this.closeEditUrlPhotoDialog();
-            } else {
-              console.error('Failed to update user image URL:', result.message);
-            }
-          },
-          error: (error) => {
-            console.error('Error updating user image URL:', error);
-          },
-        });
+        this.userService
+          .updateUrlFoto(user.id, this.formUrl.value.url!)
+          .subscribe({
+            next: (result) => {
+              if (result.success) {
+                console.log('User image URL updated successfully');
+
+                // Primeiro atualiza o currentUser no authService (persiste no localStorage)
+                const updatedUser = {
+                  ...user,
+                  urlFoto: this.formUrl.value.url!,
+                };
+                this.authService.updateCurrentUser(updatedUser);
+
+                // Depois atualiza o serviço de imagem
+                this.userImageService.updateUserImageUrl(
+                  this.formUrl.value.url!
+                );
+
+                this.closeEditUrlPhotoDialog();
+              } else {
+                console.error(
+                  'Failed to update user image URL:',
+                  result.message
+                );
+              }
+            },
+            error: (error) => {
+              console.error('Error updating user image URL:', error);
+            },
+          });
       } else {
         console.error('No user is currently logged in.');
       }

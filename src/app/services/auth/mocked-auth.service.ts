@@ -85,7 +85,7 @@ export class MockedAuthService {
       name: user.nome,
       isPremium: user.isPremium,
       iat: Math.floor(Date.now() / 1000),
-      exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60)
+      exp: Math.floor(Date.now() / 1000) + (30) // 30 seconds for mock purposes
     }));
     const signature = btoa('mockSignature');
 
