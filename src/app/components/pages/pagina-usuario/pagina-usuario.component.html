@@ -5,11 +5,15 @@
 
     <div class="profile-avatar">
       @if(urlImage() === ''){
-        <div class="avatar-circle">
-          <mat-icon class="user-icon">person</mat-icon>
-        </div>
+      <div class="avatar-circle">
+        <mat-icon class="user-icon">person</mat-icon>
+      </div>
       }@else {
-        <img src="{{ urlImage() }}" alt="Foto do Usuário" class="camera-icon-img">
+      <img
+        src="{{ urlImage() }}"
+        alt="Foto do Usuário"
+        class="camera-icon-img"
+      />
       }
 
       <div class="camera-icon edit" (click)="showEditUrlPhotoDialog()">
@@ -17,11 +21,10 @@
       </div>
 
       @if(urlImage() !== ''){
-        <div class="camera-icon delete" (click)="showDeleteUrlPhotoDialog()">
-          <mat-icon>delete</mat-icon>
-        </div>
+      <div class="camera-icon delete" (click)="showDeleteUrlPhotoDialog()">
+        <mat-icon>delete</mat-icon>
+      </div>
       }
-
     </div>
 
     <h2 class="user-name">{{ userName }}</h2>
@@ -38,10 +41,10 @@
       </button>
 
       @if(!isPremiumUser()){
-        <button class="menu-button premium" (click)="changePremiumStateOfUser()">
-          <mat-icon class="crown-icon">diamond</mat-icon>
-          Torne-se Premium
-        </button>
+      <button class="menu-button premium" (click)="changePremiumStateOfUser()">
+        <mat-icon class="crown-icon">diamond</mat-icon>
+        Torne-se Premium
+      </button>
       }
     </div>
 
@@ -85,32 +88,50 @@
 ></app-dialog>
 
 @if(isEditUrlPhotoDialogVisible) {
-  <div class="dialog-overlay">
-
-    <div class="dialog-box" role="dialog" aria-modal="true" aria-labelledby="dialog-title-1">
-
-      <div class="dialog-header">
-        <h2 class="dialog-title" id="dialog-title-1">Adicionar Foto do Usuário</h2>
-      </div>
-
-      <div class="dialog-content">
-        <form [formGroup]="formUrl">
-          <label for="url">URL da Foto:</label>
-          <input id="url" formControlName="url" type="text" placeholder="Insira a URL da foto" required>
-          @if (formUrl.get('url')?.invalid && formUrl.get('url')?.touched){
-            <div class="error-message">
-              URL inválida. Por favor, insira uma URL válida.
-            </div>
-          }
-          <button type="submit" class="dialog-btn dialog-btn--confirm">Salvar</button>
-          <button type="button" class="dialog-btn dialog-btn--cancel" (click)="closeEditUrlPhotoDialog()">Cancelar</button>
-        </form>
-      </div>
-
+<div class="dialog-overlay">
+  <div
+    class="dialog-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="dialog-title-1"
+  >
+    <div class="dialog-header">
+      <h2 class="dialog-title" id="dialog-title-1">
+        Adicionar Foto do Usuário
+      </h2>
     </div>
 
+    <div class="dialog-content">
+      <form [formGroup]="formUrl" (ngSubmit)="submitUrlPhoto()">
+        <div>
+          <label for="url">URL da Foto:</label>
+          <input
+            id="url"
+            formControlName="url"
+            type="text"
+            placeholder="Insira a URL da foto"
+            required
+          />
+          @if(formUrl.get('url')?.invalid && submitted) {
+            <div class="error-message">
+              URL é obrigatório
+            </div>
+          }
+        </div>
+        <div style="display: flex; gap: 15px; margin-top: 30px">
+          <button
+          type="button"
+          class="dialog-btn dialog-btn--cancel"
+          (click)="closeEditUrlPhotoDialog()"
+          >
+          Cancelar
+        </button>
+        <button type="submit" class="dialog-btn dialog-btn--confirm">
+          Salvar
+        </button>
+        </div>
+      </form>
+    </div>
   </div>
+</div>
 }
-
-
-

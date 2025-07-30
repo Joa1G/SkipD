@@ -24,6 +24,7 @@ export class PaginaUsuarioComponent {
   isDialogPremiumVisible = false;
   isDeleteUrlPhotoDialogVisible = false;
   isEditUrlPhotoDialogVisible = false;
+  submitted = false;
 
   // Use o signal do serviço
   urlImage = this.userImageService.userImageUrl;
@@ -114,8 +115,29 @@ export class PaginaUsuarioComponent {
     }
   }
 
-  updateUrlPhoto(){
-
+  submitUrlPhoto(){
+    this.submitted = true;
+    if (this.formUrl.valid) {
+      const user = this.authService.currentUser();
+      if (user) {
+        this.userService.updateUrlFoto(user.id, this.formUrl.value.url!).subscribe({
+          next: (result) => {
+            if (result.success) {
+              console.log('User image URL updated successfully');
+              this.userImageService.updateUserImageUrl(this.formUrl.value.url!);
+              this.closeEditUrlPhotoDialog();
+            } else {
+              console.error('Failed to update user image URL:', result.message);
+            }
+          },
+          error: (error) => {
+            console.error('Error updating user image URL:', error);
+          },
+        });
+      } else {
+        console.error('No user is currently logged in.');
+      }
+    }
   }
 
   showLogoutDialog() {
@@ -132,5 +154,7 @@ export class PaginaUsuarioComponent {
 
   closeEditUrlPhotoDialog() {
     this.isEditUrlPhotoDialogVisible = false;
+    this.formUrl.reset();
+    this.submitted = false;
   }
 }
