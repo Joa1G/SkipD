@@ -13,7 +13,10 @@
           <td *ngFor="let eventosDia of eventos">
             <div *ngFor="let evento of eventosDia"
                  class="event"
-                 [ngClass]="{ 'warning': evento.includes('Redes') || evento.includes('Inteligência') }">
+                 [ngClass]="{ 
+                  'failed': evento.includes('Engenharia'),
+                  'warning': evento.includes('Programação'),
+                  'sucess': evento.includes('Matemática') || evento.includes('Desenvolvimento')}">
               {{ evento }}
             </div>
           </td>

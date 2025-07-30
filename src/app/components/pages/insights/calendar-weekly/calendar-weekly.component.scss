@@ -62,11 +62,24 @@ $radius-sm: 6px;
       text-overflow: ellipsis;
     }
 
-    .event.warning {
+    .event.failed {
       background: linear-gradient(90deg, #d93a3a, #ff7f7f);
       color: #fff;
       font-weight: 700;
     }
+
+    .event.warning {
+      background: linear-gradient(90deg, #ffcc00, #ffe680);
+      color: #333;
+      font-weight: 700;
+    }
+
+    .event.success {
+      background: linear-gradient(90deg, #6ad48f, #a0e58d);
+      color: #fff;
+      font-weight: 700;
+    }
+
   }
 }
 

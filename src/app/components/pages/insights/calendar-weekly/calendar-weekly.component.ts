@@ -13,11 +13,11 @@ export class CalendarWeeklyComponent {
 
   eventos = [
     [], // Dom
-    ['Desenvolvimento Web Full Stack', 'Algoritmo e Estrutura de Dados I', 'Cálculo I'],
-    ['Desenvolvimento Web Full Stack', 'Algoritmo e Estrutura de Dados I', 'Cálculo I'],
-    ['Redes de Computadores'],
-    ['Desenvolvimento Web Full Stack', 'Inteligência Artificial'],
-    ['Desenvolvimento Web Full Stack', 'Banco de Dados'],
+    [],
+    ['Programação Orientada a Objetos'],
+    ['Matemática Discreta', 'Engenharia de Software', 'Desenvolvimento Web Full Stack'],
+    ['Programação Orientada a Objetos', 'Engenharia de Software', 'Desenvolvimento Web Full Stack'],
+    ['Engenharia de Software', 'Desenvolvimento Web Full Stack'],
     [] // Sáb
   ];
 }
