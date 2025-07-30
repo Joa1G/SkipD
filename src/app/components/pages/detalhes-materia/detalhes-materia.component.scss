@@ -86,6 +86,9 @@ $color-title-accent: #c0a6fa;
   font-size: 2rem;
   height: 2rem;
   width: 2rem;
+  &:hover {
+    color: #a78bfa;
+  }
 }
 
 .details-body {

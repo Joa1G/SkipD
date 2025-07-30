@@ -1,4 +1,4 @@
-$font-color: #C0A6FA;
+$font-color: #c0a6fa;
 $font-main: "Roboto", sans-serif;
 $color-primary: #8a2be2;
 $color-gradient-start: #4a00e0;
@@ -55,6 +55,9 @@ $radius-sm: 6px;
   font-size: 2rem;
   height: 2rem;
   width: 2rem;
+  &:hover {
+    color: #a78bfa;
+  }
 }
 
 .page-title {
@@ -175,7 +178,7 @@ $radius-sm: 6px;
   font-weight: 700;
   cursor: pointer;
   transition: transform $transition-speed $transition-ease,
-  box-shadow $transition-speed $transition-ease;
+    box-shadow $transition-speed $transition-ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -188,11 +191,7 @@ $radius-sm: 6px;
   );
 
   &.premium {
-    background: linear-gradient(
-      90deg,
-      #f59e0b,
-      #fbbf24
-    );
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
     color: #000;
   }
   color: $color-text;
@@ -202,7 +201,6 @@ $radius-sm: 6px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
 }
-
 
 .crown-icon {
   width: 20px;
@@ -237,7 +235,7 @@ $radius-sm: 6px;
 .logout-icon {
   width: 18px;
   height: 18px;
-  font-size: 18px;;
+  font-size: 18px;
 }
 
 // Dialog styles
@@ -259,7 +257,8 @@ $radius-sm: 6px;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 
-  transition: opacity $transition-speed $transition-ease, visibility $transition-speed $transition-ease;
+  transition: opacity $transition-speed $transition-ease,
+    visibility $transition-speed $transition-ease;
 }
 
 .dialog-box {
@@ -287,6 +286,18 @@ $radius-sm: 6px;
 }
 
 .dialog-content {
+  color: $color-text;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+
+  p {
+    margin: 0;
+    text-align: center;
+    color: $color-muted;
+    font-size: 1.2rem;
+  }
+
   form {
     display: flex;
     flex-direction: column;
@@ -327,6 +338,13 @@ $radius-sm: 6px;
   }
 }
 
+.dialog-footer {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  justify-content: center;
+}
+
 .dialog-btn {
   flex: 1;
   padding: 14px;
@@ -337,11 +355,30 @@ $radius-sm: 6px;
   cursor: pointer;
   font-family: $font-main;
   transition: transform $transition-speed $transition-ease,
-  box-shadow $transition-speed $transition-ease;
+    box-shadow $transition-speed $transition-ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  &--delete {
+    background: linear-gradient(90deg, #dc2626, #ef4444);
+    color: white;
+
+    &:hover {
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+    }
   }
 
   &--confirm {
@@ -351,19 +388,39 @@ $radius-sm: 6px;
       $color-gradient-end
     );
     color: white;
-    margin-right: 7.5px;
+
+    &:hover {
+      box-shadow: 0 4px 15px rgba(74, 0, 224, 0.3);
+    }
   }
 
   &--cancel {
     background-color: $color-bg-light;
     color: white;
     border: 1px solid $color-border;
-    margin-left: 7.5px;
 
     &:hover {
       border: 1px solid $color-primary;
       background-color: rgba($color-primary, 0.1);
     }
+  }
+}
+
+.dialog-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: $color-muted;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $color-text;
   }
 }
 

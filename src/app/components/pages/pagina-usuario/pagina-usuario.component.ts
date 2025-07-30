@@ -38,6 +38,7 @@ export class PaginaUsuarioComponent {
   isDialogPremiumVisible = false;
   isDeleteUrlPhotoDialogVisible = false;
   isEditUrlPhotoDialogVisible = false;
+  changeUrlPhotoDialogVisible = false;
   submitted = false;
 
   // Use o signal do serviço
@@ -190,6 +191,10 @@ export class PaginaUsuarioComponent {
 
   showEditUrlPhotoDialog() {
     this.isEditUrlPhotoDialogVisible = true;
+  }
+
+  showChangeUrlPhotoDialog() {
+    this.changeUrlPhotoDialogVisible = true;
   }
 
   closeEditUrlPhotoDialog() {
