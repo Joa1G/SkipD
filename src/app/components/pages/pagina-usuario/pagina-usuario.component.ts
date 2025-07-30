@@ -13,6 +13,7 @@ import {
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-pagina-usuario.component',
@@ -30,6 +31,7 @@ export class PaginaUsuarioComponent {
   authService = inject(MockedAuthService);
   userService = inject(AbstractUsuarioService);
   private userImageService = inject(UserImageService);
+  private location = inject(Location)
 
   router = inject(Router);
   isDialogLogoutVisible = false;
@@ -194,5 +196,9 @@ export class PaginaUsuarioComponent {
     this.isEditUrlPhotoDialogVisible = false;
     this.formUrl.reset();
     this.submitted = false;
+  }
+
+  onClickBackArrow(){
+    this.location.back()
   }
 }

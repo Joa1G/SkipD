@@ -6,7 +6,7 @@ import { HeaderComponent } from '../../shared/header/header.component';
 import { Materia } from '../../../models/materia/materia.model';
 import { Instituicao } from '../../../models/instituicao/instituicao.model';
 import { firstValueFrom } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 import { MatIcon } from '@angular/material/icon';
@@ -28,6 +28,7 @@ export class DetalhesMateriaComponent {
   private authService = inject(MockedAuthService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private location = inject(Location)
 
   showDeleteDialog: boolean = false;
   showEditDialog: boolean = false;
@@ -125,6 +126,8 @@ export class DetalhesMateriaComponent {
     this.showEditDialog = true;
   };
 
-
+  onClickBackArrow(){
+    this.location.back()
+  }
 
 }

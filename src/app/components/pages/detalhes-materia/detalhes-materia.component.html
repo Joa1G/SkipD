@@ -3,7 +3,10 @@
   <div class="content">
     <div class="details-card">
       <header class="details-header">
-        <h1>Detalhes da Matéria</h1>
+        <div class="details-title">
+          <mat-icon class="back-icon" (click)="onClickBackArrow()">arrow_back_ios</mat-icon>
+          <h1>Detalhes da Matéria</h1>
+        </div>
         <h2>{{ materia!.nome }}</h2>
       </header>
 

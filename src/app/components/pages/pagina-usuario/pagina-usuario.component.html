@@ -1,7 +1,10 @@
 <app-header></app-header>
 <div class="user-profile-container">
   <div class="profile-content">
-    <h1 class="page-title">Perfil do Usuário</h1>
+    <div class="profile-header">
+      <mat-icon class="back-icon" (click)="onClickBackArrow()">arrow_back_ios</mat-icon>
+      <h1 class="page-title">Perfil do Usuário</h1>
+    </div>
 
     <div class="profile-avatar">
       @if(urlImage() === ''){
@@ -32,7 +35,7 @@
     <div class="menu-options">
       <button class="menu-button primary">
         <mat-icon class="school-icon">settings</mat-icon>
-        Configurações do Usuário
+        Configurações de Conta
       </button>
 
       <button class="menu-button primary">

@@ -35,12 +35,34 @@ $radius-sm: 6px;
   align-items: center;
 }
 
+.profile-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  min-height: 2rem;
+  width: 100%;
+}
+
+.back-icon {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $color-text;
+  cursor: pointer;
+  font-size: 2rem;
+  height: 2rem;
+  width: 2rem;
+}
+
 .page-title {
   font-size: 2rem;
   font-weight: 600;
-  margin-bottom: 3rem;
   color: #a78bfa;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 0 auto;
 }
 
 .profile-avatar {

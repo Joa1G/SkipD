@@ -40,7 +40,6 @@ export class HeaderComponent {
       this.userService.getUrlFotoById(user.id).subscribe({
         next: (result) => {
           if (result.success && result.data) {
-            console.log('User image URL:', result.data);
             this.userImageService.updateUserImageUrl(result.data);
           } else {
             console.error('Failed to get user image URL:', result.message);
