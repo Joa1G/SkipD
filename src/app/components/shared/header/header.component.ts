@@ -7,6 +7,7 @@ import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 import { Router } from '@angular/router';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { UserImageService } from '../../../services/urlState.service';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,8 @@ import { UserImageService } from '../../../services/urlState.service';
     CommonModule,
     RouterModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    DialogComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -26,6 +28,7 @@ export class HeaderComponent {
   urlImage = this.userImageService.userImageUrl;
 
   isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
+  showPremiumDialog = false;
 
   ngOnInit() {
     this.getUserUrlImage();
@@ -54,4 +57,9 @@ export class HeaderComponent {
       this.userImageService.clearUserImageUrl();
     }
   }
+
+  showPremiumMessage() {
+    this.showPremiumDialog = true;
+  }
+  
 }
