@@ -7,7 +7,7 @@ import { firstValueFrom } from 'rxjs';
 import { MockedAuthService } from '../../../../services/auth/mocked-auth.service';
 import { MatIcon } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { DialogComponent } from "../../../shared/dialog/dialog.component";
+import { DialogComponent } from "../../../shared/dialogs/dialog.component";
 
 @Component({
   selector: 'app-instituicoes-list',

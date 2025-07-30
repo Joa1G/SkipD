@@ -7,7 +7,7 @@ import { AbstractInstituicaoService } from '../../../services/instituicao/abstra
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { firstValueFrom } from 'rxjs';
 import { Instituicao } from '../../../models/instituicao/instituicao.model';
-import { DialogComponent } from '../../shared/dialog/dialog.component';
+import { DialogComponent } from '../../shared/dialogs/dialog.component';
 
 export const passwordMatchValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
   const password = group.get('password')?.value;

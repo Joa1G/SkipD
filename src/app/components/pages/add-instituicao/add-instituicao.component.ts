@@ -7,7 +7,7 @@ import { AbstractInstituicaoService } from '../../../services/instituicao/abstra
 import { Instituicao } from '../../../models/instituicao/instituicao.model';
 import { firstValueFrom } from 'rxjs';
 import { RouterModule } from '@angular/router';
-import { DialogComponent } from '../../shared/dialog/dialog.component';
+import { DialogComponent } from '../../shared/dialogs/dialog.component';
 
 @Component({
   selector: 'app-add-instituicao.component',

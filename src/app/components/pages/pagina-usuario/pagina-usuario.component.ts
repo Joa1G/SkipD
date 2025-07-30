@@ -3,7 +3,7 @@ import { HeaderComponent } from '../../shared/header/header.component';
 import { MatIcon } from '@angular/material/icon';
 import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 import { Router } from '@angular/router';
-import { DialogComponent } from '../../shared/dialog/dialog.component';
+import { DialogComponent } from '../../shared/dialogs/dialog.component';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { UserImageService } from '../../../services/urlState.service';
 import {

@@ -4,10 +4,9 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
-import { Router } from '@angular/router';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { UserImageService } from '../../../services/urlState.service';
-import { DialogComponent } from '../dialog/dialog.component';
+import { PremiumDialogComponent } from '../dialogs/premium-dialog/premium-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +15,7 @@ import { DialogComponent } from '../dialog/dialog.component';
     RouterModule,
     MatIconModule,
     MatToolbarModule,
-    DialogComponent
+    PremiumDialogComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'

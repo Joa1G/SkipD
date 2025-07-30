@@ -7,7 +7,7 @@ import { Materia } from '../../../models/materia/materia.model';
 import { Instituicao } from '../../../models/instituicao/instituicao.model';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
-import { DialogComponent } from '../../shared/dialog/dialog.component';
+import { DialogComponent } from '../../shared/dialogs/dialog.component';
 import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 import { MatIcon } from '@angular/material/icon';
 

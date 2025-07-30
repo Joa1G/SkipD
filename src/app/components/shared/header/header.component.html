@@ -32,12 +32,6 @@
   </div>
 </mat-toolbar>
 
-<app-dialog
-  [title]="'Esta funcionalidade é exclusiva para usuários premium!'"
-  [message]="'Deseja se tornar um usuário premium?'"
-  [confirmText]="'Sim'"
-  [dialogType]="'logo'"
-  [isVisible]="showPremiumDialog"
-  (isVisibleChange)="showPremiumDialog = $event"
-  [route]="['/usuario']"
-></app-dialog>
+@if(showPremiumDialog){
+  <app-premium-dialog></app-premium-dialog>
+}
