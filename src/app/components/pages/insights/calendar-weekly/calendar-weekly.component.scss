@@ -19,43 +19,44 @@ $radius-sm: 6px;
   h2 {
     color: $color-primary;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    border-radius: $radius;
+    background-color: $color-bg-dark;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   }
 
   .calendar-table {
     width: 100%;
+    min-width: 700px;
     border-collapse: collapse;
-    background-color: $color-bg-dark;
-    border-radius: $radius;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 
-    th, td {
-      padding: 12px 8px;
-      border: 1px solid $color-border;
-      text-align: center;
-      font-size: 0.85rem;
-      color: $color-text;
-      vertical-align: top;
-      min-width: 90px;
+    thead th {
+      background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
+      color: #fff;
+      padding: 12px;
+      font-size: 0.95rem;
     }
 
-    thead {
-      background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
-
-      th {
-        color: white;
-        font-weight: 700;
-      }
+    td {
+      padding: 12px;
+      border: 1px solid $color-border;
+      vertical-align: top;
+      min-height: 80px;
     }
 
     .event {
       background-color: $color-bg-light;
-      margin: 4px 0;
-      padding: 4px 6px;
+      margin: 6px 0;
+      padding: 6px 8px;
       border-radius: $radius-sm;
       color: $font-color;
       font-weight: 500;
+      font-size: 0.85rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -68,3 +69,4 @@ $radius-sm: 6px;
     }
   }
 }
+

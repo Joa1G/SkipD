@@ -1,38 +1,24 @@
 <section class="calendar-section">
   <h2>Calendário Semanal</h2>
 
-  <table class="calendar-table">
-    <thead>
-      <tr>
-        <th *ngFor="let dia of dias">{{ dia }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td></td>
-        <td>
-          <div class="event">Desenvolvimento Web Full Stack</div>
-          <div class="event">Algoritmo e Estrutura de Dados I</div>
-          <div class="event">Cálculo I</div>
-        </td>
-        <td>
-          <div class="event">Desenvolvimento Web Full Stack</div>
-          <div class="event">Algoritmo e Estrutura de Dados I</div>
-          <div class="event">Cálculo I</div>
-        </td>
-        <td>
-          <div class="event warning">Redes de Computadores</div>
-        </td>
-        <td>
-          <div class="event">Desenvolvimento Web Full Stack</div>
-          <div class="event warning">Inteligência Artificial</div>
-        </td>
-        <td>
-          <div class="event">Desenvolvimento Web Full Stack</div>
-          <div class="event">Banco de Dados</div>
-        </td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-container">
+    <table class="calendar-table">
+      <thead>
+        <tr>
+          <th *ngFor="let dia of dias">{{ dia }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td *ngFor="let eventosDia of eventos">
+            <div *ngFor="let evento of eventosDia"
+                 class="event"
+                 [ngClass]="{ 'warning': evento.includes('Redes') || evento.includes('Inteligência') }">
+              {{ evento }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </section>
