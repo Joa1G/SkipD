@@ -1,19 +1,30 @@
 <div class="dialog-overlay">
 
-  <div class="dialog-box" role="dialog" aria-modal="true" aria-labelledby="dialog-title-1">
+  <div class="dialog-box --logo" role="dialog" aria-modal="true" aria-labelledby="dialog-title-1">
 
-    <button class="dialog-close-btn" aria-label="Fechar">&times;</button>
+    <button class="dialog-close-btn" aria-label="Fechar" (click)="closeDialog()">&times;</button>
 
     <div class="dialog-icon">
         SkipD
     </div>
 
     <div class="dialog-header">
-      <h2 class="dialog-title" id="dialog-title-1">Funcionalidade exclusiva para usuários premium</h2>>
+      <h2 class="dialog-title" id="dialog-title-1">Funcionalidade exclusiva para usuários premium</h2>
     </div>
 
     <div class="dialog-footer">
-      <button class="dialog-btn dialog-btn--confirm">Torna-se Premium</button>
+      <button class="dialog-btn dialog-btn--confirm" (click)="changePremiumStateOfUser()"> <mat-icon>diamond</mat-icon> Torne-se Premium</button>
     </div>
   </div>
 </div>
+
+<app-dialog
+  [title]="'Obrigado por se tornar Premium!'"
+  [message]="'Sua conta agora tem acesso a recursos exclusivos.'"
+  [confirmText]="'OK'"
+  [dialogType]="'logo'"
+  [isVisible]="isDialogPremiumVisible"
+  (isVisibleChange)="closeDialog()"
+  [showCancelButton]="false"
+  [route]="['premium']"
+></app-dialog>

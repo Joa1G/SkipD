@@ -33,5 +33,7 @@
 </mat-toolbar>
 
 @if(showPremiumDialog){
-  <app-premium-dialog></app-premium-dialog>
+  <app-premium-dialog
+    (visibleChange)="showPremiumDialog = $event"
+  ></app-premium-dialog>
 }

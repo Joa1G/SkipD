@@ -8,10 +8,11 @@ import { MockedAuthService } from '../../../../services/auth/mocked-auth.service
 import { MatIcon } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { DialogComponent } from "../../../shared/dialogs/dialog.component";
+import { PremiumDialogComponent } from "../../../shared/dialogs/premium-dialog/premium-dialog.component";
 
 @Component({
   selector: 'app-instituicoes-list',
-  imports: [CommonModule, MateriasCardComponents, MatIcon, RouterModule, DialogComponent],
+  imports: [CommonModule, MateriasCardComponents, MatIcon, RouterModule, PremiumDialogComponent],
   templateUrl: './instituicoes-list.component.html',
   styleUrl: './instituicoes-list.component.scss',
 })
