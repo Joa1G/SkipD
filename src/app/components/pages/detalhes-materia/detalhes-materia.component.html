@@ -34,9 +34,10 @@
           Adicionar Falta
         </button>
 
+      @if(isPremiumUser()){
         <div class="weekly-schedule">
           <div class="schedule-title">
-            <span class="material-icons">calendar_today</span>
+            <mat-icon class="material-icons">calendar_today</mat-icon>
             <h3>Aulas na Semana</h3>
           </div>
           <div class="days-grid">
@@ -60,6 +61,18 @@
             }
           </div>
         </div>
+      }@else {
+        <div class="weekly-schedule">
+          <div class="schedule-title">
+            <mat-icon class="material-icons">diamond</mat-icon>
+            <h3>Aulas na Semana</h3>
+          </div>
+          <p class="premium-message">
+            <mat-icon>lock</mat-icon>
+            Acesso exclusivo para usuários <mat-icon>diamond</mat-icon>Premium.
+          </p>
+        </div>
+      }
       </main>
 
       <footer class="details-footer">

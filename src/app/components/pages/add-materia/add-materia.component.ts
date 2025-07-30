@@ -64,6 +64,7 @@ export class AddMateriaComponents{
   showSubmitDialog = false;
   isEditMode = false;
   currentRoute = '';
+  isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
 
   form = new FormGroup({
     id: new FormControl<number | null>(null),

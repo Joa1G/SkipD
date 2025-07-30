@@ -228,3 +228,16 @@ $color-title-accent: #c0a6fa;
     flex-grow: 1;
   }
 }
+
+.premium-message {
+  color: $color-muted;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  text-align: center;
+  mat-icon{
+    font-size: 0.9rem;
+    width: 0.9rem;
+    height: 0.9rem;
+    vertical-align: middle;
+  }
+}
