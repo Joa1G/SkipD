@@ -19,8 +19,9 @@
     <h2 class="user-name">{{ userName }}</h2>
 
     <div class="menu-options">
-      <button class="privacy-link">
-        Configurações de Privacidade
+      <button class="menu-button primary">
+        <mat-icon class="school-icon">settings</mat-icon>
+        Configurações
       </button>
 
       <button class="menu-button primary">
@@ -28,10 +29,12 @@
         Gerenciar Instituições
       </button>
 
-      <button class="menu-button premium">
-        <mat-icon class="crown-icon">diamond</mat-icon>
-        Torne-se Premium
-      </button>
+      @if(!isPremiumUser()){
+        <button class="menu-button premium" (click)="changePremiumStateOfUser()">
+          <mat-icon class="crown-icon">diamond</mat-icon>
+          Torne-se Premium
+        </button>
+      }
     </div>
 
     <button class="logout-button" (click)="showLogoutDialog()">
@@ -42,11 +45,22 @@
 </div>
 
 <app-dialog
-  [title]="'Confirmação'"
-  [message]="'Você tem certeza que deseja sair?'"
+  [title]="'Você tem certeza que deseja sair?'"
+  [message]="'Ao sair, você será desconectado da sua conta.'"
   [confirmText]="'Sair'"
   [dialogType]="'warning'"
-  [isVisible]="isDialogVisible"
-  (isVisibleChange)="isDialogVisible = $event"
+  [isVisible]="isDialogLogoutVisible"
+  (isVisibleChange)="isDialogLogoutVisible = $event"
   (confirmAction)="logout()"
+></app-dialog>
+
+<app-dialog
+  [title]="'Obrigado por se tornar Premium!'"
+  [message]="'Sua conta agora tem acesso a recursos exclusivos.'"
+  [confirmText]="'OK'"
+  [dialogType]="'logo'"
+  [isVisible]="isDialogPremiumVisible"
+  (isVisibleChange)="isDialogPremiumVisible = $event"
+  [showCancelButton]="false"
+  [route]="['premium']"
 ></app-dialog>

@@ -22,6 +22,8 @@ export class InstituicoesListComponents {
 
   authService = inject(MockedAuthService);
 
+  isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
+
   instituicoesDoUsuario = computed(() => {
     const currentUser = this.authService.currentUser();
     const todasInstituicoes = this.serviceInstituicao.instituicoes();

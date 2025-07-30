@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,6 +22,8 @@ export class HeaderComponent {
   private authService = inject(MockedAuthService);
   private userService = inject(AbstractUsuarioService);
   urlImage: string = '';
+
+  isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
 
   ngOnInit() {
     this.getUserUrlImage();

@@ -101,7 +101,7 @@ $radius-sm: 6px;
 .user-name {
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   color: white;
 }
 
@@ -134,7 +134,7 @@ $radius-sm: 6px;
   border: none;
   border-radius: $radius;
   font-family: $font-main;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
   transition: transform $transition-speed $transition-ease,

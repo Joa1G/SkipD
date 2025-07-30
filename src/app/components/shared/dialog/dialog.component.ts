@@ -49,6 +49,8 @@ export class DialogComponent {
   useRouter(){
     if(this.route[0] === ''){
       this.location.back();
+    }else if(this.route[0] === 'premium'){
+      this.isVisibleChange.emit(false);
     }else{
       this.router.navigate(this.route);
     }

@@ -146,6 +146,19 @@ export class MockedAuthService {
     }
   }
 
+  updateCurrentUser(user: Usuario): void {
+      // Atualiza o signal
+    this._currentUser.set(user);
+
+    // Também atualiza o BehaviorSubject para manter consistência
+    this.currentUserSubject.next(user);
+
+    // Atualiza o localStorage se estiver no browser
+    if (isPlatformBrowser(this.platformId)) {
+      this.setStorageItem('currentUser', JSON.stringify(user));
+    }
+  }
+
   refreshToken(): Observable<OperationResult> {
     return of({ success: false, status: 501, message: 'Método não implementado' });
   }

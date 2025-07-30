@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MatIcon } from '@angular/material/icon';
 import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
@@ -17,9 +17,11 @@ export class PaginaUsuarioComponent {
   userService = inject(AbstractUsuarioService);
 
   router = inject(Router);
-  isDialogVisible = false;
+  isDialogLogoutVisible = false;
+  isDialogPremiumVisible = false;
   urlImage: string = '';
   userName: string = this.authService.currentUser()?.nome || 'Usuário';
+  isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
 
   ngOnInit() {
     this.getUserUrlImage();
@@ -54,7 +56,31 @@ export class PaginaUsuarioComponent {
     this.router.navigate(['/login']);
   }
 
+  changePremiumStateOfUser() {
+  const user = this.authService.currentUser();
+  if (user) {
+    this.userService.changePremiumState(user.id).subscribe({
+      next: (result) => {
+        if (result.success) {
+          console.log('Premium state changed successfully');
+
+          this.authService.updateCurrentUser(result.data);
+
+          this.isDialogPremiumVisible = true;
+        } else {
+          console.error('Failed to change premium state:', result.message);
+        }
+      },
+      error: (error) => {
+        console.error('Error changing premium state:', error);
+      },
+    });
+  } else {
+    console.error('No user is currently logged in.');
+  }
+}
+
   showLogoutDialog() {
-    this.isDialogVisible = true;
+    this.isDialogLogoutVisible = true;
   }
 }
