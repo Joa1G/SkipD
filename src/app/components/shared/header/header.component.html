@@ -20,10 +20,10 @@
       matTooltip="Ver Perfil"
       aria-label="Link para a página de perfil do usuário"
       class="profile-link">
-      @if(this.urlImage === ''){
+      @if(urlImage() === ''){
         <mat-icon class="user-profile-button">account_circle</mat-icon>
       } @else {
-        <img [src]="this.urlImage" alt="User Photo" class="user-profile-image">
+        <img [src]="urlImage()" alt="User Photo" class="user-profile-image">
       }
     </button>
   </div>

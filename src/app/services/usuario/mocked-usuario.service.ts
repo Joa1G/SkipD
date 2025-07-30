@@ -252,4 +252,21 @@ export class MockedUsuarioService extends AbstractUsuarioService {
       });
     }
   }
+
+  override updateUrlFoto(id: number, urlFoto: string): Observable<OperationResult> {
+    try {
+      this._usuarios.update((usuarios) => {
+        const index = usuarios.findIndex((u) => u.id === id);
+        if (index !== -1) {
+          usuarios[index].urlFoto = urlFoto;
+          return [...usuarios];
+        } else {
+          throw new Error('Usuário não encontrado.');
+        }
+      });
+      return of({ success: true, status: 200, message: 'URL da foto atualizada com sucesso.' });
+    } catch (error) {
+      return of({ success: false, status: 500, data: error });
+    }
+  }
 }

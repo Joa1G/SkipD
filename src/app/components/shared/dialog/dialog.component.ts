@@ -58,7 +58,9 @@ export class DialogComponent {
 
   emitConfirmAction() {
     this.confirmAction.emit(true);
-    this.location.back();
+    if(this.route[0] !== 'photo_delete') {
+      this.location.back();
+    }
   }
 
   emitConfirmActionInLogout(){

@@ -5,6 +5,7 @@ import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 import { Router } from '@angular/router';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
+import { UserImageService } from '../../../services/urlState.service';
 
 @Component({
   selector: 'app-pagina-usuario.component',
@@ -15,13 +16,20 @@ import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuar
 export class PaginaUsuarioComponent {
   authService = inject(MockedAuthService);
   userService = inject(AbstractUsuarioService);
+  private userImageService = inject(UserImageService);
 
   router = inject(Router);
   isDialogLogoutVisible = false;
   isDialogPremiumVisible = false;
-  urlImage: string = '';
+  isDeleteUrlPhotoDialogVisible = false;
+  isCameraIconClicked = false;
+
+  // Use o signal do serviço
+  urlImage = this.userImageService.userImageUrl;
   userName: string = this.authService.currentUser()?.nome || 'Usuário';
-  isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
+  isPremiumUser = computed(
+    () => this.authService.currentUser()?.isPremium ?? false
+  );
 
   ngOnInit() {
     this.getUserUrlImage();
@@ -34,20 +42,20 @@ export class PaginaUsuarioComponent {
         next: (result) => {
           if (result.success && result.data) {
             console.log('User image URL:', result.data);
-            this.urlImage = result.data;
+            this.userImageService.updateUserImageUrl(result.data);
           } else {
             console.error('Failed to get user image URL:', result.message);
-            this.urlImage = '';
+            this.userImageService.clearUserImageUrl();
           }
         },
         error: (error) => {
           console.error('Error fetching user image:', error);
-          this.urlImage = '';
+          this.userImageService.clearUserImageUrl();
         },
       });
     } else {
       console.error('No user is currently logged in.');
-      this.urlImage = '';
+      this.userImageService.clearUserImageUrl();
     }
   }
 
@@ -57,30 +65,57 @@ export class PaginaUsuarioComponent {
   }
 
   changePremiumStateOfUser() {
-  const user = this.authService.currentUser();
-  if (user) {
-    this.userService.changePremiumState(user.id).subscribe({
-      next: (result) => {
-        if (result.success) {
-          console.log('Premium state changed successfully');
+    const user = this.authService.currentUser();
+    if (user) {
+      this.userService.changePremiumState(user.id).subscribe({
+        next: (result) => {
+          if (result.success) {
+            console.log('Premium state changed successfully');
 
-          this.authService.updateCurrentUser(result.data);
+            this.authService.updateCurrentUser(result.data);
 
-          this.isDialogPremiumVisible = true;
-        } else {
-          console.error('Failed to change premium state:', result.message);
-        }
-      },
-      error: (error) => {
-        console.error('Error changing premium state:', error);
-      },
-    });
-  } else {
-    console.error('No user is currently logged in.');
+            this.isDialogPremiumVisible = true;
+          } else {
+            console.error('Failed to change premium state:', result.message);
+          }
+        },
+        error: (error) => {
+          console.error('Error changing premium state:', error);
+        },
+      });
+    } else {
+      console.error('No user is currently logged in.');
+    }
   }
-}
+
+  deleteUrlPhoto() {
+    const user = this.authService.currentUser();
+    this.isDeleteUrlPhotoDialogVisible = false;
+    if (user) {
+      this.userService.updateUrlFoto(user.id, '').subscribe({
+        next: (result) => {
+          if (result.success) {
+            console.log('User image URL deleted successfully');
+            // Atualiza o serviço compartilhado
+            this.userImageService.clearUserImageUrl();
+          } else {
+            console.error('Failed to delete user image URL:', result.message);
+          }
+        },
+        error: (error) => {
+          console.error('Error deleting user image URL:', error);
+        },
+      });
+    } else {
+      console.error('No user is currently logged in.');
+    }
+  }
 
   showLogoutDialog() {
     this.isDialogLogoutVisible = true;
+  }
+
+  showDeleteUrlPhotoDialog() {
+    this.isDeleteUrlPhotoDialogVisible = true;
   }
 }

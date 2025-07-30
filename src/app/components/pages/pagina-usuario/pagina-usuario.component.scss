@@ -96,6 +96,21 @@ $radius-sm: 6px;
     font-size: 16px;
     color: white;
   }
+
+  &:hover {
+    background: #6b7280;
+    transform: scale(1.1);
+  }
+
+  &.edit {
+    bottom: 8px;
+  }
+
+  &.delete {
+    background: #ef4444;
+    left: 1px;
+    bottom: 8px;
+  }
 }
 
 .user-name {
@@ -149,6 +164,15 @@ $radius-sm: 6px;
     $color-gradient-start,
     $color-gradient-end
   );
+
+  &.premium {
+    background: linear-gradient(
+      90deg,
+      #f59e0b,
+      #fbbf24
+    );
+    color: #000;
+  }
   color: $color-text;
 
   &:hover {

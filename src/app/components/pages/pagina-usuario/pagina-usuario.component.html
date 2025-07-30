@@ -4,16 +4,24 @@
     <h1 class="page-title">Perfil do Usuário</h1>
 
     <div class="profile-avatar">
-      @if(urlImage === ''){
+      @if(urlImage() === ''){
         <div class="avatar-circle">
           <mat-icon class="user-icon">person</mat-icon>
         </div>
       }@else {
-        <img src="{{ urlImage }}" alt="Foto do Usuário" class="camera-icon-img">
+        <img src="{{ urlImage() }}" alt="Foto do Usuário" class="camera-icon-img">
       }
-      <div class="camera-icon">
-        <mat-icon>camera_alt</mat-icon>
+
+      <div class="camera-icon edit">
+        <mat-icon>edit</mat-icon>
       </div>
+
+      @if(urlImage() !== ''){
+        <div class="camera-icon delete" (click)="showDeleteUrlPhotoDialog()">
+          <mat-icon>delete</mat-icon>
+        </div>
+      }
+
     </div>
 
     <h2 class="user-name">{{ userName }}</h2>
@@ -21,7 +29,7 @@
     <div class="menu-options">
       <button class="menu-button primary">
         <mat-icon class="school-icon">settings</mat-icon>
-        Configurações
+        Configurações do Usuário
       </button>
 
       <button class="menu-button primary">
@@ -64,3 +72,16 @@
   [showCancelButton]="false"
   [route]="['premium']"
 ></app-dialog>
+
+<app-dialog
+  [title]="'Tem certeza que deseja excluir a foto?'"
+  [message]="'Esta ação não pode ser desfeita.'"
+  [confirmText]="'Excluir'"
+  [dialogType]="'warning'"
+  [isVisible]="isDeleteUrlPhotoDialogVisible"
+  (isVisibleChange)="isDeleteUrlPhotoDialogVisible = $event"
+  (confirmAction)="deleteUrlPhoto()"
+  [route]="['photo_delete']"
+></app-dialog>
+
+

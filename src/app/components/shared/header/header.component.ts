@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 import { Router } from '@angular/router';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
+import { UserImageService } from '../../../services/urlState.service';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +22,8 @@ import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuar
 export class HeaderComponent {
   private authService = inject(MockedAuthService);
   private userService = inject(AbstractUsuarioService);
-  urlImage: string = '';
+  private userImageService = inject(UserImageService);
+  urlImage = this.userImageService.userImageUrl;
 
   isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
 
@@ -36,20 +38,20 @@ export class HeaderComponent {
         next: (result) => {
           if (result.success && result.data) {
             console.log('User image URL:', result.data);
-            this.urlImage = result.data;
+            this.userImageService.updateUserImageUrl(result.data);
           } else {
             console.error('Failed to get user image URL:', result.message);
-            this.urlImage = '';
+            this.userImageService.clearUserImageUrl();
           }
         },
         error: (error) => {
           console.error('Error fetching user image:', error);
-          this.urlImage = '';
+          this.userImageService.clearUserImageUrl();
         },
       });
     } else {
       console.error('No user is currently logged in.');
-      this.urlImage = '';
+      this.userImageService.clearUserImageUrl();
     }
   }
 }

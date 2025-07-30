@@ -46,8 +46,11 @@ export class UsuarioService extends AbstractUsuarioService {
   override changePremiumState(id: number): Observable<OperationResult> {
     return of();
   }
-  
+
   override getUrlFotoById(id: number): Observable<OperationResult> {
+    return of();
+  }
+  override updateUrlFoto(id: number, urlFoto: string): Observable<OperationResult> {
     return of();
   }
 }
