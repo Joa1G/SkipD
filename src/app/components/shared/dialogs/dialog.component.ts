@@ -14,6 +14,7 @@ export class DialogComponent {
   @Input() title: string = '';
   @Input() message: string = '';
   @Input() confirmText: string = 'OK';
+  @Input() cancelText: string = 'Cancelar';
   @Input() isVisible: boolean = false;
   @Output() isVisibleChange = new EventEmitter<boolean>();
   @Input() route: any[] = [''];
@@ -22,6 +23,7 @@ export class DialogComponent {
   @Output() confirmAction = new EventEmitter<boolean>();
 
   isExcluirDialog: boolean = false;
+  isLogoutDialog: boolean = false;
   router = inject(Router);
   private location = inject(Location);
 
@@ -30,8 +32,10 @@ export class DialogComponent {
   }
 
   setExcluirDialog() {
-    if (this.confirmText === 'Excluir') {
+    if (this.confirmText === 'Excluir' || this.confirmText === 'Cancelar' || this.confirmText === 'Deletar') {
       this.isExcluirDialog = true;
+    } else if (this.confirmText === 'Sair') {
+      this.isLogoutDialog = true;
     }
   }
 
@@ -46,6 +50,8 @@ export class DialogComponent {
   useRouter(){
     if(this.route[0] === ''){
       this.location.back();
+    }else if(this.route[0] === 'premium' || this.route[0] === 'success-edit-name' || this.route[0] === 'success-edit-email' || this.route[0] === 'success-edit-password'){
+      this.isVisibleChange.emit(false);
     }else{
       this.router.navigate(this.route);
     }
@@ -53,7 +59,15 @@ export class DialogComponent {
 
   emitConfirmAction() {
     this.confirmAction.emit(true);
-    this.location.back();
+    if(this.route[0] === 'cancel-premium'){
+      this.isVisibleChange.emit(false);
+    } else if(this.route[0] !== 'photo_delete'){
+      this.location.back();
+    }
+  }
+
+  emitConfirmActionInLogout(){
+    this.confirmAction.emit(true);
   }
 
 
@@ -68,5 +82,12 @@ export class DialogComponent {
       case 'logo':
         return 'dialog-box--logo';
     }
+  }
+
+  cancelTypeClass(){
+    if (this.cancelText === 'Manter') {
+      return 'manter-btn';
+    }
+    return '';
   }
 }

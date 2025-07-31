@@ -14,21 +14,9 @@ export class MockedInstituicaoService extends AbstractInstituicaoService {
       id_usuario: 2
     },
     {
-      id: 2,
-      nome: 'Dx Academy',
-      percentual_limite_faltas: 0.30,
-      id_usuario: 2
-    },
-    {
       id: 3,
       nome: 'Universidade Estadual do Amazonas',
       percentual_limite_faltas: 0.20,
-      id_usuario: 1
-    },
-    {
-      id: 4,
-      nome: 'Dx Academy',
-      percentual_limite_faltas: 0.30,
       id_usuario: 1
     }
   ]);

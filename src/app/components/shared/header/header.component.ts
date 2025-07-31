@@ -1,10 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
-import { Router } from '@angular/router';
+import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
+import { UserImageService } from '../../../services/urlState.service';
+import { PremiumDialogComponent } from '../dialogs/premium-dialog/premium-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -12,23 +14,50 @@ import { Router } from '@angular/router';
     CommonModule,
     RouterModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    PremiumDialogComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  isLogoutButtonVisible = false;
+  private authService = inject(MockedAuthService);
+  private userService = inject(AbstractUsuarioService);
+  private userImageService = inject(UserImageService);
+  urlImage = this.userImageService.userImageUrl;
 
-  authService = inject(MockedAuthService);
-  private router = inject(Router)
+  isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
+  showPremiumDialog = false;
 
-  hideLogoutButton() {
-    this.isLogoutButtonVisible = !this.isLogoutButtonVisible;
+  ngOnInit() {
+    this.getUserUrlImage();
   }
 
-  logout(){
-    this.authService.logout();
-    this.router.navigate(['/login']);
+  getUserUrlImage() {
+    const user = this.authService.currentUser();
+    if (user) {
+      this.userService.getUrlFotoById(user.id).subscribe({
+        next: (result) => {
+          if (result.success && result.data) {
+            this.userImageService.updateUserImageUrl(result.data);
+          } else {
+            console.error('Failed to get user image URL:', result.message);
+            this.userImageService.clearUserImageUrl();
+          }
+        },
+        error: (error) => {
+          console.error('Error fetching user image:', error);
+          this.userImageService.clearUserImageUrl();
+        },
+      });
+    } else {
+      console.error('No user is currently logged in.');
+      this.userImageService.clearUserImageUrl();
+    }
   }
+
+  showPremiumMessage() {
+    this.showPremiumDialog = true;
+  }
+  
 }

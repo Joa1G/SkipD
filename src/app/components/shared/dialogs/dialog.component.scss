@@ -1,0 +1,256 @@
+@use "sass:color";
+$font-main: "Roboto", sans-serif;
+
+// Cores do Tema Principal
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #e0e0e0;
+$color-muted: #a0a0b0;
+
+// Cores de Status
+$color-success: #22c55e;
+$color-warning: #eab308; // Para referência, não usado no dialog
+$color-danger: #ef4444;
+$color-info: #3b82f6;
+
+// Animações e Bordas
+$transition-speed: 0.3s;
+$transition-ease: ease-in-out;
+$radius: 12px;
+$radius-sm: 8px; // Raio menor para botões de diálogo
+
+// =================================================================
+// == ESTILOS DO DIÁLOGO (Adaptado ao Tema)
+// =================================================================
+
+// Overlay que cobre a tela toda
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba($color-bg-dark, 0.3);
+
+  // Efeito de blur no fundo
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+
+  // Animação de fade-in/out
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-speed $transition-ease, visibility $transition-speed $transition-ease;
+
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// A caixa do diálogo
+.dialog-box {
+  background-color: $color-bg-light; // Um tom mais claro que o fundo principal
+  border-radius: $radius;
+  border: 1px solid $color-border;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  font-family: $font-main;
+
+  // Animação de "pop-in"
+  transform: scale(0.95);
+  transition: transform $transition-speed $transition-ease;
+
+  .is-visible & {
+    transform: scale(1);
+  }
+}
+
+// Botão de fechar (X)
+.dialog-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: $color-muted;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $color-text;
+  }
+}
+
+// Ícone principal
+.dialog-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    width: 32px;
+  }
+}
+
+// Título e mensagem
+.dialog-header {
+  margin-bottom: 1.5rem;
+}
+
+.dialog-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $color-text;
+  margin: 0 0 0.5rem;
+}
+
+.dialog-message {
+  font-size: 1rem;
+  color: $color-muted;
+  line-height: 1.5;
+  margin: 0;
+}
+
+// Container dos botões
+.dialog-footer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
+
+  // quando só tiver 1 botão, expande pras 2 colunas
+  > .dialog-btn:only-child {
+        grid-column: 1 / -1;
+  }
+}
+
+// Estilo base dos botões do diálogo
+.dialog-btn {
+  padding: 0.75rem 1rem;
+  border-radius: $radius-sm;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Botão de cancelar
+.dialog-btn--cancel {
+  background-color: transparent;
+  border-color: $color-border;
+  color: $color-text;
+
+  &:hover {
+    background-color: rgba($color-primary, 0.1);
+    border-color: $color-primary;
+  }
+}
+
+// Botão de confirmar (padrão e variações)
+.dialog-btn--confirm {
+  color: white;
+  border: none;
+}
+
+
+// --- LÓGICA DE ESTILO POR TIPO DE DIÁLOGO ---
+
+.dialog-box--warning {
+  .dialog-icon {
+    background-color: rgba($color-danger, 0.15);
+    mat-icon { color: $color-danger; }
+  }
+  .dialog-btn--confirm {
+    background-color: $color-danger;
+    &:hover { background-color: color.adjust($color-danger, $lightness: -8%); }
+  }
+}
+
+.dialog-box--success {
+  .dialog-icon {
+    background-color: rgba($color-success, 0.15);
+    mat-icon { color: $color-success; }
+  }
+  .dialog-btn--confirm {
+    background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
+  }
+}
+
+.dialog-box--info {
+  .dialog-icon {
+    background-color: rgba($color-warning, 0.15);
+    mat-icon { color: $color-warning; }
+  }
+  .dialog-btn--confirm {
+    background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
+  }
+}
+
+.dialog-box--logo {
+  .dialog-icon {
+    font-size: 3rem;
+    background-color: transparent;
+    font-family: "Jaro", sans-serif;
+  }
+  .dialog-btn--confirm {
+    background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
+  }
+  h2 {
+    color: $color-success;
+  }
+}
+
+.manter-btn{
+  padding: 14px;
+  border: none;
+  border-radius: $radius;
+  font-family: $font-main;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  transition: transform $transition-speed $transition-ease,
+  box-shadow $transition-speed $transition-ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(
+    90deg,
+    $color-gradient-start,
+    $color-gradient-end
+  );
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+}

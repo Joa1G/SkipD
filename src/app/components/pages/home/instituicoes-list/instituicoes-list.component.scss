@@ -87,7 +87,7 @@ $radius-sm: 6px;
   cursor: pointer;
   transition: transform $transition-speed $transition-ease,
   box-shadow $transition-speed $transition-ease;
-  display: inline-flex; // Para alinhar conteúdo como ícones
+  display: flex;
   align-items: center;
   justify-content: center;
 
@@ -115,6 +115,15 @@ $radius-sm: 6px;
   .add-icon {
     font-size: 1.5rem;
     font-weight: 700;
+  }
+
+  &.premium {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    color: #000;
+
+    .add-icon {
+      color: #000;
+    }
   }
 }
 

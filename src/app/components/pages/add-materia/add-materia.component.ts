@@ -15,7 +15,7 @@ import { Materia } from '../../../models/materia/materia.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { DialogComponent } from '../../shared/dialog/dialog.component';
+import { DialogComponent } from '../../shared/dialogs/dialog.component';
 import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 
 @Component({
@@ -64,6 +64,7 @@ export class AddMateriaComponents{
   showSubmitDialog = false;
   isEditMode = false;
   currentRoute = '';
+  isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
 
   form = new FormGroup({
     id: new FormControl<number | null>(null),

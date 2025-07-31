@@ -12,11 +12,23 @@
         }
       }
       <button class="add-materia-button" routerLink="/add-materia/{{ instituicao.id }}">
-        <mat-icon class="add-icon">add_circle</mat-icon><span>Adicionar matéria</span>
+        <mat-icon class="add-icon">add_circle</mat-icon><span>Adicionar Matéria</span>
       </button>
     </div>
   }
-  <button class="add-instituicao-button" routerLink="/add-instituicao">
-    <mat-icon class="add-icon">add</mat-icon><span>Adicionar instituição</span>
-  </button>
+  @if(isPremiumUser()){
+    <button class="add-instituicao-button" routerLink="/add-instituicao">
+      <mat-icon class="add-icon">add</mat-icon><span>Adicionar Instituição</span>
+    </button>
+  }@else {
+    <button class="add-instituicao-button premium" (click)="showPremiumMessage()">
+      <mat-icon class="add-icon">diamond</mat-icon><span>Adicionar Instituição</span>
+    </button>
+  }
 </div>
+
+@if(showPremiumDialog){
+  <app-premium-dialog
+    (visibleChange)="showPremiumDialog = $event"
+  ></app-premium-dialog>
+}

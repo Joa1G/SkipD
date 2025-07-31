@@ -85,7 +85,7 @@ export class MockedAuthService {
       name: user.nome,
       isPremium: user.isPremium,
       iat: Math.floor(Date.now() / 1000),
-      exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60)
+      exp: Math.floor(Date.now() / 1000) + (30) // 30 seconds for mock purposes
     }));
     const signature = btoa('mockSignature');
 
@@ -143,6 +143,19 @@ export class MockedAuthService {
   private removeStorageItem(key: string): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem(key);
+    }
+  }
+
+  updateCurrentUser(user: Usuario): void {
+      // Atualiza o signal
+    this._currentUser.set(user);
+
+    // Também atualiza o BehaviorSubject para manter consistência
+    this.currentUserSubject.next(user);
+
+    // Atualiza o localStorage se estiver no browser
+    if (isPlatformBrowser(this.platformId)) {
+      this.setStorageItem('currentUser', JSON.stringify(user));
     }
   }
 

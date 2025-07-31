@@ -87,23 +87,6 @@ export const mockedMateria: Materia[] = [
       idInstituicao: 1,
     },
     {
-      id: 6,
-      nome: 'Desenvolvimento Web Full Stack',
-      cargaHorariaTotal: 200,
-      faltas: 10,
-      status: 'Aprovado',
-      aulasDaSemana: {
-        domingo: 0,
-        segunda: 0,
-        terca: 0,
-        quarta: 1,
-        quinta: 1,
-        sexta: 1,
-        sabado: 0
-      },
-      idInstituicao: 2,
-    },
-    {
       id: 7,
       nome: 'Matemática Discreta',
       cargaHorariaTotal: 60,
@@ -153,22 +136,5 @@ export const mockedMateria: Materia[] = [
         sabado: 0
       },
       idInstituicao: 3,
-    },
-    {
-      id: 10,
-      nome: 'Desenvolvimento Web Full Stack',
-      cargaHorariaTotal: 200,
-      faltas: 10,
-      status: 'Aprovado',
-      aulasDaSemana: {
-        domingo: 0,
-        segunda: 0,
-        terca: 0,
-        quarta: 1,
-        quinta: 1,
-        sexta: 1,
-        sabado: 0
-      },
-      idInstituicao: 4,
     }
 ]

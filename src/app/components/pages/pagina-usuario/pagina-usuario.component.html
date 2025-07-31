@@ -1,0 +1,172 @@
+<app-header></app-header>
+<div class="user-profile-container">
+  <div class="profile-content">
+    <div class="profile-header">
+      <mat-icon class="back-icon" (click)="onClickBackArrow()">arrow_back_ios</mat-icon>
+      <h1 class="page-title">Perfil do Usuário</h1>
+    </div>
+
+    <div class="profile-avatar">
+      @if(urlImage() === ''){
+      <div class="avatar-circle">
+        <mat-icon class="user-icon">person</mat-icon>
+      </div>
+      }@else {
+      <img
+        src="{{ urlImage() }}"
+        alt="Foto do Usuário"
+        class="camera-icon-img"
+      />
+      }
+
+      <div class="camera-icon edit" (click)="showChangeUrlPhotoDialog()">
+        <mat-icon>edit</mat-icon>
+      </div>
+
+    </div>
+
+    <h2 class="user-name">{{ userName }}</h2>
+
+    <div class="menu-options">
+      <button class="menu-button primary" routerLink="/conta-settings">
+        <mat-icon class="school-icon">settings</mat-icon>
+        Configurações de Conta
+      </button>
+
+      <button class="menu-button primary">
+        <mat-icon class="school-icon">school</mat-icon>
+        Gerenciar Instituições
+      </button>
+
+      @if(!isPremiumUser()){
+      <button class="menu-button premium" (click)="changePremiumStateOfUser()">
+        <mat-icon class="crown-icon">diamond</mat-icon>
+        Torne-se Premium
+      </button>
+      }
+    </div>
+
+    <button class="logout-button" (click)="showLogoutDialog()">
+      <mat-icon class="logout-icon">logout</mat-icon>
+      Sair
+    </button>
+  </div>
+</div>
+
+<app-dialog
+  [title]="'Você tem certeza que deseja sair?'"
+  [message]="'Ao sair, você será desconectado da sua conta.'"
+  [confirmText]="'Sair'"
+  [dialogType]="'warning'"
+  [isVisible]="isDialogLogoutVisible"
+  (isVisibleChange)="isDialogLogoutVisible = $event"
+  (confirmAction)="logout()"
+></app-dialog>
+
+<app-dialog
+  [title]="'Obrigado por se tornar Premium!'"
+  [message]="'Sua conta agora tem acesso a recursos exclusivos.'"
+  [confirmText]="'OK'"
+  [dialogType]="'logo'"
+  [isVisible]="isDialogPremiumVisible"
+  (isVisibleChange)="isDialogPremiumVisible = $event"
+  [showCancelButton]="false"
+  [route]="['premium']"
+></app-dialog>
+
+@if(changeUrlPhotoDialogVisible) {
+  <div class="dialog-overlay">
+  <div
+    class="dialog-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="dialog-title-1"
+  >
+  <button class="dialog-close-btn" aria-label="Fechar" (click)="changeUrlPhotoDialogVisible = false">&times;</button>
+    <div class="dialog-header">
+      <h2 class="dialog-title" id="dialog-title-1">
+        Alterar Foto do Usuário
+      </h2>
+    </div>
+    <div class="dialog-content">
+      <p>Você tem certeza que deseja alterar a foto do usuário?</p>
+    </div>
+    <div class="dialog-footer">
+      @if(urlImage() !== ''){
+        <button class="dialog-btn dialog-btn--delete" (click)="showDeleteUrlPhotoDialog()"><mat-icon>delete</mat-icon>Deletar</button>
+      }
+      <button class="dialog-btn dialog-btn--confirm" (click)="showEditUrlPhotoDialog()"><mat-icon>edit</mat-icon>Editar</button>
+    </div>
+  </div>
+</div>
+<app-dialog
+  [title]="'Tem certeza que deseja excluir a foto?'"
+  [message]="'Esta ação não pode ser desfeita.'"
+  [confirmText]="'Excluir'"
+  [dialogType]="'warning'"
+  [isVisible]="isDeleteUrlPhotoDialogVisible"
+  (isVisibleChange)="isDeleteUrlPhotoDialogVisible = $event"
+  (confirmAction)="deleteUrlPhoto()"
+  [route]="['photo_delete']"
+></app-dialog>
+}
+
+@if(isEditUrlPhotoDialogVisible) {
+<div class="dialog-overlay">
+  <div
+    class="dialog-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="dialog-title-1"
+  >
+    <div class="dialog-header">
+      <h2 class="dialog-title" id="dialog-title-1">
+        Editar Foto do Usuário
+      </h2>
+    </div>
+
+    <div class="dialog-content">
+      <form [formGroup]="formUrl" (ngSubmit)="submitUrlPhoto()">
+        <div>
+          <label for="url">URL da Foto:</label>
+          <input
+            id="url"
+            formControlName="url"
+            type="text"
+            placeholder="Insira a URL da foto"
+            required
+          />
+          @if(formUrl.get('url')?.invalid && submitted) {
+            <div class="error-message">
+              URL é obrigatório
+            </div>
+          }
+        </div>
+        <div style="display: flex; gap: 15px; margin-top: 30px">
+          <button
+          type="button"
+          class="dialog-btn dialog-btn--cancel"
+          (click)="closeEditUrlPhotoDialog()"
+          >
+          Cancelar
+        </button>
+        <button type="submit" class="dialog-btn dialog-btn--confirm">
+          Salvar
+        </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+}
+
+<app-dialog
+  [title]="'Sucesso'"
+  [message]="'A foto do usuário foi alterada com sucesso.'"
+  [confirmText]="'OK'"
+  [dialogType]="'confirmation'"
+  [isVisible]="showSuccessUrlPhotoChangedDialog"
+  (isVisibleChange)="showSuccessUrlPhotoChangedDialog = $event"
+  [showCancelButton]="false"
+  [route]="['success-edit-name']"
+></app-dialog>

@@ -37,9 +37,16 @@
           <div class="error-message">
             @if(cadastroForm.get('email')?.errors?.['required']) {
               O email é obrigatório.
-            }@else if (cadastroForm.get('email')?.errors?.['email']) {
+            } @else if (cadastroForm.get('email')?.errors?.['email']) {
               O email deve ser válido.
+            } @else if (cadastroForm.get('email')?.errors?.['emailInUse']) {
+              Este email já está em uso.
             }
+          </div>
+        }
+        @if (cadastroForm.get('email')?.pending) {
+          <div class="info-message">
+            Verificando disponibilidade do email...
           </div>
         }
       </div>

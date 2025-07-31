@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractMateriaService } from '../../../services/materia/abstract-materia.service';
 import { AbstractInstituicaoService } from '../../../services/instituicao/abstract-instituicao.service';
@@ -6,15 +6,18 @@ import { HeaderComponent } from '../../shared/header/header.component';
 import { Materia } from '../../../models/materia/materia.model';
 import { Instituicao } from '../../../models/instituicao/instituicao.model';
 import { firstValueFrom } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import { DialogComponent } from '../../shared/dialog/dialog.component';
+import { CommonModule, Location } from '@angular/common';
+import { DialogComponent } from '../../shared/dialogs/dialog.component';
+import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-detalhes-materia',
   imports: [
     HeaderComponent,
     CommonModule,
-    DialogComponent
+    DialogComponent,
+    MatIcon
   ],
   templateUrl: './detalhes-materia.component.html',
   styleUrl: './detalhes-materia.component.scss'
@@ -22,12 +25,15 @@ import { DialogComponent } from '../../shared/dialog/dialog.component';
 export class DetalhesMateriaComponent {
   private serviceMateria = inject(AbstractMateriaService);
   private serviceInstituicao = inject(AbstractInstituicaoService);
+  private authService = inject(MockedAuthService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private location = inject(Location)
 
   showDeleteDialog: boolean = false;
   showEditDialog: boolean = false;
   deleteRequested: boolean = false;
+  isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
 
   materiaIdParam = this.route.snapshot.paramMap.get('id');
   materiaId = Number(this.materiaIdParam);
@@ -120,6 +126,8 @@ export class DetalhesMateriaComponent {
     this.showEditDialog = true;
   };
 
-
+  onClickBackArrow(){
+    this.location.back()
+  }
 
 }

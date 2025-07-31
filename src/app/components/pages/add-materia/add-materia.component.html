@@ -28,33 +28,40 @@
             <input type="number" id="carga-horaria" name="carga-horaria" placeholder="Faltas já existentes" formControlName="faltas" required>
         </div>
 
-        <div class="form-group">
-            <label>Aulas na Semana</label>
-            <div class="dias-semana-grid">
-                @for(dia of diasDaSemana; track dia.id){
-                    <div class="dia-item" >
-                      <span>{{ dia.viewValue }}</span>
-                      <input type="checkbox" class="dia-checkbox" formControlName="is_{{dia.viewValue.toLowerCase()}}_checked">
-                      @if(form.get(`is_${dia.viewValue.toLowerCase()}_checked`)?.value){
-                        <select type="number"
-                        class="horas-select"
-                        formControlName="hor_{{dia.viewValue.toLowerCase()}}"
-                        [ngClass]="invalidFieldClass('hor_' + dia.viewValue.toLowerCase())"
-                        required>
-                          <option [value]="1">1 h</option>
-                          <option [value]="2">2 h</option>
-                          <option [value]="3">3 h</option>
-                          <option [value]="4">4 h</option>
-                          <option [value]="5">5 h</option>
-                          <option [value]="6">6 h</option>
-                          <option [value]="7">7 h</option>
-                          <option [value]="8">8 h</option>
-                        </select>
-                      }
-                  </div>
-                }
-            </div>
-        </div>
+        @if(isPremiumUser()){
+          <div class="form-group">
+              <label>Aulas na Semana</label>
+              <div class="dias-semana-grid">
+                  @for(dia of diasDaSemana; track dia.id){
+                      <div class="dia-item" >
+                        <span>{{ dia.viewValue }}</span>
+                        <input type="checkbox" class="dia-checkbox" formControlName="is_{{dia.viewValue.toLowerCase()}}_checked">
+                        @if(form.get(`is_${dia.viewValue.toLowerCase()}_checked`)?.value){
+                          <select type="number"
+                          class="horas-select"
+                          formControlName="hor_{{dia.viewValue.toLowerCase()}}"
+                          [ngClass]="invalidFieldClass('hor_' + dia.viewValue.toLowerCase())"
+                          required>
+                            <option [value]="1">1 h</option>
+                            <option [value]="2">2 h</option>
+                            <option [value]="3">3 h</option>
+                            <option [value]="4">4 h</option>
+                            <option [value]="5">5 h</option>
+                            <option [value]="6">6 h</option>
+                            <option [value]="7">7 h</option>
+                            <option [value]="8">8 h</option>
+                          </select>
+                        }
+                    </div>
+                  }
+              </div>
+          </div>
+        }@else {
+          <div class="form-group">
+              <label>Aulas na Semana</label>
+              <span class="premium-message"><mat-icon>lock</mat-icon> Recurso disponível apenas para usuários <mat-icon>diamond</mat-icon>Premium.</span>
+          </div>
+        }
 
         @if (form.invalid && submitted) {
           <div class="error-message">
