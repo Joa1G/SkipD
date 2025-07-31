@@ -24,14 +24,18 @@ export class MateriaService extends AbstractMateriaService {
   }
 
   override addMateria(materia: Omit<Materia, 'id'>): Observable<OperationResult> {
+    const novaMateria: Materia = { id: Date.now(), ...materia };
+    this._materias.update(atuais => [...atuais, novaMateria]);
     return of();
   }
 
   override updateMateria(materia: Materia): Observable<OperationResult> {
+    this._materias.update(atuais => atuais.map(m => m.id === materia.id ? materia : m));
     return of();
   }
 
   override deleteMateria(id: number): Observable<OperationResult> {
+    this._materias.update(atuais => atuais.filter(m => m.id !== id));
     return of();
   }
 
@@ -39,7 +43,12 @@ export class MateriaService extends AbstractMateriaService {
     return of();
   }
 
-  override addFalta(id: number, falta: any): Observable<OperationResult> {
+  override addFalta(idMateria: number, quantidade: number): Observable<OperationResult> {
+    this._materias.update(atuais =>
+      atuais.map(m =>
+        m.id === idMateria ? { ...m, faltas: m.faltas + quantidade } : m
+      )
+    );
     return of();
   }
 
