@@ -32,6 +32,10 @@ export class ContaSettingsComponent {
     name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)])
   })
 
+  formEmail = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email])
+  })
+
   user = computed(() => this.authService.currentUser());
   isPremiumUser = computed(
     () => this.authService.currentUser()?.isPremium ?? false
@@ -135,7 +139,43 @@ export class ContaSettingsComponent {
 
   closeEditEmailDialog() {
     this.isEditEmailDialogVisible = false;
+    this.formEmail.reset();
+    this.submittedEmail = false;
   }
+
+  submitEmailChange() {
+    this.submittedEmail = true;
+    if (this.formEmail.invalid) {
+      return;
+    }
+
+    const user = this.authService.currentUser();
+    const updatedUser = {
+      ...user!,
+      email: this.formEmail.value.email!
+    };
+    if (user) {
+      this.userService.updateUsuario(updatedUser).subscribe({
+        next: (result) => {
+          if (result.success) {
+            console.log('Email updated successfully');
+            this.authService.updateCurrentUser(result.data);
+            this.isEditEmailDialogVisible = false;
+            this.formEmail.reset();
+            this.submittedEmail = false;
+          } else {
+            console.error('Failed to update email:', result.message);
+          }
+        },
+        error: (error) => {
+          console.error('Error updating email:', error);
+        },
+      });
+    } else {
+      console.error('No user is currently logged in.');
+    }
+  }
+
   closeEditPasswordDialog() {
     this.isEditPasswordDialogVisible = false;
   }
