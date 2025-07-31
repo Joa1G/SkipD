@@ -296,3 +296,187 @@ $radius-sm: 6px;
     align-self: flex-end;
   }
 }
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba($color-bg-dark, 0.3);
+
+  // Efeito de blur no fundo
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+
+  transition: opacity $transition-speed $transition-ease,
+    visibility $transition-speed $transition-ease;
+}
+
+.dialog-box {
+  background-color: $color-bg-light; // Um tom mais claro que o fundo principal
+  border-radius: $radius;
+  border: 1px solid $color-border;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  font-family: $font-main;
+
+  // Animação de "pop-in"
+  transform: scale(0.95);
+  transition: transform $transition-speed $transition-ease;
+}
+
+.dialog-header {
+  text-align: center;
+  font-family: $font-main;
+  color: #c0a6fa;
+  margin-bottom: 25px;
+}
+
+.dialog-content {
+  color: $color-text;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+
+  p {
+    margin: 0;
+    text-align: center;
+    color: $color-muted;
+    font-size: 1.2rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: $color-text;
+    text-align: left;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    background-color: $color-bg-light;
+    border: 1px solid $color-border;
+    border-radius: $radius;
+    color: $color-text;
+    font-size: 1rem;
+    font-family: $font-main;
+    box-sizing: border-box;
+    transition: border-color $transition-speed $transition-ease;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
+  }
+
+  .error-message {
+    color: #ff4d4d;
+    font-size: 1rem;
+    margin-top: 5px;
+    text-align: center;
+  }
+}
+
+.dialog-footer {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  justify-content: center;
+}
+
+.dialog-btn {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: $radius;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: $font-main;
+  transition: transform $transition-speed $transition-ease,
+    box-shadow $transition-speed $transition-ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  &--delete {
+    background: linear-gradient(90deg, #dc2626, #ef4444);
+    color: white;
+
+    &:hover {
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+    }
+  }
+
+  &--confirm {
+    background: linear-gradient(
+      90deg,
+      $color-gradient-start,
+      $color-gradient-end
+    );
+    color: white;
+
+    &:hover {
+      box-shadow: 0 4px 15px rgba(74, 0, 224, 0.3);
+    }
+  }
+
+  &--cancel {
+    background-color: $color-bg-light;
+    color: white;
+    border: 1px solid $color-border;
+
+    &:hover {
+      border: 1px solid $color-primary;
+      background-color: rgba($color-primary, 0.1);
+    }
+  }
+}
+
+.dialog-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: $color-muted;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $color-text;
+  }
+}

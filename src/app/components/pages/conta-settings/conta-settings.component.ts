@@ -6,10 +6,11 @@ import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { DialogComponent } from '../../shared/dialogs/dialog.component';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-conta-settings',
-  imports: [HeaderComponent, MatIcon, DialogComponent],
+  imports: [HeaderComponent, MatIcon, DialogComponent, ReactiveFormsModule],
   templateUrl: './conta-settings.component.html',
   styleUrl: './conta-settings.component.scss'
 })
@@ -20,8 +21,18 @@ export class ContaSettingsComponent {
   private router = inject(Router);
   showCancelPremiumDialog = false;
   showDeleteAccountDialog = false;
+  isEditNameDialogVisible = false;
+  submittedName = false;
+  isEditEmailDialogVisible = false;
+  submittedEmail = false;
+  isEditPasswordDialogVisible = false;
+  submittedPassword = false;
 
-  user = this.authService.currentUser();
+  formName = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)])
+  })
+
+  user = computed(() => this.authService.currentUser());
   isPremiumUser = computed(
     () => this.authService.currentUser()?.isPremium ?? false
   );
@@ -81,5 +92,51 @@ export class ContaSettingsComponent {
 
   openDeleteAccountDialog() {
     this.showDeleteAccountDialog = true;
+  }
+
+  closeEditNameDialog() {
+    this.isEditNameDialogVisible = false;
+    this.formName.reset();
+    this.submittedName = false;
+  }
+
+  submitNameChange() {
+    this.submittedName = true;
+    if (this.formName.invalid) {
+      return;
+    }
+
+    const user = this.authService.currentUser();
+    const updatedUser = {
+      ...user!,
+      nome: this.formName.value.name!
+    };
+    if (user) {
+      this.userService.updateUsuario(updatedUser).subscribe({
+        next: (result) => {
+          if (result.success) {
+            console.log('Name updated successfully');
+            this.authService.updateCurrentUser(result.data);
+            this.isEditNameDialogVisible = false;
+            this.formName.reset();
+            this.submittedName = false;
+          } else {
+            console.error('Failed to update name:', result.message);
+          }
+        },
+        error: (error) => {
+          console.error('Error updating name:', error);
+        },
+      });
+    } else {
+      console.error('No user is currently logged in.');
+    }
+  }
+
+  closeEditEmailDialog() {
+    this.isEditEmailDialogVisible = false;
+  }
+  closeEditPasswordDialog() {
+    this.isEditPasswordDialogVisible = false;
   }
 }

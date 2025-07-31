@@ -18,10 +18,10 @@
             <mat-icon class="setting-icon">person</mat-icon>
             <div class="setting-details">
               <div class="setting-label">Nome</div>
-              <div class="setting-value">{{ user?.nome! }}</div>
+              <div class="setting-value">{{ user()?.nome! }}</div>
             </div>
           </div>
-          <button class="edit-btn" mat-stroked-button><mat-icon>edit</mat-icon>Editar</button>
+          <button class="edit-btn" mat-stroked-button (click)="isEditNameDialogVisible = true"><mat-icon>edit</mat-icon>Editar</button>
         </div>
 
         <div class="setting-item">
@@ -29,7 +29,7 @@
             <mat-icon class="setting-icon">email</mat-icon>
             <div class="setting-details">
               <div class="setting-label">Email</div>
-              <div class="setting-value">{{ user?.email! }}</div>
+              <div class="setting-value">{{ user()?.email! }}</div>
             </div>
           </div>
           <button class="edit-btn" mat-stroked-button><mat-icon>edit</mat-icon>Editar</button>
@@ -102,3 +102,61 @@
   [confirmText]="'Deletar'"
   [cancelText]="'Manter'"
 ></app-dialog>
+
+@if(isEditNameDialogVisible) {
+<div class="dialog-overlay">
+  <div
+    class="dialog-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="dialog-title-1"
+  >
+    <div class="dialog-header">
+      <h2 class="dialog-title" id="dialog-title-1">
+        Editar Nome do Usuário
+      </h2>
+    </div>
+
+    <div class="dialog-content">
+      <form [formGroup]="formName" (ngSubmit)="submitNameChange()">
+        <div>
+          <label for="url">Novo Nome:</label>
+          <input
+            id="name"
+            formControlName="name"
+            type="text"
+            placeholder="Insira o nome"
+            required
+          />
+          @if(formName.get('name')?.hasError('required') && submittedName) {
+            <div class="error-message">
+              Nome é obrigatório
+            </div>
+          }@else if (formName.get('name')?.hasError('minlength') && formName.get('name')?.dirty) {
+            <div class="error-message">
+              Nome deve ter pelo menos 3 caracteres
+            </div>
+          }@else if (formName.get('name')?.hasError('maxlength') && formName.get('name')?.dirty) {
+            <div class="error-message">
+              Nome deve ter no máximo 30 caracteres
+            </div>
+          }
+        </div>
+        <div style="display: flex; gap: 15px; margin-top: 30px">
+          <button
+          type="button"
+          class="dialog-btn dialog-btn--cancel"
+          (click)="closeEditNameDialog()"
+          >
+          Cancelar
+        </button>
+        <button type="submit" class="dialog-btn dialog-btn--confirm">
+          Salvar
+        </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+}
+
