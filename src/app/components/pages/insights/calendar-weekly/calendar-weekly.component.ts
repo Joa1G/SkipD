@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Materia } from '../../../../models/materia/materia.model';
 
 @Component({
   selector: 'app-calendar-weekly',
@@ -9,14 +10,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./calendar-weekly.component.scss']
 })
 export class CalendarWeeklyComponent {
-  // Este Input para os eventos já estava correto.
-  @Input() eventosPorDia: Record<string, string[]> = {};
+  @Input() eventosPorDia: Record<string, Materia[]> = {};
 
   @Input() dias: string[] = [];
 
-  // Este getter continua funcionando perfeitamente.
-  // Ele vai usar a lista de 'dias' que for passada pelo pai.
-  get eventosSemana(): string[][] {
+  get eventosSemana(): Materia[][] {
     return this.dias.map(dia => this.eventosPorDia[dia] || []);
   }
 }
