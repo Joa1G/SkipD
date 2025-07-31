@@ -1,19 +1,24 @@
 import { Component, computed, inject } from '@angular/core';
-import { HeaderComponent } from "../../shared/header/header.component";
+import { HeaderComponent } from '../../shared/header/header.component';
 import { MatIcon } from '@angular/material/icon';
 import { Location } from '@angular/common';
 import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { DialogComponent } from '../../shared/dialogs/dialog.component';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { passwordMatchValidator } from '../cadastro/cadastro.component';
 
 @Component({
   selector: 'app-conta-settings',
   imports: [HeaderComponent, MatIcon, DialogComponent, ReactiveFormsModule],
   templateUrl: './conta-settings.component.html',
-  styleUrl: './conta-settings.component.scss'
+  styleUrl: './conta-settings.component.scss',
 })
 export class ContaSettingsComponent {
   private location = inject(Location);
@@ -28,19 +33,31 @@ export class ContaSettingsComponent {
   submittedEmail = false;
   isEditPasswordDialogVisible = false;
   submittedPassword = false;
+  showPassword = false;
 
   formName = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)])
-  })
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(30),
+    ]),
+  });
 
   formEmail = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email])
-  })
+    email: new FormControl('', [Validators.required, Validators.email]),
+  });
 
-  formPassword = new FormGroup({
-    password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
-    confirmPassword: new FormControl('', [Validators.required])
-  }, { validators: passwordMatchValidator });
+  formPassword = new FormGroup(
+    {
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(20),
+      ]),
+      confirmPassword: new FormControl('', [Validators.required]),
+    },
+    { validators: passwordMatchValidator }
+  );
 
   user = computed(() => this.authService.currentUser());
   isPremiumUser = computed(
@@ -49,6 +66,10 @@ export class ContaSettingsComponent {
 
   onClickBackArrow() {
     this.location.back();
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   changePremiumStateOfUser() {
@@ -60,7 +81,6 @@ export class ContaSettingsComponent {
             console.log('Premium state changed successfully');
 
             this.authService.updateCurrentUser(result.data);
-
           } else {
             console.error('Failed to change premium state:', result.message);
           }
@@ -119,7 +139,7 @@ export class ContaSettingsComponent {
     const user = this.authService.currentUser();
     const updatedUser = {
       ...user!,
-      nome: this.formName.value.name!
+      nome: this.formName.value.name!,
     };
     if (user) {
       this.userService.updateUsuario(updatedUser).subscribe({
@@ -158,7 +178,7 @@ export class ContaSettingsComponent {
     const user = this.authService.currentUser();
     const updatedUser = {
       ...user!,
-      email: this.formEmail.value.email!
+      email: this.formEmail.value.email!,
     };
     if (user) {
       this.userService.updateUsuario(updatedUser).subscribe({
@@ -197,7 +217,7 @@ export class ContaSettingsComponent {
     const user = this.authService.currentUser();
     const updatedUser = {
       ...user!,
-      senha: this.formPassword.value.password!
+      senha: this.formPassword.value.password!,
     };
     if (user) {
       this.userService.updateUsuario(updatedUser).subscribe({

@@ -144,7 +144,7 @@ $radius-sm: 6px;
   color: white;
   cursor: pointer;
   transition: transform $transition-speed $transition-ease,
-  box-shadow $transition-speed $transition-ease;
+    box-shadow $transition-speed $transition-ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -205,7 +205,7 @@ $radius-sm: 6px;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  mat-icon{
+  mat-icon {
     font-size: 0.9rem;
     height: 0.9rem;
     width: 0.9rem;
@@ -395,6 +395,40 @@ $radius-sm: 6px;
     font-size: 1rem;
     margin-bottom: 5px;
     text-align: center;
+  }
+
+  .password-container {
+    .input-group {
+      position: relative;
+
+      input {
+        width: 100%;
+        padding-right: 2.5rem; // espaço para o ícone
+      }
+
+      .toggle-password-visibility {
+        position: absolute;
+        top: 50%;
+        right: 0.75rem;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        color: $color-muted;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        mat-icon {
+          font-size: 1.25rem;
+        }
+
+        &:hover {
+          color: $color-text;
+        }
+      }
+    }
   }
 }
 

@@ -21,7 +21,13 @@
               <div class="setting-value">{{ user()?.nome! }}</div>
             </div>
           </div>
-          <button class="edit-btn" mat-stroked-button (click)="isEditNameDialogVisible = true"><mat-icon>edit</mat-icon>Editar</button>
+          <button
+            class="edit-btn"
+            mat-stroked-button
+            (click)="isEditNameDialogVisible = true"
+          >
+            <mat-icon>edit</mat-icon>Editar
+          </button>
         </div>
 
         <div class="setting-item">
@@ -32,7 +38,13 @@
               <div class="setting-value">{{ user()?.email! }}</div>
             </div>
           </div>
-          <button class="edit-btn" mat-stroked-button (click)="isEditEmailDialogVisible = true"><mat-icon>edit</mat-icon>Editar</button>
+          <button
+            class="edit-btn"
+            mat-stroked-button
+            (click)="isEditEmailDialogVisible = true"
+          >
+            <mat-icon>edit</mat-icon>Editar
+          </button>
         </div>
 
         <div class="setting-item">
@@ -43,25 +55,36 @@
               <div class="setting-value">********</div>
             </div>
           </div>
-          <button class="edit-btn" mat-stroked-button (click)="isEditPasswordDialogVisible = true"><mat-icon>edit</mat-icon>Editar</button>
+          <button
+            class="edit-btn"
+            mat-stroked-button
+            (click)="isEditPasswordDialogVisible = true"
+          >
+            <mat-icon>edit</mat-icon>Editar
+          </button>
         </div>
       </div>
 
       <!-- Zona de Perigo -->
       <div class="settings-section danger-zone">
-
         @if(isPremiumUser()){
-          <div class="danger-item">
-            <div class="danger-info">
-              <div class="danger-label">Cancelar Assinatura <mat-icon>diamond</mat-icon>Premium</div>
-              <div class="danger-description">
-                Você perderá o acesso aos benefícios exclusivos.
-              </div>
+        <div class="danger-item">
+          <div class="danger-info">
+            <div class="danger-label">
+              Cancelar Assinatura <mat-icon>diamond</mat-icon>Premium
             </div>
-            <button class="danger-btn delete-account" mat-stroked-button (click)="openCancelPremiumDialog()">
-              Cancelar Premium
-            </button>
+            <div class="danger-description">
+              Você perderá o acesso aos benefícios exclusivos.
+            </div>
           </div>
+          <button
+            class="danger-btn delete-account"
+            mat-stroked-button
+            (click)="openCancelPremiumDialog()"
+          >
+            Cancelar Premium
+          </button>
+        </div>
         }
 
         <div class="danger-item">
@@ -71,7 +94,11 @@
               Esta ação é permanente e não pode ser desfeita.
             </div>
           </div>
-          <button class="danger-btn delete-account" mat-flat-button (click)="openDeleteAccountDialog()">
+          <button
+            class="danger-btn delete-account"
+            mat-flat-button
+            (click)="openDeleteAccountDialog()"
+          >
             <mat-icon>delete</mat-icon>Deletar Conta
           </button>
         </div>
@@ -83,7 +110,9 @@
 <app-dialog
   [dialogType]="'warning'"
   [title]="'Cancelar Assinatura Premium'"
-  [message]="'Tem certeza que deseja cancelar sua assinatura Premium? Você perderá todos os benefícios exclusivos.'"
+  [message]="
+    'Tem certeza que deseja cancelar sua assinatura Premium? Você perderá todos os benefícios exclusivos.'
+  "
   [isVisible]="showCancelPremiumDialog"
   (isVisibleChange)="showCancelPremiumDialog = $event"
   (confirmAction)="changePremiumStateOfUser()"
@@ -95,7 +124,9 @@
 <app-dialog
   [dialogType]="'warning'"
   [title]="'Deletar Conta'"
-  [message]="'Tem certeza que deseja deletar sua conta? Esta ação é permanente e não pode ser desfeita.'"
+  [message]="
+    'Tem certeza que deseja deletar sua conta? Esta ação é permanente e não pode ser desfeita.'
+  "
   [isVisible]="showDeleteAccountDialog"
   (isVisibleChange)="showDeleteAccountDialog = $event"
   (confirmAction)="deleteAccount()"
@@ -112,9 +143,7 @@
     aria-labelledby="dialog-title-1"
   >
     <div class="dialog-header">
-      <h2 class="dialog-title" id="dialog-title-1">
-        Editar Nome do Usuário
-      </h2>
+      <h2 class="dialog-title" id="dialog-title-1">Editar Nome do Usuário</h2>
     </div>
 
     <div class="dialog-content">
@@ -129,39 +158,33 @@
             required
           />
           @if(formName.get('name')?.hasError('required') && submittedName) {
-            <div class="error-message">
-              Nome é obrigatório
-            </div>
-          }@else if (formName.get('name')?.hasError('minlength') && formName.get('name')?.dirty) {
-            <div class="error-message">
-              Nome deve ter pelo menos 3 caracteres
-            </div>
-          }@else if (formName.get('name')?.hasError('maxlength') && formName.get('name')?.dirty) {
-            <div class="error-message">
-              Nome deve ter no máximo 30 caracteres
-            </div>
+          <div class="error-message">Nome é obrigatório</div>
+          }@else if (formName.get('name')?.hasError('minlength') &&
+          formName.get('name')?.dirty) {
+          <div class="error-message">Nome deve ter pelo menos 3 caracteres</div>
+          }@else if (formName.get('name')?.hasError('maxlength') &&
+          formName.get('name')?.dirty) {
+          <div class="error-message">Nome deve ter no máximo 30 caracteres</div>
           }
         </div>
         <div style="display: flex; gap: 15px; margin-top: 30px">
           <button
-          type="button"
-          class="dialog-btn dialog-btn--cancel"
-          (click)="closeEditNameDialog()"
+            type="button"
+            class="dialog-btn dialog-btn--cancel"
+            (click)="closeEditNameDialog()"
           >
-          Cancelar
-        </button>
-        <button type="submit" class="dialog-btn dialog-btn--confirm">
-          Salvar
-        </button>
+            Cancelar
+          </button>
+          <button type="submit" class="dialog-btn dialog-btn--confirm">
+            Salvar
+          </button>
         </div>
       </form>
     </div>
   </div>
 </div>
-}
-
-@if(isEditEmailDialogVisible) {
-  <div class="dialog-overlay">
+} @if(isEditEmailDialogVisible) {
+<div class="dialog-overlay">
   <div
     class="dialog-box"
     role="dialog"
@@ -169,9 +192,7 @@
     aria-labelledby="dialog-title-1"
   >
     <div class="dialog-header">
-      <h2 class="dialog-title" id="dialog-title-1">
-        Editar Email do Usuário
-      </h2>
+      <h2 class="dialog-title" id="dialog-title-1">Editar Email do Usuário</h2>
     </div>
 
     <div class="dialog-content">
@@ -186,106 +207,121 @@
             required
           />
           @if(formEmail.get('email')?.hasError('required') && submittedEmail) {
-            <div class="error-message">
-              Email é obrigatório
-            </div>
-          }@else if (formEmail.get('email')?.hasError('email') && formEmail.get('email')?.dirty) {
-            <div class="error-message">
-              Email deve ser um endereço de email válido
-            </div>
+          <div class="error-message">Email é obrigatório</div>
+          }@else if (formEmail.get('email')?.hasError('email') &&
+          formEmail.get('email')?.dirty) {
+          <div class="error-message">
+            Email deve ser um endereço de email válido
+          </div>
           }
         </div>
         <div style="display: flex; gap: 15px; margin-top: 30px">
           <button
-          type="button"
-          class="dialog-btn dialog-btn--cancel"
-          (click)="closeEditEmailDialog()"
+            type="button"
+            class="dialog-btn dialog-btn--cancel"
+            (click)="closeEditEmailDialog()"
           >
-          Cancelar
-        </button>
-        <button type="submit" class="dialog-btn dialog-btn--confirm">
-          Salvar
-        </button>
+            Cancelar
+          </button>
+          <button type="submit" class="dialog-btn dialog-btn--confirm">
+            Salvar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+} @if(isEditPasswordDialogVisible) {
+<div class="dialog-overlay">
+  <div
+    class="dialog-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="dialog-title-2"
+  >
+    <div class="dialog-header">
+      <h2 class="dialog-title" id="dialog-title-2">Editar Senha do Usuário</h2>
+    </div>
+
+    <div class="dialog-content">
+      <form [formGroup]="formPassword" (ngSubmit)="submitPasswordChange()">
+        <div class="password-container">
+          <label for="password">Nova Senha:</label>
+          <div class="input-group">
+            <input
+              id="password"
+              formControlName="password"
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="Insira a nova senha"
+              required
+            />
+            <button
+              type="button"
+              class="toggle-password-visibility"
+              (click)="togglePasswordVisibility()"
+            >
+              <mat-icon>{{
+                showPassword ? "visibility" : "visibility_off"
+              }}</mat-icon>
+            </button>
+          </div>
+          @if(formPassword.get('password')?.hasError('required') &&
+          submittedPassword) {
+          <div class="error-message">Senha é obrigatória</div>
+          }@else if (formPassword.get('password')?.hasError('minlength') &&
+          formPassword.get('password')?.dirty) {
+          <div class="error-message">
+            Senha deve ter pelo menos 6 caracteres
+          </div>
+          }@else if (formPassword.get('password')?.hasError('maxlength') &&
+          formPassword.get('password')?.dirty) {
+          <div class="error-message">
+            Senha deve ter no máximo 20 caracteres
+          </div>
+          }
+        </div>
+        <div class="password-container">
+          <label for="confirmPassword">Confirmar Senha:</label>
+          <div class="input-group">
+            <input
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="Confirme a nova senha"
+              required
+            />
+            <button
+              type="button"
+              class="toggle-password-visibility"
+              (click)="togglePasswordVisibility()"
+            >
+              <mat-icon>{{
+                showPassword ? "visibility" : "visibility_off"
+              }}</mat-icon>
+            </button>
+          </div>
+          @if(formPassword.get('confirmPassword')?.hasError('required') &&
+          submittedPassword) {
+          <div class="error-message">Confirmação de senha é obrigatória</div>
+          }@else if (formPassword.hasError('passwordMismatch') &&
+          formPassword.get('confirmPassword')?.dirty) {
+          <div class="error-message">As senhas não coincidem</div>
+          }
+        </div>
+        <div style="display: flex; gap: 15px; margin-top: 30px">
+          <button
+            type="button"
+            class="dialog-btn dialog-btn--cancel"
+            (click)="closeEditPasswordDialog()"
+          >
+            Cancelar
+          </button>
+          <button type="submit" class="dialog-btn dialog-btn--confirm">
+            Salvar
+          </button>
         </div>
       </form>
     </div>
   </div>
 </div>
 }
-
-@if(isEditPasswordDialogVisible) {
-  <div class="dialog-overlay">
-    <div
-      class="dialog-box"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="dialog-title-2"
-    >
-      <div class="dialog-header">
-        <h2 class="dialog-title" id="dialog-title-2">
-          Editar Senha do Usuário
-        </h2>
-      </div>
-
-      <div class="dialog-content">
-        <form [formGroup]="formPassword" (ngSubmit)="submitPasswordChange()">
-          <div>
-            <label for="password">Nova Senha:</label>
-            <input
-              id="password"
-              formControlName="password"
-              type="password"
-              placeholder="Insira a nova senha"
-              required
-            />
-            @if(formPassword.get('password')?.hasError('required') && submittedPassword) {
-              <div class="error-message">
-                Senha é obrigatória
-              </div>
-            }@else if (formPassword.get('password')?.hasError('minlength') && formPassword.get('password')?.dirty) {
-              <div class="error-message">
-                Senha deve ter pelo menos 6 caracteres
-              </div>
-            }@else if (formPassword.get('password')?.hasError('maxlength') && formPassword.get('password')?.dirty) {
-              <div class="error-message">
-                Senha deve ter no máximo 20 caracteres
-              </div>
-            }
-          </div>
-          <div>
-            <label for="confirmPassword">Confirmar Senha:</label>
-            <input
-              id="confirmPassword"
-              formControlName="confirmPassword"
-              type="password"
-              placeholder="Confirme a nova senha"
-              required
-            />
-            @if(formPassword.get('confirmPassword')?.hasError('required') && submittedPassword) {
-              <div class="error-message">
-                Confirmação de senha é obrigatória
-              </div>
-            }@else if (formPassword.hasError('passwordMismatch') && formPassword.get('confirmPassword')?.dirty) {
-              <div class="error-message">
-                As senhas não coincidem
-              </div>
-            }
-          </div>
-          <div style="display: flex; gap: 15px; margin-top: 30px">
-            <button
-              type="button"
-              class="dialog-btn dialog-btn--cancel"
-              (click)="closeEditPasswordDialog()"
-            >
-              Cancelar
-            </button>
-            <button type="submit" class="dialog-btn dialog-btn--confirm">
-              Salvar
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-}
-
