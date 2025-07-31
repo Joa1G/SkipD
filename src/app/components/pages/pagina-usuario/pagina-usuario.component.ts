@@ -41,6 +41,7 @@ export class PaginaUsuarioComponent {
   isEditUrlPhotoDialogVisible = false;
   changeUrlPhotoDialogVisible = false;
   submitted = false;
+  showSuccessUrlPhotoChangedDialog = false;
 
   // Use o signal do serviço
   urlImage = this.userImageService.userImageUrl;
@@ -127,6 +128,8 @@ export class PaginaUsuarioComponent {
             // Atualiza o currentUser no authService
             const updatedUser = { ...user, urlFoto: '' };
             this.authService.updateCurrentUser(updatedUser);
+            this.changeUrlPhotoDialogVisible = false;
+          this.showSuccessUrlPhotoChangedDialog = true;
           } else {
             console.error('Failed to delete user image URL:', result.message);
           }
@@ -165,6 +168,8 @@ export class PaginaUsuarioComponent {
                 );
 
                 this.closeEditUrlPhotoDialog();
+                this.changeUrlPhotoDialogVisible = false;
+                this.showSuccessUrlPhotoChangedDialog = true;
               } else {
                 console.error(
                   'Failed to update user image URL:',

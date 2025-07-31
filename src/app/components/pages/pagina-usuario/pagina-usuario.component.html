@@ -159,3 +159,14 @@
   </div>
 </div>
 }
+
+<app-dialog
+  [title]="'Sucesso'"
+  [message]="'A foto do usuário foi alterada com sucesso.'"
+  [confirmText]="'OK'"
+  [dialogType]="'confirmation'"
+  [isVisible]="showSuccessUrlPhotoChangedDialog"
+  (isVisibleChange)="showSuccessUrlPhotoChangedDialog = $event"
+  [showCancelButton]="false"
+  [route]="['success-edit-name']"
+></app-dialog>
