@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { CalendarWeeklyComponent } from './calendar-weekly/calendar-weekly.component';
 import { InsightsService } from '../../../services/insights/insights.service';
+import { AbstractInsightsService } from '../../../services/insights/abstract-insights.service';
 
 @Component({
   selector: 'app-insights',
@@ -12,7 +13,7 @@ import { InsightsService } from '../../../services/insights/insights.service';
   styleUrls: ['./insights.component.scss'],
 })
 export class InsightsComponent {
-  private insightsService = inject(InsightsService);
+  private insightsService = inject(AbstractInsightsService);
   insights = this.insightsService.insights;
 
   diasDaSemana = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
