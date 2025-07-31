@@ -14,6 +14,7 @@ export class DialogComponent {
   @Input() title: string = '';
   @Input() message: string = '';
   @Input() confirmText: string = 'OK';
+  @Input() cancelText: string = 'Cancelar';
   @Input() isVisible: boolean = false;
   @Output() isVisibleChange = new EventEmitter<boolean>();
   @Input() route: any[] = [''];
@@ -31,7 +32,7 @@ export class DialogComponent {
   }
 
   setExcluirDialog() {
-    if (this.confirmText === 'Excluir') {
+    if (this.confirmText === 'Excluir' || this.confirmText === 'Cancelar') {
       this.isExcluirDialog = true;
     } else if (this.confirmText === 'Sair') {
       this.isLogoutDialog = true;
@@ -58,7 +59,9 @@ export class DialogComponent {
 
   emitConfirmAction() {
     this.confirmAction.emit(true);
-    if(this.route[0] !== 'photo_delete') {
+    if(this.route[0] === 'cancel-premium'){
+      this.isVisibleChange.emit(false);
+    } else if(this.route[0] !== 'photo_delete'){
       this.location.back();
     }
   }
@@ -79,5 +82,12 @@ export class DialogComponent {
       case 'logo':
         return 'dialog-box--logo';
     }
+  }
+
+  cancelTypeClass(){
+    if (this.cancelText === 'Manter') {
+      return 'manter-btn';
+    }
+    return '';
   }
 }

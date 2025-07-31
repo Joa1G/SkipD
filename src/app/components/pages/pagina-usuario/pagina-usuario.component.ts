@@ -2,7 +2,7 @@ import { Component, computed, inject } from '@angular/core';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MatIcon } from '@angular/material/icon';
 import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { DialogComponent } from '../../shared/dialogs/dialog.component';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { UserImageService } from '../../../services/urlState.service';
@@ -23,6 +23,7 @@ import { Location } from '@angular/common';
     DialogComponent,
     ReactiveFormsModule,
     FormsModule,
+    RouterModule,
   ],
   templateUrl: './pagina-usuario.component.html',
   styleUrl: './pagina-usuario.component.scss',

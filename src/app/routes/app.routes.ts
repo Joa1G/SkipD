@@ -9,6 +9,7 @@ import { materiaGuard } from '../guards/materia.guard';
 import { AddInstituicaoComponent } from '../components/pages/add-instituicao/add-instituicao.component';
 import { PaginaUsuarioComponent } from '../components/pages/pagina-usuario/pagina-usuario.component';
 import { premiumGuard } from '../guards/premium.guard';
+import { ContaSettingsComponent } from '../components/pages/conta-settings/conta-settings.component';
 
 export const routes: Routes = [
   {
@@ -50,6 +51,11 @@ export const routes: Routes = [
     path: 'edit-materia/:id',
     component: AddMateriaComponents,
     canActivate: [authGuard, materiaGuard],
+  },
+  {
+    path: 'conta-settings',
+    component: ContaSettingsComponent,
+    canActivate: [authGuard],
   },
   {
     path: '',

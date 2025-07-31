@@ -1,0 +1,93 @@
+<app-header></app-header>
+<div class="conta-settings-container">
+  <div class="settings-content">
+    <div class="settings-header">
+      <mat-icon class="back-icon" (click)="onClickBackArrow()"
+        >arrow_back_ios</mat-icon
+      >
+      <h1 class="page-title">Configurações da Conta</h1>
+    </div>
+
+    <div class="settings-body">
+      <!-- Dados Pessoais -->
+      <div class="settings-section">
+        <h2 class="section-title">Dados Pessoais</h2>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <mat-icon class="setting-icon">person</mat-icon>
+            <div class="setting-details">
+              <div class="setting-label">Nome</div>
+              <div class="setting-value">{{ user?.nome! }}</div>
+            </div>
+          </div>
+          <button class="edit-btn" mat-stroked-button><mat-icon>edit</mat-icon>Editar</button>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <mat-icon class="setting-icon">email</mat-icon>
+            <div class="setting-details">
+              <div class="setting-label">Email</div>
+              <div class="setting-value">{{ user?.email! }}</div>
+            </div>
+          </div>
+          <button class="edit-btn" mat-stroked-button><mat-icon>edit</mat-icon>Editar</button>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <mat-icon class="setting-icon">lock</mat-icon>
+            <div class="setting-details">
+              <div class="setting-label">Senha</div>
+              <div class="setting-value">********</div>
+            </div>
+          </div>
+          <button class="edit-btn" mat-stroked-button><mat-icon>edit</mat-icon>Editar</button>
+        </div>
+      </div>
+
+      <!-- Zona de Perigo -->
+      <div class="settings-section danger-zone">
+
+        @if(isPremiumUser()){
+          <div class="danger-item">
+            <div class="danger-info">
+              <div class="danger-label">Cancelar Assinatura <mat-icon>diamond</mat-icon>Premium</div>
+              <div class="danger-description">
+                Você perderá o acesso aos benefícios exclusivos.
+              </div>
+            </div>
+            <button class="danger-btn delete-account" mat-stroked-button (click)="openCancelPremiumDialog()">
+              Cancelar Premium
+            </button>
+          </div>
+        }
+
+        <div class="danger-item">
+          <div class="danger-info">
+            <div class="danger-label">Deletar Conta</div>
+            <div class="danger-description">
+              Esta ação é permanente e não pode ser desfeita.
+            </div>
+          </div>
+          <button class="danger-btn delete-account" mat-flat-button>
+            <mat-icon>delete</mat-icon>Deletar Conta
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-dialog
+  [dialogType]="'warning'"
+  [title]="'Cancelar Assinatura Premium'"
+  [message]="'Tem certeza que deseja cancelar sua assinatura Premium? Você perderá todos os benefícios exclusivos.'"
+  [isVisible]="showCancelPremiumDialog"
+  (isVisibleChange)="showCancelPremiumDialog = $event"
+  (confirmAction)="changePremiumStateOfUser()"
+  [confirmText]="'Cancelar'"
+  [cancelText]="'Manter'"
+  [route]="['cancel-premium']"
+></app-dialog>

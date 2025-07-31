@@ -26,7 +26,7 @@
 
     <div class="dialog-footer">
       @if(showCancelButton){
-        <button class="dialog-btn dialog-btn--cancel" (click)="closeDialog()">Cancelar</button>
+        <button class="dialog-btn dialog-btn--cancel" [ngClass]="cancelTypeClass()" (click)="closeDialog()">{{ cancelText }}</button>
       }
       <button class="dialog-btn dialog-btn--confirm" (click)="isExcluirDialog ? emitConfirmAction() : isLogoutDialog ? emitConfirmActionInLogout() : useRouter()">{{ confirmText }}</button>
     </div>
