@@ -34,6 +34,9 @@ export class ContaSettingsComponent {
   isEditPasswordDialogVisible = false;
   submittedPassword = false;
   showPassword = false;
+  showSucessEditNameDialog = false;
+  showSucessEditEmailDialog = false;
+  showSucessEditPasswordDialog = false;
 
   formName = new FormGroup({
     name: new FormControl('', [
@@ -150,6 +153,7 @@ export class ContaSettingsComponent {
             this.isEditNameDialogVisible = false;
             this.formName.reset();
             this.submittedName = false;
+            this.showSucessEditNameDialog = true;
           } else {
             console.error('Failed to update name:', result.message);
           }
@@ -189,6 +193,7 @@ export class ContaSettingsComponent {
             this.isEditEmailDialogVisible = false;
             this.formEmail.reset();
             this.submittedEmail = false;
+            this.showSucessEditEmailDialog = true;
           } else {
             console.error('Failed to update email:', result.message);
           }
@@ -228,6 +233,7 @@ export class ContaSettingsComponent {
             this.isEditPasswordDialogVisible = false;
             this.formPassword.reset();
             this.submittedPassword = false;
+            this.showSucessEditPasswordDialog = true;
           } else {
             console.error('Failed to update password:', result.message);
           }

@@ -50,7 +50,7 @@ export class DialogComponent {
   useRouter(){
     if(this.route[0] === ''){
       this.location.back();
-    }else if(this.route[0] === 'premium'){
+    }else if(this.route[0] === 'premium' || this.route[0] === 'success-edit-name' || this.route[0] === 'success-edit-email' || this.route[0] === 'success-edit-password'){
       this.isVisibleChange.emit(false);
     }else{
       this.router.navigate(this.route);

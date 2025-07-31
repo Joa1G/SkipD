@@ -325,3 +325,32 @@
   </div>
 </div>
 }
+<app-dialog
+  [title]="'Sucesso ao Editar Nome'"
+  [message]="'Seu nome foi atualizado com sucesso!'"
+  [showCancelButton]="false"
+  [isVisible]="showSucessEditNameDialog"
+  (isVisibleChange)="showSucessEditNameDialog = $event"
+  [dialogType]="'confirmation'"
+  [route]="['success-edit-name']"
+></app-dialog>
+
+<app-dialog
+  [title]="'Sucesso ao Editar Email'"
+  [message]="'Seu email foi atualizado com sucesso!'"
+  [showCancelButton]="false"
+  [isVisible]="showSucessEditEmailDialog"
+  (isVisibleChange)="showSucessEditEmailDialog = $event"
+  [dialogType]="'confirmation'"
+  [route]="['success-edit-email']"
+></app-dialog>
+
+<app-dialog
+  [title]="'Sucesso ao Editar Senha'"
+  [message]="'Sua senha foi atualizada com sucesso!'"
+  [showCancelButton]="false"
+  [isVisible]="showSucessEditPasswordDialog"
+  (isVisibleChange)="showSucessEditPasswordDialog = $event"
+  [dialogType]="'confirmation'"
+  [route]="['success-edit-password']"
+></app-dialog>
