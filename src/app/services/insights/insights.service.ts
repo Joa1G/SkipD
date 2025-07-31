@@ -4,18 +4,10 @@ import { AbstractInstituicaoService } from '../instituicao/abstract-instituicao.
 import { MockedAuthService } from '../auth/mocked-auth.service';
 import { Materia } from '../../models/materia/materia.model';
 import { DiaSemana } from '../../models/materia/materia.model';
-
-export interface InsightData {
-  materiasEmRisco: Materia[]; 
-  materiasReprovadas: Materia[]; 
-  horasPorDia: Record<string, number>;
-  materiasPorDia: Record<string, Materia[]>;
-  diaMaisCritico: string;
-  diaMaisLeve: string;
-}
+import { AbstractInsightsService, InsightData } from './abstract-insights.service';
 
 @Injectable({ providedIn: 'root' })
-export class InsightsService {
+export class InsightsService extends AbstractInsightsService {
   private materiaService = inject(AbstractMateriaService);
   private instituicaoService = inject(AbstractInstituicaoService);
   private authService = inject(MockedAuthService);
@@ -26,7 +18,7 @@ export class InsightsService {
 
   diasSemana = ['domingo','segunda','terca','quarta','quinta','sexta','sabado'];
 
-  insights = computed<InsightData>(() => {
+  public override insights = computed<InsightData>(() => {
     const user = this.currentUser();
     if (!user) {
       return {
