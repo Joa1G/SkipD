@@ -15,6 +15,9 @@ export class InsightsComponent {
   private insightsService = inject(InsightsService);
   insights = this.insightsService.insights;
 
+
+  diasDaSemana = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+
   get criticaMensagem() {
     const criticas = this.insights().materiasCriticas;
     if (criticas.length === 0) return 'Sem matérias em risco.';
@@ -24,6 +27,6 @@ export class InsightsComponent {
 
   get podeFaltarMensagem() {
     const dia = this.insights().diaMaisLeve;
-    return dia ? `Você pode faltar com mais segurança em: ${dia.charAt(0).toUpperCase() + dia.slice(1)}` : '';
+    return dia ? `Você pode faltar com mais segurança na ${dia.charAt(0).toUpperCase() + dia.slice(1)}` : 'Nenhum dia seguro para faltar identificado.';
   }
 }
