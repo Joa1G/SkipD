@@ -163,4 +163,14 @@ export class MockedAuthService {
     return of({ success: false, status: 501, message: 'Método não implementado' });
   }
 
+  verifyPassword(password: string): Observable<boolean> {
+    const currentUser = this._currentUser();
+    // Supondo que a senha do usuário está armazenada em currentUser.senha
+    if (!currentUser || !currentUser.senha) {
+      return of(false);
+    }
+    // Comparação simples (em produção, nunca armazene senha em texto puro!)
+    return of(currentUser.senha === password);
+  }
+
 }

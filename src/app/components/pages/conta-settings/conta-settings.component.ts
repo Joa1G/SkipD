@@ -13,7 +13,22 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { AsyncValidatorFn, AbstractControl } from '@angular/forms';
 import { passwordMatchValidator } from '../cadastro/cadastro.component';
+import { catchError, map, of } from 'rxjs';
+
+export const oldPasswordMatchValidator = (authService: MockedAuthService): AsyncValidatorFn => {
+  return (control: AbstractControl) => {
+    if (!control.value) {
+      return of(null);
+    }
+    // Supondo que o serviço tenha um método para verificar a senha
+    return authService.verifyPassword(control.value).pipe(
+      map(isMatch => (isMatch ? null : { oldPasswordIncorrect: true })),
+      catchError(() => of({ oldPasswordIncorrect: true }))
+    );
+  };
+};
 
 @Component({
   selector: 'app-conta-settings',
@@ -53,6 +68,11 @@ export class ContaSettingsComponent {
 
   formPassword = new FormGroup(
     {
+      old_password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(20),
+      ], [oldPasswordMatchValidator(this.authService)]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),

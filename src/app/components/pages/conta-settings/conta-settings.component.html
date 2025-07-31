@@ -247,6 +247,46 @@
 
     <div class="dialog-content">
       <form [formGroup]="formPassword" (ngSubmit)="submitPasswordChange()">
+
+        <div class="password-container">
+          <label for="old_password">Senha Atual:</label>
+          <div class="input-group">
+            <input
+              id="old_password"
+              formControlName="old_password"
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="Insira a senha atual"
+              required
+            />
+            <button
+              type="button"
+              class="toggle-password-visibility"
+              (click)="togglePasswordVisibility()"
+            >
+              <mat-icon>{{
+                showPassword ? "visibility" : "visibility_off"
+              }}</mat-icon>
+            </button>
+          </div>
+          @if(formPassword.get('old_password')?.hasError('required') &&
+          submittedPassword) {
+          <div class="error-message">Senha atual é obrigatória</div>
+          }@else if (formPassword.get('old_password')?.hasError('minlength') &&
+          formPassword.get('old_password')?.dirty) {
+          <div class="error-message">
+            Senha atual deve ter pelo menos 6 caracteres
+          </div>
+          }@else if (formPassword.get('old_password')?.hasError('maxlength') &&
+          formPassword.get('old_password')?.dirty) {
+          <div class="error-message">
+            Senha atual deve ter no máximo 20 caracteres
+          </div>
+          }@else if(formPassword.get('old_password')?.hasError('oldPasswordIncorrect') && submittedPassword) {
+            <div class="error-message">
+              A senha atual não confere. Por favor, tente novamente.
+            </div>
+          }
+        </div>
         <div class="password-container">
           <label for="password">Nova Senha:</label>
           <div class="input-group">
