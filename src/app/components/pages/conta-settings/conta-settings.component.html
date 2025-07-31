@@ -71,7 +71,7 @@
               Esta ação é permanente e não pode ser desfeita.
             </div>
           </div>
-          <button class="danger-btn delete-account" mat-flat-button>
+          <button class="danger-btn delete-account" mat-flat-button (click)="openDeleteAccountDialog()">
             <mat-icon>delete</mat-icon>Deletar Conta
           </button>
         </div>
@@ -90,4 +90,15 @@
   [confirmText]="'Cancelar'"
   [cancelText]="'Manter'"
   [route]="['cancel-premium']"
+></app-dialog>
+
+<app-dialog
+  [dialogType]="'warning'"
+  [title]="'Deletar Conta'"
+  [message]="'Tem certeza que deseja deletar sua conta? Esta ação é permanente e não pode ser desfeita.'"
+  [isVisible]="showDeleteAccountDialog"
+  (isVisibleChange)="showDeleteAccountDialog = $event"
+  (confirmAction)="deleteAccount()"
+  [confirmText]="'Deletar'"
+  [cancelText]="'Manter'"
 ></app-dialog>

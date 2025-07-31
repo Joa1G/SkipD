@@ -32,7 +32,7 @@ export class DialogComponent {
   }
 
   setExcluirDialog() {
-    if (this.confirmText === 'Excluir' || this.confirmText === 'Cancelar') {
+    if (this.confirmText === 'Excluir' || this.confirmText === 'Cancelar' || this.confirmText === 'Deletar') {
       this.isExcluirDialog = true;
     } else if (this.confirmText === 'Sair') {
       this.isLogoutDialog = true;

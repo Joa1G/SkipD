@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { DialogComponent } from '../../shared/dialogs/dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-conta-settings',
@@ -16,7 +17,9 @@ export class ContaSettingsComponent {
   private location = inject(Location);
   private authService = inject(MockedAuthService);
   private userService = inject(AbstractUsuarioService);
+  private router = inject(Router);
   showCancelPremiumDialog = false;
+  showDeleteAccountDialog = false;
 
   user = this.authService.currentUser();
   isPremiumUser = computed(
@@ -50,7 +53,33 @@ export class ContaSettingsComponent {
     }
   }
 
+  deleteAccount() {
+    const user = this.authService.currentUser();
+    if (user) {
+      this.userService.deleteUsuario(user.id).subscribe({
+        next: (result) => {
+          if (result.success) {
+            console.log('Account deleted successfully');
+            this.authService.logout();
+            this.router.navigate(['/login']);
+          } else {
+            console.error('Failed to delete account:', result.message);
+          }
+        },
+        error: (error) => {
+          console.error('Error deleting account:', error);
+        },
+      });
+    } else {
+      console.error('No user is currently logged in.');
+    }
+  }
+
   openCancelPremiumDialog() {
     this.showCancelPremiumDialog = true;
+  }
+
+  openDeleteAccountDialog() {
+    this.showDeleteAccountDialog = true;
   }
 }
