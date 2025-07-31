@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,15 +9,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./calendar-weekly.component.scss']
 })
 export class CalendarWeeklyComponent {
-  dias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+  @Input() eventosPorDia: Record<string, string[]> = {};
 
-  eventos = [
-    [], // Dom
-    [],
-    ['Programação Orientada a Objetos'],
-    ['Matemática Discreta', 'Engenharia de Software', 'Desenvolvimento Web Full Stack'],
-    ['Programação Orientada a Objetos', 'Engenharia de Software', 'Desenvolvimento Web Full Stack'],
-    ['Engenharia de Software', 'Desenvolvimento Web Full Stack'],
-    [] // Sáb
-  ];
+  dias = ['domingo', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
+
+  get eventosSemana(): string[][] {
+    return this.dias.map(dia => this.eventosPorDia[dia] || []);
+  }
 }

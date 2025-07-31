@@ -6,20 +6,20 @@
       <thead>
         <tr>
           @for (dia of dias; track $index) {
-            <th>{{ dia }}</th>
+            <th>{{ dia | titlecase }}</th>
           }
         </tr>
       </thead>
       <tbody>
         <tr>
-          @for (eventosDia of eventos; track $index) {
+          @for (eventosDia of eventosSemana; track $index) {
             <td>
               @for (evento of eventosDia; track $index) {
                 <div class="event"
-                     [ngClass]="{ 
-                        'failed': evento.includes('Engenharia'),
-                        'warning': evento.includes('Programação'),
-                        'sucess': evento.includes('Matemática') || evento.includes('Desenvolvimento')
+                     [ngClass]="{
+                        'failed': evento.toLowerCase().includes('engenharia'),
+                        'warning': evento.toLowerCase().includes('programação'),
+                        'sucess': evento.toLowerCase().includes('matemática') || evento.toLowerCase().includes('desenvolvimento')
                      }">
                   {{ evento }}
                 </div>
