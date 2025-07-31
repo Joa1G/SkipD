@@ -9,10 +9,13 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./calendar-weekly.component.scss']
 })
 export class CalendarWeeklyComponent {
+  // Este Input para os eventos já estava correto.
   @Input() eventosPorDia: Record<string, string[]> = {};
 
-  dias = ['domingo', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
+  @Input() dias: string[] = [];
 
+  // Este getter continua funcionando perfeitamente.
+  // Ele vai usar a lista de 'dias' que for passada pelo pai.
   get eventosSemana(): string[][] {
     return this.dias.map(dia => this.eventosPorDia[dia] || []);
   }
