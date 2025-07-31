@@ -205,6 +205,7 @@
             type="email"
             placeholder="Insira o email"
             required
+            (focus)="submittedEmail = false"
           />
           @if(formEmail.get('email')?.hasError('required') && submittedEmail) {
           <div class="error-message">Email é obrigatório</div>

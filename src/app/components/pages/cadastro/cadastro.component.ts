@@ -129,11 +129,6 @@ export class CadastroComponents {
     if (fieldName === 'confirmPassword' && this.cadastroForm.hasError('passwordMismatch') && (field!.dirty || this.submitted)) {
       return 'is-invalid';
     }
-
-    if (fieldName === 'email' && field!.hasError('emailInUse') && (field!.dirty || this.submitted)) {
-      return 'is-invalid';
-    }
-
     if (field!.valid && (field!.dirty || this.submitted)) {
       return 'is-valid';
     }else if (field!.invalid && (field!.dirty || this.submitted) || this.incorretFormField) {
@@ -141,6 +136,25 @@ export class CadastroComponents {
     }else {
       return '';
     }
+  }
+
+  invalidFieldClassEmail() {
+    const field = this.cadastroForm.get('email');
+
+    if (field!.hasError('required') && field!.dirty){
+      return 'is-invalid';
+    }else if (field!.hasError('email') && field!.dirty) {
+      return 'is-invalid';
+    }else if (field!.hasError('emailInUse') && this.incorretFormField) {
+      return 'is-invalid';
+    }else if(field!.valid && field!.dirty || field!.hasError('emailInUse') && !this.incorretFormField) {
+      return 'is-valid';
+    }else{
+      return '';
+    }
+
+
+
   }
 
   changeIncorrectFormField() {
