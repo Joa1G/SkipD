@@ -1,17 +1,42 @@
+<!-- src/app/components/pages/insights/insights.component.html -->
 <app-header></app-header>
 <div class="insights-container">
-  <div class="header-cards">
-    <div class="card secure-window">
-      <h3>Janela Segura Para Faltar</h3>
-      <p>{{ podeFaltarMensagem }}</p>
-    </div>
-    <div class="card pattern-analysis">
-      <h3>Análise de Padrão</h3>
-      <p>{{ criticaMensagem }}</p>
-    </div>
-  </div>
-
-  <app-calendar-weekly 
-    [eventosPorDia]="insights().materiasPorDia">
+  <!-- 
+    CORREÇÃO: A propriedade aqui deve ser [eventosPorDia], 
+    que é o nome do @Input() no seu componente de calendário.
+  -->
+  <app-calendar-weekly
+    [eventosPorDia]="insights().materiasPorDia"
+    [dias]="diasDaSemana">
   </app-calendar-weekly>
+
+  <!-- Nova seção para os cards de insights -->
+  <section class="useful-insights">
+    <h2>Insights Úteis</h2>
+    <div class="insights-cards">
+      <!-- Card 1: Janela Segura -->
+      <div class="insight-card">
+        <span class="icon success">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+        </span>
+        <p>{{ podeFaltarMensagem }}</p>
+      </div>
+
+      <!-- Card 2: Análise de Padrão -->
+      <div class="insight-card">
+        <span class="icon warning">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
+        </span>
+        <p>{{ criticaMensagem }}</p>
+      </div>
+
+      <!-- Card 3: Estado Crítico -->
+      <div class="insight-card">
+        <span class="icon failed">
+           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </span>
+        <p>Engenharia está em estado crítico. Evite faltas a todo custo.</p>
+      </div>
+    </div>
+  </section>
 </div>
