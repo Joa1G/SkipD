@@ -15,7 +15,7 @@ $radius-sm: 6px;
 
 .gi-container {
   min-height: calc(100vh - 96px);
-  padding: 2rem 1rem;
+  padding: 1rem 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,7 +90,7 @@ $radius-sm: 6px;
   font-weight: 700;
   cursor: pointer;
   transition: transform $transition-speed $transition-ease,
-  box-shadow $transition-speed $transition-ease;
+    box-shadow $transition-speed $transition-ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -131,6 +131,114 @@ $radius-sm: 6px;
 
     .add-icon {
       color: #000;
+    }
+  }
+}
+
+.i-card {
+  width: 100%;
+  min-height: 80px;
+  margin: 15px 0;
+  background-color: $color-bg-light;
+  color: $color-text;
+  border-radius: $radius;
+  border: 1px solid $color-border;
+  font-family: $font-main;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all $transition-speed $transition-ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+
+  .i-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-grow: 1;
+
+    .i-card-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: $color-text;
+      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+      mat-icon{
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .i-card-faltas {
+      font-size: 0.9rem;
+      color: $color-muted;
+      font-weight: 500;
+
+      .faltas-percentage {
+        color: white;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .i-card-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    .action-button {
+      @extend .btn;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      min-width: 80px;
+      height: 36px;
+
+      mat-icon {
+        font-size: 1rem;
+        width: 1rem;
+        height: 1rem;
+        line-height: 1rem;
+      }
+
+      &.edit {
+        background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
+        color: white;
+      }
+
+      &.clean {
+        background: #22c55e;
+        color: #fff;
+      }
+
+      &.delete {
+        background: linear-gradient(90deg, #dc2626, #ef4444);
+        color: white;
+      }
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .i-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+
+    .i-card-header {
+      align-items: center;
+      text-align: center;
+    }
+
+    .i-card-actions {
+      justify-content: center;
+      flex-wrap: wrap;
     }
   }
 }

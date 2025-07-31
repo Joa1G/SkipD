@@ -8,23 +8,52 @@
       <h1 class="page-title">Gerenciar Instituições</h1>
       <span class="spacer"></span>
       @if(isPremiumUser()){
-        <button class="add-instituicao-button" routerLink="/add-instituicao">
-          <mat-icon class="add-icon">add</mat-icon><span>Adicionar Instituição</span>
-        </button>
+      <button class="add-instituicao-button" routerLink="/add-instituicao">
+        <mat-icon class="add-icon">add</mat-icon
+        ><span>Adicionar Instituição</span>
+      </button>
       }@else {
-        <button class="add-instituicao-button premium" (click)="showPremiumMessage()">
-          <mat-icon class="add-icon">diamond</mat-icon><span>Adicionar Instituição</span>
-        </button>
+      <button
+        class="add-instituicao-button premium"
+        (click)="showPremiumMessage()"
+      >
+        <mat-icon class="add-icon">diamond</mat-icon
+        ><span>Adicionar Instituição</span>
+      </button>
       }
     </div>
 
-    <div class="gi-body">
-      
-    </div>
-</div>
+    @for(instituicao of instituicoesDoUsuario(); track instituicao.id) {
+      <div class="gi-body">
+        <div class="i-card">
+          <div class="i-card-header">
+            <div class="i-card-title"><mat-icon>school</mat-icon> {{instituicao.nome}}</div>
+            <div class="i-card-faltas">
+              Limite de Faltas: <span class="faltas-percentage">{{instituicao.percentual_limite_faltas * 100}}%</span>
+            </div>
+          </div>
+          <div class="i-card-actions">
+            <button class="action-button edit">
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button class="action-button clean">
+              <mat-icon>cleaning_services</mat-icon>
+              <span>Limpar</span>
+            </button>
+            <button class="action-button delete">
+              <mat-icon>delete</mat-icon>
+              <span>Excluir</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
 
-@if(showPremiumDialog){
+  @if(showPremiumDialog){
   <app-premium-dialog
     (visibleChange)="showPremiumDialog = $event"
   ></app-premium-dialog>
-}
+  }
+</div>
