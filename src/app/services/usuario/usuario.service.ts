@@ -53,4 +53,8 @@ export class UsuarioService extends AbstractUsuarioService {
   override updateUrlFoto(id: number, urlFoto: string): Observable<OperationResult> {
     return of();
   }
+
+  override isEmailInUse(email: string): Observable<OperationResult> {
+    return of();
+  }
 }

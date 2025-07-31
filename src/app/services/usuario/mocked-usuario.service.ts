@@ -269,4 +269,22 @@ export class MockedUsuarioService extends AbstractUsuarioService {
       return of({ success: false, status: 500, data: error });
     }
   }
+
+  override isEmailInUse(email: string): Observable<OperationResult> {
+    try {
+      const isInUse = this._usuarios().some((u) => u.email === email);
+      return of({
+        success: true,
+        status: 200,
+        data: isInUse,
+        message: isInUse ? 'E-mail já está em uso.' : 'E-mail disponível.',
+      });
+    } catch {
+      return of({
+        success: false,
+        status: 500,
+        message: 'Erro ao verificar e-mail.',
+      });
+    }
+  }
 }

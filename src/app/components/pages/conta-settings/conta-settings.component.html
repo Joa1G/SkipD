@@ -213,6 +213,9 @@
           <div class="error-message">
             Email deve ser um endereço de email válido
           </div>
+          }@else if (formEmail.get('email')?.errors?.['emailInUse'] &&
+          formEmail.get('email')?.dirty) {
+          <div class="error-message">Este email já está em uso.</div>
           }
         </div>
         <div style="display: flex; gap: 15px; margin-top: 30px">

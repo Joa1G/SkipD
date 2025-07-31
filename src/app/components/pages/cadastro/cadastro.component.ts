@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ReactiveFormsModule, FormControl, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { ReactiveFormsModule, FormControl, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { AbstractInstituicaoService } from '../../../services/instituicao/abstract-instituicao.service';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
-import { firstValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, map, of } from 'rxjs';
 import { Instituicao } from '../../../models/instituicao/instituicao.model';
 import { DialogComponent } from '../../shared/dialogs/dialog.component';
 
@@ -13,6 +13,24 @@ export const passwordMatchValidator: ValidatorFn = (group: AbstractControl): Val
   const password = group.get('password')?.value;
   const confirmPassword = group.get('confirmPassword')?.value;
   return password === confirmPassword ? null : { passwordMismatch: true };
+};
+
+export const emailInUseValidator = (usuarioService: AbstractUsuarioService): AsyncValidatorFn => {
+  return (control: AbstractControl) => {
+    if (!control.value) {
+      return of(null);
+    }
+
+    return usuarioService.isEmailInUse(control.value).pipe(
+      map(result => {
+        if (result.success && result.data) {
+          return { emailInUse: true };
+        }
+        return null;
+      }),
+      catchError(() => of(null))
+    );
+  };
 };
 
 @Component({
@@ -39,7 +57,7 @@ export class CadastroComponents {
 
   cadastroForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.email], [emailInUseValidator(this.serviceUsuario)]),
     password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
     confirmPassword: new FormControl('', [Validators.required]),
     instituicaoPadrao: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
@@ -109,6 +127,10 @@ export class CadastroComponents {
     const field = this.cadastroForm.get(fieldName);
 
     if (fieldName === 'confirmPassword' && this.cadastroForm.hasError('passwordMismatch') && (field!.dirty || this.submitted)) {
+      return 'is-invalid';
+    }
+
+    if (fieldName === 'email' && field!.hasError('emailInUse') && (field!.dirty || this.submitted)) {
       return 'is-invalid';
     }
 

@@ -6,6 +6,7 @@ import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { DialogComponent } from '../../shared/dialogs/dialog.component';
 import { Router } from '@angular/router';
+import { emailInUseValidator } from '../cadastro/cadastro.component';
 import {
   FormControl,
   FormGroup,
@@ -47,7 +48,7 @@ export class ContaSettingsComponent {
   });
 
   formEmail = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.email], [emailInUseValidator(this.userService)]),
   });
 
   formPassword = new FormGroup(
