@@ -175,6 +175,10 @@ $radius-sm: 8px; // Raio menor para botões de diálogo
   }
 }
 
+.manter-btn {
+  background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
+}
+
 // Botão de confirmar (padrão e variações)
 .dialog-btn--confirm {
   color: white;
@@ -226,31 +230,5 @@ $radius-sm: 8px; // Raio menor para botões de diálogo
   }
   h2 {
     color: $color-success;
-  }
-}
-
-.manter-btn{
-  padding: 14px;
-  border: none;
-  border-radius: $radius;
-  font-family: $font-main;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: white;
-  cursor: pointer;
-  transition: transform $transition-speed $transition-ease,
-  box-shadow $transition-speed $transition-ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: linear-gradient(
-    90deg,
-    $color-gradient-start,
-    $color-gradient-end
-  );
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
 }
