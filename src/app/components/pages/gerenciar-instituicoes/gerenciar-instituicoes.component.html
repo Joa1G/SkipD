@@ -1,0 +1,30 @@
+<app-header></app-header>
+<div class="gi-container">
+  <div class="gi-content">
+    <div class="gi-header">
+      <mat-icon class="back-icon" (click)="onClickBackArrow()"
+        >arrow_back_ios</mat-icon
+      >
+      <h1 class="page-title">Gerenciar Instituições</h1>
+      <span class="spacer"></span>
+      @if(isPremiumUser()){
+        <button class="add-instituicao-button" routerLink="/add-instituicao">
+          <mat-icon class="add-icon">add</mat-icon><span>Adicionar Instituição</span>
+        </button>
+      }@else {
+        <button class="add-instituicao-button premium" (click)="showPremiumMessage()">
+          <mat-icon class="add-icon">diamond</mat-icon><span>Adicionar Instituição</span>
+        </button>
+      }
+    </div>
+
+    <div class="gi-body">
+      
+    </div>
+</div>
+
+@if(showPremiumDialog){
+  <app-premium-dialog
+    (visibleChange)="showPremiumDialog = $event"
+  ></app-premium-dialog>
+}
