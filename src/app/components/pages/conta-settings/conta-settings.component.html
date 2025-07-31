@@ -43,7 +43,7 @@
               <div class="setting-value">********</div>
             </div>
           </div>
-          <button class="edit-btn" mat-stroked-button><mat-icon>edit</mat-icon>Editar</button>
+          <button class="edit-btn" mat-stroked-button (click)="isEditPasswordDialogVisible = true"><mat-icon>edit</mat-icon>Editar</button>
         </div>
       </div>
 
@@ -211,5 +211,81 @@
     </div>
   </div>
 </div>
+}
+
+@if(isEditPasswordDialogVisible) {
+  <div class="dialog-overlay">
+    <div
+      class="dialog-box"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="dialog-title-2"
+    >
+      <div class="dialog-header">
+        <h2 class="dialog-title" id="dialog-title-2">
+          Editar Senha do Usuário
+        </h2>
+      </div>
+
+      <div class="dialog-content">
+        <form [formGroup]="formPassword" (ngSubmit)="submitPasswordChange()">
+          <div>
+            <label for="password">Nova Senha:</label>
+            <input
+              id="password"
+              formControlName="password"
+              type="password"
+              placeholder="Insira a nova senha"
+              required
+            />
+            @if(formPassword.get('password')?.hasError('required') && submittedPassword) {
+              <div class="error-message">
+                Senha é obrigatória
+              </div>
+            }@else if (formPassword.get('password')?.hasError('minlength') && formPassword.get('password')?.dirty) {
+              <div class="error-message">
+                Senha deve ter pelo menos 6 caracteres
+              </div>
+            }@else if (formPassword.get('password')?.hasError('maxlength') && formPassword.get('password')?.dirty) {
+              <div class="error-message">
+                Senha deve ter no máximo 20 caracteres
+              </div>
+            }
+          </div>
+          <div>
+            <label for="confirmPassword">Confirmar Senha:</label>
+            <input
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              type="password"
+              placeholder="Confirme a nova senha"
+              required
+            />
+            @if(formPassword.get('confirmPassword')?.hasError('required') && submittedPassword) {
+              <div class="error-message">
+                Confirmação de senha é obrigatória
+              </div>
+            }@else if (formPassword.hasError('passwordMismatch') && formPassword.get('confirmPassword')?.dirty) {
+              <div class="error-message">
+                As senhas não coincidem
+              </div>
+            }
+          </div>
+          <div style="display: flex; gap: 15px; margin-top: 30px">
+            <button
+              type="button"
+              class="dialog-btn dialog-btn--cancel"
+              (click)="closeEditPasswordDialog()"
+            >
+              Cancelar
+            </button>
+            <button type="submit" class="dialog-btn dialog-btn--confirm">
+              Salvar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 }
 

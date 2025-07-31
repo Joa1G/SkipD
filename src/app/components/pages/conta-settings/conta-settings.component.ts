@@ -7,6 +7,7 @@ import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuar
 import { DialogComponent } from '../../shared/dialogs/dialog.component';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { passwordMatchValidator } from '../cadastro/cadastro.component';
 
 @Component({
   selector: 'app-conta-settings',
@@ -35,6 +36,11 @@ export class ContaSettingsComponent {
   formEmail = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])
   })
+
+  formPassword = new FormGroup({
+    password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
+    confirmPassword: new FormControl('', [Validators.required])
+  }, { validators: passwordMatchValidator });
 
   user = computed(() => this.authService.currentUser());
   isPremiumUser = computed(
@@ -178,5 +184,40 @@ export class ContaSettingsComponent {
 
   closeEditPasswordDialog() {
     this.isEditPasswordDialogVisible = false;
+    this.formPassword.reset();
+    this.submittedPassword = false;
+  }
+
+  submitPasswordChange() {
+    this.submittedPassword = true;
+    if (this.formPassword.invalid) {
+      return;
+    }
+
+    const user = this.authService.currentUser();
+    const updatedUser = {
+      ...user!,
+      senha: this.formPassword.value.password!
+    };
+    if (user) {
+      this.userService.updateUsuario(updatedUser).subscribe({
+        next: (result) => {
+          if (result.success) {
+            console.log('Password updated successfully');
+            this.authService.updateCurrentUser(result.data);
+            this.isEditPasswordDialogVisible = false;
+            this.formPassword.reset();
+            this.submittedPassword = false;
+          } else {
+            console.error('Failed to update password:', result.message);
+          }
+        },
+        error: (error) => {
+          console.error('Error updating password:', error);
+        },
+      });
+    } else {
+      console.error('No user is currently logged in.');
+    }
   }
 }

@@ -364,13 +364,14 @@ $radius-sm: 6px;
     display: block;
     font-size: 1rem;
     font-weight: 500;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     color: $color-text;
     text-align: left;
   }
 
   input[type="text"],
-  input[type="email"] {
+  input[type="email"],
+  input[type="password"] {
     width: 100%;
     padding: 14px;
     background-color: $color-bg-light;
@@ -381,6 +382,7 @@ $radius-sm: 6px;
     font-family: $font-main;
     box-sizing: border-box;
     transition: border-color $transition-speed $transition-ease;
+    margin-bottom: 10px;
 
     &:focus {
       outline: none;
@@ -391,7 +393,7 @@ $radius-sm: 6px;
   .error-message {
     color: #ff4d4d;
     font-size: 1rem;
-    margin-top: 5px;
+    margin-bottom: 5px;
     text-align: center;
   }
 }
