@@ -7,6 +7,7 @@ import { routes } from '../routes/app.routes';
 import { usuarioProvider } from '../services/usuario/usuario.provider.service';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from '../interceptors/auth.interceptor';
+import { insightsProvider } from '../services/insights/insights.provider.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor]), withFetch()),
     instituicaoProvider,
     materiaProvider,
-    usuarioProvider
+    usuarioProvider, 
+    insightsProvider
   ]
 };
