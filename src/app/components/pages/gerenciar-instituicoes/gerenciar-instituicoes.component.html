@@ -41,19 +41,31 @@
               <mat-icon>cleaning_services</mat-icon>
               <span>Limpar</span>
             </button>
-            <button class="action-button delete">
-              <mat-icon>delete</mat-icon>
-              <span>Excluir</span>
-            </button>
+            @if(instituicoesDoUsuario().length > 1) {
+              <button class="action-button delete" (click)="showDeleteMessage(instituicao.id)">
+                <mat-icon>delete</mat-icon>
+                <span>Excluir</span>
+              </button>
+            }
           </div>
         </div>
       </div>
     }
   </div>
-
-  @if(showPremiumDialog){
-  <app-premium-dialog
-    (visibleChange)="showPremiumDialog = $event"
-  ></app-premium-dialog>
-  }
 </div>
+
+@if(showPremiumDialog){
+  <app-premium-dialog
+  (visibleChange)="showPremiumDialog = $event"
+  ></app-premium-dialog>
+}
+<app-dialog
+  [title]="'Deseja excluir esta instituição?'"
+  [message]="'Esta ação não pode ser desfeita. Todas as matérias associadas a esta instituição serão removidas.'"
+  [confirmText]="'Excluir'"
+  [dialogType]="'warning'"
+  (confirmAction)="deleteInstituicao(selectedInstituicaoId!)"
+  [isVisible]="showDeleteDialog"
+  (isVisibleChange)="showDeleteDialog = $event"
+  [route]="['photo_delete']"
+></app-dialog>
