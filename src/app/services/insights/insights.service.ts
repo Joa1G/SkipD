@@ -27,7 +27,8 @@ export class InsightsService extends AbstractInsightsService {
         horasPorDia: {},
         materiasPorDia: {},
         diaMaisCritico: '',
-        diaMaisLeve: ''
+        diaMaisLeve: '',
+        materiasAprovadas: [] 
       };
     }
 
@@ -39,8 +40,9 @@ export class InsightsService extends AbstractInsightsService {
     const horasPorDia: Record<string, number> = {};
     const materiasPorDia: Record<string, Materia[]> = {};
 
-    const materiasEmRisco = materiasDoUsuario.filter(m => m.status === 'Risco');
-    const materiasReprovadas = materiasDoUsuario.filter(m => m.status === 'Reprovado');
+    const materiasEmRisco = [];
+    const materiasReprovadas = [];
+    const materiasAprovadas = []; 
 
     for (const materia of materiasDoUsuario) {
       const inst = minhasInstituicoes.find(i => i.id === materia.idInstituicao);
@@ -55,6 +57,7 @@ export class InsightsService extends AbstractInsightsService {
         materiasEmRisco.push(materia);
       } else {
         materia.status = 'Aprovado';
+        materiasAprovadas.push(materia); 
       }
 
       for (const dia of this.diasSemana as DiaSemana[]) {
@@ -68,12 +71,17 @@ export class InsightsService extends AbstractInsightsService {
     }
 
     const diaMaisCritico = Object.entries(horasPorDia).sort((a, b) => b[1] - a[1])[0]?.[0] || '';
-    const horasDosDiasComAula = Object.values(horasPorDia).filter(h => h > 0);
+  
+    const diasComPoucasFaltas = Object.entries(materiasPorDia).filter(([dia, materias]) => 
+      materias.every(materia => materia.status === 'Aprovado') 
+    );
+    
+    const horasDosDiasComPoucasFaltas = diasComPoucasFaltas.map(([dia]) => horasPorDia[dia]).filter(h => h > 0);
     let diaMaisLeve = '';
-    if (horasDosDiasComAula.length > 0) {
-        const minHoras = Math.min(...horasDosDiasComAula);
-        diaMaisLeve = Object.entries(horasPorDia)
-            .filter(([, horas]) => horas === minHoras)
+    if (horasDosDiasComPoucasFaltas.length > 0) {
+      const minHoras = Math.min(...horasDosDiasComPoucasFaltas);
+      diaMaisLeve = diasComPoucasFaltas
+        .filter(([dia]) => horasPorDia[dia] === minHoras)
             .map(([dia]) => dia.charAt(0).toUpperCase() + dia.slice(1))
             .join(', ');
     }
@@ -84,7 +92,8 @@ export class InsightsService extends AbstractInsightsService {
       horasPorDia,
       materiasPorDia,
       diaMaisCritico,
-      diaMaisLeve
+      diaMaisLeve,
+      materiasAprovadas
     };
   });
 }
