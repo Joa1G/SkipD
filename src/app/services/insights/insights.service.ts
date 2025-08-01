@@ -43,6 +43,20 @@ export class InsightsService extends AbstractInsightsService {
     const materiasReprovadas = materiasDoUsuario.filter(m => m.status === 'Reprovado');
 
     for (const materia of materiasDoUsuario) {
+      const inst = minhasInstituicoes.find(i => i.id === materia.idInstituicao);
+      const limiteFaltas = inst ? inst.percentual_limite_faltas : 0;
+      const maxFaltas = materia.cargaHorariaTotal * limiteFaltas;
+
+      if (materia.faltas >= maxFaltas) {
+        materia.status = 'Reprovado';
+        materiasReprovadas.push(materia);
+      } else if (materia.faltas >= maxFaltas * 0.8) {
+        materia.status = 'Risco';
+        materiasEmRisco.push(materia);
+      } else {
+        materia.status = 'Aprovado';
+      }
+
       for (const dia of this.diasSemana as DiaSemana[]) {
         const horas = materia.aulasDaSemana[dia] || 0;
         if (horas > 0) {
