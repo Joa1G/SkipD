@@ -10,7 +10,6 @@ export const insightsProvider: Provider = {
         realService: InsightsService,
         mockedService: MockedInsightsService
     ) => {
-        // MUDANÇA PARA DEBUG: Vamos ignorar a condição e forçar o serviço real.
         return realService;
 
         /* CÓDIGO ORIGINAL COMENTADO

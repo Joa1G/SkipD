@@ -29,7 +29,7 @@ export class InsightsComponent {
     const reprovadas = this.insights().materiasReprovadas;
     if (reprovadas.length === 0) return '';
     const nomes = reprovadas.map(m => m.nome).join(', ');
-    return `Estado crítico em: ${nomes}. Evite faltas a todo custo.`;
+    return `Você esgotou seu limite de faltas em: ${nomes}.`;
   }
 
   get podeFaltarMensagem() {
