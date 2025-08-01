@@ -1,34 +1,108 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule} from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
 import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 import { AbstractInstituicaoService } from '../../../services/instituicao/abstract-instituicao.service';
 import { Instituicao } from '../../../models/instituicao/instituicao.model';
 import { firstValueFrom } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { DialogComponent } from '../../shared/dialogs/dialog.component';
+import { AbstractMateriaService } from '../../../services/materia/abstract-materia.service';
 
 @Component({
   selector: 'app-add-instituicao.component',
-  imports: [HeaderComponent, ReactiveFormsModule, FormsModule, RouterModule, CommonModule, DialogComponent],
+  imports: [
+    HeaderComponent,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule,
+    CommonModule,
+    DialogComponent,
+  ],
   templateUrl: './add-instituicao.component.html',
-  styleUrl: './add-instituicao.component.scss'
+  styleUrl: './add-instituicao.component.scss',
 })
 export class AddInstituicaoComponent {
-
   authService = inject(MockedAuthService);
   instituicaoService = inject(AbstractInstituicaoService);
+  materiaService = inject(AbstractMateriaService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   submitted = false;
   showCancelDialog = false;
   showSubmitDialog = false;
   incorretFormField = false;
+  currentRoute = '';
+  isEditMode = false;
 
   form = new FormGroup({
-    instituicao_name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
-    percentFaltas: new FormControl('', [Validators.required, Validators.min(0), Validators.max(100)])
+    id: new FormControl<number | null>(null),
+    instituicao_name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(50),
+    ]),
+    percentFaltas: new FormControl('', [
+      Validators.required,
+      Validators.min(0),
+      Validators.max(100),
+    ]),
   });
+
+  ngOnInit(): void {
+    this.identifyRoute();
+    this.handleRouteParams();
+  }
+
+  private identifyRoute(): void {
+    const url = this.router.url;
+
+    if (url.includes('edit-instituicao')) {
+      this.currentRoute = 'edit';
+      this.isEditMode = true;
+    } else if (url.includes('add-instituicao')) {
+      this.currentRoute = 'add';
+      this.isEditMode = false;
+    } else {
+      this.currentRoute = 'unknown';
+    }
+  }
+
+  private handleRouteParams(): void {
+    const idParam = this.route.snapshot.paramMap.get('id');
+
+    if (idParam && this.currentRoute === 'edit') {
+      const id = Number(idParam);
+      this.loadInstituicaoForEdit(id);
+    }
+  }
+
+  private loadInstituicaoForEdit(id: number): void {
+    this.instituicaoService.getInstituicaoById(id).subscribe((result) => {
+      if (result.success && result.data) {
+        this.form.patchValue({
+          id: result.data.id,
+          instituicao_name: result.data.nome,
+          percentFaltas: (result.data.percentual_limite_faltas * 100).toString(),
+        });
+        this.isEditMode = true;
+      } else {
+        console.error(
+          'Erro ao carregar a instituição:',
+          result.data || 'Dados não encontrados.'
+        );
+        this.router.navigate(['/home']);
+      }
+    });
+  }
 
   private adicionarInstituicao() {
     const formValue = this.form.value;
@@ -37,30 +111,80 @@ export class AddInstituicaoComponent {
     const instituicao: Omit<Instituicao, 'id'> = {
       nome: formValue.instituicao_name!,
       id_usuario: currentUser?.id!,
-      percentual_limite_faltas: Number(formValue.percentFaltas!) / 100
-    }
+      percentual_limite_faltas: Number(formValue.percentFaltas!) / 100,
+    };
+
+    return instituicao;
+  }
+
+  private atualizarInstituicao() {
+    const formValue = this.form.value;
+    const currentUser = this.authService.currentUser();
+
+    const instituicao: Instituicao = {
+      id: formValue.id!,
+      nome: formValue.instituicao_name!,
+      id_usuario: currentUser?.id!,
+      percentual_limite_faltas: Number(formValue.percentFaltas!) / 100,
+    };
 
     return instituicao;
   }
 
   async onSubmit() {
+    if (this.currentRoute === 'edit') {
+      await this.onSubmitEdit();
+    } else {
+      await this.onSubmitAdd();
+    }
+  }
+
+  async onSubmitAdd() {
     this.submitted = true;
 
-    if (this.form.invalid){
+    if (this.form.invalid) {
       this.incorretFormField = true;
       return;
     }
 
     const instituicao = this.adicionarInstituicao();
-    const result = await firstValueFrom(this.instituicaoService.addInstituicao(instituicao));
+    const result = await firstValueFrom(
+      this.instituicaoService.addInstituicao(instituicao)
+    );
 
     if (result.success) {
       this.showSubmitDialog = true;
-      console.log('Instituição adicionada com sucesso:')
+      console.log('Instituição adicionada com sucesso:');
     } else {
       console.error('Erro ao adicionar instituição:', result.message);
     }
+  }
 
+  async onSubmitEdit() {
+    this.submitted = true;
+
+    if (this.form.invalid) {
+      this.incorretFormField = true;
+      return;
+    }
+
+    const instituicao = this.atualizarInstituicao();
+    const result = await firstValueFrom(
+      this.instituicaoService.updateInstituicao(instituicao)
+    );
+
+    const materias = await firstValueFrom(this.materiaService.getMateriasByInstituicaoId(instituicao.id));
+
+    for (const materia of materias.data) {
+      await firstValueFrom(this.materiaService.updateStatus(materia.id));
+    }
+
+    if (result.success) {
+      this.showSubmitDialog = true;
+      console.log('Instituição editada com sucesso:');
+    } else {
+      console.error('Erro ao editar instituição:', result.message);
+    }
   }
 
   onCancel() {
@@ -70,21 +194,28 @@ export class AddInstituicaoComponent {
   invalidFieldClass(fieldName: string) {
     const field = this.form.get(fieldName);
 
-    if (fieldName === 'confirmPassword' && this.form.hasError('passwordMismatch') && (field!.dirty || this.submitted)) {
+    if (
+      fieldName === 'confirmPassword' &&
+      this.form.hasError('passwordMismatch') &&
+      (field!.dirty || this.submitted)
+    ) {
       return 'is-invalid';
     }
 
     if (field!.valid && (field!.dirty || this.submitted)) {
       return 'is-valid';
-    }else if (field!.invalid && (field!.dirty || this.submitted) || this.incorretFormField) {
+    } else if (
+      (field!.invalid && (field!.dirty || this.submitted)) ||
+      this.incorretFormField
+    ) {
       return 'is-invalid';
-    }else {
+    } else {
       return '';
     }
   }
 
   changeIncorrectFormField() {
-    if (this.form.valid){
+    if (this.form.valid) {
       this.incorretFormField = false;
     }
   }

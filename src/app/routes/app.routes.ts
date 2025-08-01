@@ -10,6 +10,8 @@ import { AddInstituicaoComponent } from '../components/pages/add-instituicao/add
 import { PaginaUsuarioComponent } from '../components/pages/pagina-usuario/pagina-usuario.component';
 import { premiumGuard } from '../guards/premium.guard';
 import { ContaSettingsComponent } from '../components/pages/conta-settings/conta-settings.component';
+import { GerenciarInstituicoesComponent } from '../components/pages/gerenciar-instituicoes/gerenciar-instituicoes.component';
+import { instituicaoGuard } from '../guards/instituicao.guard';
 
 export const routes: Routes = [
   {
@@ -41,6 +43,16 @@ export const routes: Routes = [
     path: 'add-instituicao',
     component: AddInstituicaoComponent,
     canActivate: [authGuard, premiumGuard],
+  },
+  {
+    path: 'edit-instituicao/:id',
+    component: AddInstituicaoComponent,
+    canActivate: [authGuard, instituicaoGuard],
+  },
+  {
+    path: 'gerenciar-instituicoes',
+    component: GerenciarInstituicoesComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'detalhes-materia/:id',

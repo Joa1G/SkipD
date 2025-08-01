@@ -127,7 +127,7 @@ export class DetalhesMateriaComponent {
   };
 
   onClickBackArrow(){
-    this.location.back()
+    this.router.navigate(['/home']);
   }
 
 }

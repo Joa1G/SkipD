@@ -89,7 +89,7 @@ export class ContaSettingsComponent {
   );
 
   onClickBackArrow() {
-    this.location.back();
+    this.router.navigate(['/usuario']);
   }
 
   togglePasswordVisibility() {

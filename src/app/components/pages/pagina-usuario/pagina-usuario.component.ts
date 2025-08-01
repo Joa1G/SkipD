@@ -210,6 +210,6 @@ export class PaginaUsuarioComponent {
   }
 
   onClickBackArrow(){
-    this.location.back()
+    this.router.navigate(['/home']);
   }
 }
