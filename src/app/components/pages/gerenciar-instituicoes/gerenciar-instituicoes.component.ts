@@ -23,11 +23,19 @@ export class GerenciarInstituicoesComponent {
   private materiasService = inject(AbstractMateriaService);
 
   showDeleteDialog: boolean = false;
+  showCleanDialog: boolean = false;
+  showSuccessDeleteInstituicao: boolean = false;
+  showSuccessCleanInstituicao: boolean = false;
   selectedInstituicaoId: number | null = null;
 
   showDeleteMessage(instituicaoId: number) {
     this.selectedInstituicaoId = instituicaoId;
     this.showDeleteDialog = true;
+  }
+
+  showCleanMessage(instituicaoId: number) {
+    this.selectedInstituicaoId = instituicaoId;
+    this.showCleanDialog = true;
   }
 
   ngOnInit() {
@@ -88,6 +96,7 @@ export class GerenciarInstituicoesComponent {
           this.loadUserInstituicoes();
           this.showDeleteDialog = false;
           this.selectedInstituicaoId = null;
+          this.showSuccessDeleteInstituicao = true;
         } else {
           console.error('Erro ao deletar instituição:', result.message);
         }
@@ -96,6 +105,21 @@ export class GerenciarInstituicoesComponent {
         console.error('Erro ao deletar instituição:', error);
       }
     });
+  }
+
+  async clearMaterias(instituicaoId: number) {
+    const materias = await firstValueFrom(this.materiasService.getMateriasByInstituicaoId(instituicaoId));
+
+    if (materias.data.length > 0) {
+      for (const materia of materias.data) {
+        await firstValueFrom(this.materiasService.deleteMateria(materia.id));
+      }
+    }
+
+    this.showCleanDialog = false;
+    this.selectedInstituicaoId = null;
+    this.loadUserInstituicoes();
+    this.showSuccessCleanInstituicao = true;
   }
 
 }

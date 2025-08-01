@@ -37,7 +37,7 @@
               <mat-icon>edit</mat-icon>
               <span>Editar</span>
             </button>
-            <button class="action-button clean">
+            <button class="action-button clean" (click)="showCleanMessage(instituicao.id)">
               <mat-icon>cleaning_services</mat-icon>
               <span>Limpar</span>
             </button>
@@ -61,11 +61,44 @@
 }
 <app-dialog
   [title]="'Deseja excluir esta instituição?'"
-  [message]="'Esta ação não pode ser desfeita. Todas as matérias associadas a esta instituição serão removidas.'"
+  [message]="'Esta ação não pode ser desfeita. Todas as matérias associadas a esta instituição serão removidas e excluirá a instituição.'"
   [confirmText]="'Excluir'"
   [dialogType]="'warning'"
   (confirmAction)="deleteInstituicao(selectedInstituicaoId!)"
   [isVisible]="showDeleteDialog"
   (isVisibleChange)="showDeleteDialog = $event"
   [route]="['photo_delete']"
+></app-dialog>
+
+<app-dialog
+  [title]="'Sucesso'"
+  [message]="'A instituição foi excluída com sucesso. Todas as matérias associadas foram removidas.'"
+  [confirmText]="'OK'"
+  [dialogType]="'confirmation'"
+  [isVisible]="showSuccessDeleteInstituicao"
+  (isVisibleChange)="showSuccessDeleteInstituicao = $event"
+  [showCancelButton]="false"
+  [route]="['success-edit-name']"
+></app-dialog>
+
+<app-dialog
+  [title]="'Deseja limpar as matérias desta instituição?'"
+  [message]="'Esta ação removerá todas as matérias associadas a esta instituição.'"
+  [confirmText]="'Limpar'"
+  [dialogType]="'warning'"
+  (confirmAction)="clearMaterias(selectedInstituicaoId!)"
+  [isVisible]="showCleanDialog"
+  (isVisibleChange)="showCleanDialog = $event"
+  [route]="['photo_delete']"
+></app-dialog>
+
+<app-dialog
+  [title]="'Sucesso'"
+  [message]="'A instituição foi limpa com sucesso. Todas as matérias associadas foram removidas.'"
+  [confirmText]="'OK'"
+  [dialogType]="'confirmation'"
+  [isVisible]="showSuccessCleanInstituicao"
+  (isVisibleChange)="showSuccessCleanInstituicao = $event"
+  [showCancelButton]="false"
+  [route]="['success-edit-name']"
 ></app-dialog>

@@ -273,8 +273,8 @@ export class AddMateriaComponents{
       const materia = this.adicionarMateria();
       console.log('Adicionando matéria:', materia);
       const result = await firstValueFrom(this.serviceMateria.addMateria(materia));
-
-      if(result.success){
+      const resultSetStatus = await firstValueFrom(this.serviceMateria.updateStatus(result.data.id));
+      if(result.success && resultSetStatus.success){
         this.showSubmitDialog = true;
       }else{
         console.error('Erro ao adicionar matéria:', result.data);
