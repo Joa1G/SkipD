@@ -16,7 +16,7 @@ export class InsightsComponent {
   private insightsService = inject(AbstractInsightsService);
   insights = this.insightsService.insights;
 
-  diasDaSemana = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+  diasDaSemana = ['domingo', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
 
   get riscoMensagem() {
     const emRisco = this.insights().materiasEmRisco;
