@@ -23,14 +23,7 @@ export class MockedInstituicaoService extends AbstractInstituicaoService {
 
   instituicoes: Signal<Instituicao[]> = computed(() => this._instituicoes());
 
-  override getInstituicoes(): Observable<OperationResult> {
-    try {
-      const instituicoes = this.instituicoes();
-      return of({success: true, status: 200, data: instituicoes});
-    } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao buscar instituições.'});
-    }
-  }
+  override refresh(): void {}
 
   override getInstituicaoById(id: number): Observable<OperationResult> {
     try {

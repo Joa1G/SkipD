@@ -5,7 +5,7 @@ import { OperationResult } from '../../models/operation-result.model';
 
 export abstract class AbstractInstituicaoService {
   abstract instituicoes: Signal<Instituicao[]>;
-  abstract getInstituicoes(): Observable<OperationResult>;
+  abstract refresh(): void;
   abstract getInstituicaoById(id: number): Observable<OperationResult>;
   abstract addInstituicao(instituicao: Omit<Instituicao, 'id'>): Observable<OperationResult>;
   abstract updateInstituicao(instituicao: Instituicao): Observable<OperationResult>;
