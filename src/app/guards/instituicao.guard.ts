@@ -1,17 +1,17 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
-import { MockedAuthService } from '../services/auth/mocked-auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { AbstractInstituicaoService } from '../services/instituicao/abstract-instituicao.service';
 import { catchError, of, map } from 'rxjs';
 
 export const instituicaoGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot
 ) => {
-  const authService = inject(MockedAuthService);
+  const authService = inject(AuthService);
   const instituicaoService = inject(AbstractInstituicaoService);
   const router = inject(Router);
 
-  const currentUser = authService.currentUser();
+  const currentUser = authService.getCurrentUser();
 
   if (!currentUser) {
     router.navigate(['/login']);

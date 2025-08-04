@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
-import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { AbstractInstituicaoService } from '../../../services/instituicao/abstract-instituicao.service';
 import { Instituicao } from '../../../models/instituicao/instituicao.model';
 import { firstValueFrom } from 'rxjs';
@@ -30,7 +30,7 @@ import { AbstractMateriaService } from '../../../services/materia/abstract-mater
   styleUrl: './add-instituicao.component.scss',
 })
 export class AddInstituicaoComponent {
-  authService = inject(MockedAuthService);
+  authService = inject(AuthService);
   instituicaoService = inject(AbstractInstituicaoService);
   materiaService = inject(AbstractMateriaService);
   private router = inject(Router);
@@ -91,7 +91,9 @@ export class AddInstituicaoComponent {
         this.form.patchValue({
           id: result.data.id,
           instituicao_name: result.data.nome,
-          percentFaltas: (result.data.percentual_limite_faltas * 100).toString(),
+          percentFaltas: (
+            result.data.percentual_limite_faltas * 100
+          ).toString(),
         });
         this.isEditMode = true;
       } else {
@@ -106,7 +108,7 @@ export class AddInstituicaoComponent {
 
   private adicionarInstituicao() {
     const formValue = this.form.value;
-    const currentUser = this.authService.currentUser();
+    const currentUser = this.authService.getCurrentUser();
 
     const instituicao: Omit<Instituicao, 'id'> = {
       nome: formValue.instituicao_name!,
@@ -119,7 +121,7 @@ export class AddInstituicaoComponent {
 
   private atualizarInstituicao() {
     const formValue = this.form.value;
-    const currentUser = this.authService.currentUser();
+    const currentUser = this.authService.getCurrentUser();
 
     const instituicao: Instituicao = {
       id: formValue.id!,
@@ -148,15 +150,30 @@ export class AddInstituicaoComponent {
     }
 
     const instituicao = this.adicionarInstituicao();
-    const result = await firstValueFrom(
-      this.instituicaoService.addInstituicao(instituicao)
-    );
+    console.log('Dados da instituição sendo enviados:', instituicao);
 
-    if (result.success) {
-      this.showSubmitDialog = true;
-      console.log('Instituição adicionada com sucesso:');
-    } else {
-      console.error('Erro ao adicionar instituição:', result.message);
+    try {
+      const result = await firstValueFrom(
+        this.instituicaoService.addInstituicao(instituicao)
+      );
+      console.log('Resposta completa da API:', result);
+
+      if (result.success) {
+        console.log('Instituição adicionada com sucesso:', result.data);
+
+        // Atualizar as instituições após adicionar
+        await this.instituicaoService.refresh();
+
+        this.showSubmitDialog = true;
+      } else {
+        console.error('Erro ao adicionar instituição:', {
+          message: result.message,
+          status: result.status,
+          data: result.data,
+        });
+      }
+    } catch (error) {
+      console.error('Erro de rede ao adicionar instituição:', error);
     }
   }
 
@@ -168,22 +185,34 @@ export class AddInstituicaoComponent {
       return;
     }
 
-    const instituicao = this.atualizarInstituicao();
-    const result = await firstValueFrom(
-      this.instituicaoService.updateInstituicao(instituicao)
-    );
+    try {
+      const instituicao = this.atualizarInstituicao();
+      const result = await firstValueFrom(
+        this.instituicaoService.updateInstituicao(instituicao)
+      );
 
-    const materias = await firstValueFrom(this.materiaService.getMateriasByInstituicaoId(instituicao.id));
+      if (result.success) {
+        console.log('Instituição editada com sucesso');
 
-    for (const materia of materias.data) {
-      await firstValueFrom(this.materiaService.updateStatus(materia.id));
-    }
+        // Atualizar status das matérias da instituição
+        const materias = await firstValueFrom(
+          this.materiaService.getMateriasByInstituicaoId(instituicao.id)
+        );
 
-    if (result.success) {
-      this.showSubmitDialog = true;
-      console.log('Instituição editada com sucesso:');
-    } else {
-      console.error('Erro ao editar instituição:', result.message);
+        for (const materia of materias.data) {
+          await firstValueFrom(this.materiaService.updateStatus(materia.id));
+        }
+
+        // Atualizar lista de matérias e instituições
+        await this.materiaService.refresh();
+        await this.instituicaoService.refresh();
+
+        this.showSubmitDialog = true;
+      } else {
+        console.error('Erro ao editar instituição:', result.message);
+      }
+    } catch (error) {
+      console.error('Erro ao editar instituição:', error);
     }
   }
 

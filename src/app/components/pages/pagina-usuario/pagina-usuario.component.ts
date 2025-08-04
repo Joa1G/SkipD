@@ -1,7 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MatIcon } from '@angular/material/icon';
-import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { DialogComponent } from '../../shared/dialogs/dialog.component';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
@@ -29,10 +29,10 @@ import { Location } from '@angular/common';
   styleUrl: './pagina-usuario.component.scss',
 })
 export class PaginaUsuarioComponent {
-  authService = inject(MockedAuthService);
+  authService = inject(AuthService);
   userService = inject(AbstractUsuarioService);
   private userImageService = inject(UserImageService);
-  private location = inject(Location)
+  private location = inject(Location);
 
   router = inject(Router);
   isDialogLogoutVisible = false;
@@ -71,7 +71,10 @@ export class PaginaUsuarioComponent {
             console.log('User image URL:', result.data);
             this.userImageService.updateUserImageUrl(result.data);
           } else {
-            console.error('Failed to get user image URL:', result.message);
+            console.error(
+              'Failed to get user image URL:',
+              result.message || 'URL não encontrada'
+            );
             this.userImageService.clearUserImageUrl();
           }
         },
@@ -129,7 +132,7 @@ export class PaginaUsuarioComponent {
             const updatedUser = { ...user, urlFoto: '' };
             this.authService.updateCurrentUser(updatedUser);
             this.changeUrlPhotoDialogVisible = false;
-          this.showSuccessUrlPhotoChangedDialog = true;
+            this.showSuccessUrlPhotoChangedDialog = true;
           } else {
             console.error('Failed to delete user image URL:', result.message);
           }
@@ -209,7 +212,7 @@ export class PaginaUsuarioComponent {
     this.submitted = false;
   }
 
-  onClickBackArrow(){
+  onClickBackArrow() {
     this.router.navigate(['/home']);
   }
 }

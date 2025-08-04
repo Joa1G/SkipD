@@ -3,22 +3,27 @@ import { HeaderComponent } from '../../shared/header/header.component';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { PremiumDialogComponent } from '../../shared/dialogs/premium-dialog/premium-dialog.component';
-import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { AbstractInstituicaoService } from '../../../services/instituicao/abstract-instituicao.service';
 import { firstValueFrom } from 'rxjs';
-import { DialogComponent } from "../../shared/dialogs/dialog.component";
+import { DialogComponent } from '../../shared/dialogs/dialog.component';
 import { AbstractMateriaService } from '../../../services/materia/abstract-materia.service';
 
 @Component({
   selector: 'app-gerenciar-instituicoes',
-  imports: [HeaderComponent, MatIcon, PremiumDialogComponent, RouterModule, DialogComponent],
+  imports: [
+    HeaderComponent,
+    MatIcon,
+    PremiumDialogComponent,
+    RouterModule,
+    DialogComponent,
+  ],
   templateUrl: './gerenciar-instituicoes.component.html',
-  styleUrl: './gerenciar-instituicoes.component.scss'
+  styleUrl: './gerenciar-instituicoes.component.scss',
 })
 export class GerenciarInstituicoesComponent {
-
   private router = inject(Router);
-  private authService = inject(MockedAuthService);
+  private authService = inject(AuthService);
   private instituicaoService = inject(AbstractInstituicaoService);
   private materiasService = inject(AbstractMateriaService);
 
@@ -42,7 +47,9 @@ export class GerenciarInstituicoesComponent {
     this.loadUserInstituicoes();
   }
 
-  isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
+  isPremiumUser = computed(
+    () => this.authService.currentUser()?.isPremium ?? false
+  );
 
   showPremiumDialog = false;
 
@@ -55,7 +62,7 @@ export class GerenciarInstituicoesComponent {
   }
 
   instituicoesDoUsuario = computed(() => {
-    const currentUser = this.authService.currentUser();
+    const currentUser = this.authService.getCurrentUser();
     const todasInstituicoes = this.instituicaoService.instituicoes();
 
     if (!currentUser) {
@@ -68,7 +75,7 @@ export class GerenciarInstituicoesComponent {
   });
 
   private async loadUserInstituicoes() {
-    const currentUser = this.authService.currentUser();
+    const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       try {
         await firstValueFrom(
@@ -81,45 +88,60 @@ export class GerenciarInstituicoesComponent {
   }
 
   async deleteInstituicao(instituicaoId: number) {
-    const materias = await firstValueFrom(this.materiasService.getMateriasByInstituicaoId(instituicaoId));
+    try {
+      const materias = await firstValueFrom(
+        this.materiasService.getMateriasByInstituicaoId(instituicaoId)
+      );
 
-    if (materias.data.length > 0) {
-      for (const materia of materias.data) {
-        await firstValueFrom(this.materiasService.deleteMateria(materia.id));
-      }
-    }
-
-    this.instituicaoService.deleteInstituicao(instituicaoId).subscribe({
-      next: (result) => {
-        if (result.success) {
-          console.log('Instituição deletada com sucesso');
-          this.loadUserInstituicoes();
-          this.showDeleteDialog = false;
-          this.selectedInstituicaoId = null;
-          this.showSuccessDeleteInstituicao = true;
-        } else {
-          console.error('Erro ao deletar instituição:', result.message);
+      if (materias.data.length > 0) {
+        for (const materia of materias.data) {
+          await firstValueFrom(this.materiasService.deleteMateria(materia.id));
         }
-      },
-      error: (error) => {
-        console.error('Erro ao deletar instituição:', error);
       }
-    });
+
+      const result = await firstValueFrom(
+        this.instituicaoService.deleteInstituicao(instituicaoId)
+      );
+
+      if (result.success) {
+        console.log('Instituição deletada com sucesso');
+
+        // Atualizar ambos os serviços
+        await this.materiasService.refresh();
+        await this.instituicaoService.refresh();
+
+        this.showDeleteDialog = false;
+        this.selectedInstituicaoId = null;
+        this.showSuccessDeleteInstituicao = true;
+      } else {
+        console.error('Erro ao deletar instituição:', result.message);
+      }
+    } catch (error) {
+      console.error('Erro ao deletar instituição:', error);
+    }
   }
 
   async clearMaterias(instituicaoId: number) {
-    const materias = await firstValueFrom(this.materiasService.getMateriasByInstituicaoId(instituicaoId));
+    try {
+      const materias = await firstValueFrom(
+        this.materiasService.getMateriasByInstituicaoId(instituicaoId)
+      );
 
-    if (materias.data.length > 0) {
-      for (const materia of materias.data) {
-        await firstValueFrom(this.materiasService.deleteMateria(materia.id));
+      if (materias.data.length > 0) {
+        for (const materia of materias.data) {
+          await firstValueFrom(this.materiasService.deleteMateria(materia.id));
+        }
       }
+
+      // Atualizar ambos os serviços após limpar matérias
+      await this.materiasService.refresh();
+      await this.instituicaoService.refresh();
+
+      this.showCleanDialog = false;
+      this.selectedInstituicaoId = null;
+      this.showSuccessCleanInstituicao = true;
+    } catch (error) {
+      console.error('Erro ao limpar matérias:', error);
     }
-
-    this.showCleanDialog = false;
-    this.selectedInstituicaoId = null;
-    this.loadUserInstituicoes();
-    this.showSuccessCleanInstituicao = true;
   }
-
 }

@@ -1,9 +1,16 @@
-import { Component, computed, inject, Input } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  Input,
+  OnInit,
+  effect,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { UserImageService } from '../../../services/urlState.service';
 import { PremiumDialogComponent } from '../dialogs/premium-dialog/premium-dialog.component';
@@ -15,33 +22,52 @@ import { PremiumDialogComponent } from '../dialogs/premium-dialog/premium-dialog
     RouterModule,
     MatIconModule,
     MatToolbarModule,
-    PremiumDialogComponent
+    PremiumDialogComponent,
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
-export class HeaderComponent {
-  private authService = inject(MockedAuthService);
+export class HeaderComponent implements OnInit {
+  private authService = inject(AuthService);
   private userService = inject(AbstractUsuarioService);
-  private userImageService = inject(UserImageService);
+  userImageService = inject(UserImageService); // Tornando público para uso no template
   urlImage = this.userImageService.userImageUrl;
 
-  isPremiumUser = computed(() => this.authService.currentUser()?.isPremium ?? false);
+  isPremiumUser = computed(
+    () => this.authService.currentUser()?.isPremium ?? false
+  );
   showPremiumDialog = false;
+
+  constructor() {
+    // Effect para debug - ver quando o estado premium muda
+    effect(() => {
+      const user = this.authService.currentUser();
+      console.log(
+        'Header - User changed:',
+        user?.nome,
+        'Premium:',
+        user?.isPremium
+      );
+    });
+  }
 
   ngOnInit() {
     this.getUserUrlImage();
   }
 
   getUserUrlImage() {
+    // Usar o signal em vez de getCurrentUser()
     const user = this.authService.currentUser();
     if (user) {
       this.userService.getUrlFotoById(user.id).subscribe({
         next: (result) => {
-          if (result.success && result.data) {
+          if (result.success && result.data && result.data.trim() !== '') {
             this.userImageService.updateUserImageUrl(result.data);
           } else {
-            console.error('Failed to get user image URL:', result.message);
+            console.log(
+              'User image URL not available or empty:',
+              result.message || 'URL vazia'
+            );
             this.userImageService.clearUserImageUrl();
           }
         },
@@ -51,7 +77,7 @@ export class HeaderComponent {
         },
       });
     } else {
-      console.error('No user is currently logged in.');
+      console.log('No user is currently logged in.');
       this.userImageService.clearUserImageUrl();
     }
   }
@@ -59,5 +85,9 @@ export class HeaderComponent {
   showPremiumMessage() {
     this.showPremiumDialog = true;
   }
-  
+
+  onImageError() {
+    console.log('Erro ao carregar imagem do usuário, usando ícone padrão');
+    this.userImageService.clearUserImageUrl();
+  }
 }

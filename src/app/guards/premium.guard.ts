@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { MockedAuthService } from '../services/auth/mocked-auth.service';
+import { AuthService } from '../services/auth/auth.service';
 
 export const premiumGuard: CanActivateFn = (route, state) => {
-  const authService = inject(MockedAuthService);
+  const authService = inject(AuthService);
   const router = inject(Router);
 
   const currentUser = authService.currentUser();

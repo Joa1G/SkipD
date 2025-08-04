@@ -1,7 +1,13 @@
-import { Instituicao} from '../../models/instituicao/instituicao.model';
+import { Instituicao } from '../../models/instituicao/instituicao.model';
 import { AbstractInstituicaoService } from './abstract-instituicao.service';
 import { OperationResult } from '../../models/operation-result.model';
-import { Injectable, signal, computed, Signal, WritableSignal } from '@angular/core';
+import {
+  Injectable,
+  signal,
+  computed,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 @Injectable()
@@ -11,53 +17,78 @@ export class MockedInstituicaoService extends AbstractInstituicaoService {
       id: 1,
       nome: 'Instituto Federal do Amazonas',
       percentual_limite_faltas: 0.25,
-      id_usuario: 2
+      id_usuario: 2,
     },
     {
       id: 3,
       nome: 'Universidade Estadual do Amazonas',
-      percentual_limite_faltas: 0.20,
-      id_usuario: 1
-    }
+      percentual_limite_faltas: 0.2,
+      id_usuario: 1,
+    },
   ]);
 
   instituicoes: Signal<Instituicao[]> = computed(() => this._instituicoes());
 
-  override refresh(): void {}
+  override refresh(): Promise<void> {
+    console.log('Refresh chamado no MockedInstituicaoService');
+    return Promise.resolve();
+  }
 
   override getInstituicaoById(id: number): Observable<OperationResult> {
     try {
-      const instituicao = this._instituicoes().find(i => i.id === id);
+      const instituicao = this._instituicoes().find((i) => i.id === id);
       if (instituicao) {
-        return of({success: true, status: 200, data: instituicao});
+        return of({ success: true, status: 200, data: instituicao });
       } else {
-        return of({success: false, status: 404, message: 'Instituição não encontrada.'});
+        return of({
+          success: false,
+          status: 404,
+          message: 'Instituição não encontrada.',
+        });
       }
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao buscar instituição.'});
+      return of({
+        success: false,
+        status: 500,
+        message: 'Erro ao buscar instituição.',
+      });
     }
   }
 
-  override addInstituicao(instituicao: Omit<Instituicao, 'id'>): Observable<OperationResult> {
+  override addInstituicao(
+    instituicao: Omit<Instituicao, 'id'>
+  ): Observable<OperationResult> {
     try {
       const instituicoes = this._instituicoes();
-      const newId = instituicoes.length > 0 ? Math.max(...instituicoes.map(i => i.id)) + 1 : 1;
+      const newId =
+        instituicoes.length > 0
+          ? Math.max(...instituicoes.map((i) => i.id)) + 1
+          : 1;
       const newInstituicao: Instituicao = {
         id: newId,
         ...instituicao,
       };
-      this._instituicoes.update(instituicoes => [...instituicoes, newInstituicao]);
-      return of({success: true, status: 201, data: newInstituicao});
+      this._instituicoes.update((instituicoes) => [
+        ...instituicoes,
+        newInstituicao,
+      ]);
+      return of({ success: true, status: 201, data: newInstituicao });
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao adicionar instituição.'});
+      return of({
+        success: false,
+        status: 500,
+        message: 'Erro ao adicionar instituição.',
+      });
     }
   }
 
-  override updateInstituicao(instituicao: Instituicao): Observable<OperationResult> {
+  override updateInstituicao(
+    instituicao: Instituicao
+  ): Observable<OperationResult> {
     try {
       let updated = false;
-      this._instituicoes.update(list =>
-        list.map(i => {
+      this._instituicoes.update((list) =>
+        list.map((i) => {
           if (i.id === instituicao.id) {
             updated = true;
             return { ...instituicao };
@@ -66,42 +97,78 @@ export class MockedInstituicaoService extends AbstractInstituicaoService {
         })
       );
       if (updated) {
-        return of({success: true, status: 200, message: 'Instituição atualizada com sucesso.'});
+        return of({
+          success: true,
+          status: 200,
+          message: 'Instituição atualizada com sucesso.',
+        });
       } else {
-        return of({success: false, status: 404, message: 'Instituição não encontrada.'});
+        return of({
+          success: false,
+          status: 404,
+          message: 'Instituição não encontrada.',
+        });
       }
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao atualizar instituição.'});
+      return of({
+        success: false,
+        status: 500,
+        message: 'Erro ao atualizar instituição.',
+      });
     }
   }
 
   override deleteInstituicao(id: number): Observable<OperationResult> {
     try {
-      const index = this._instituicoes().findIndex(i => i.id === id);
+      const index = this._instituicoes().findIndex((i) => i.id === id);
       if (index === -1) {
-        return of({success: false, status: 404, message: 'Instituição não encontrada.'});
+        return of({
+          success: false,
+          status: 404,
+          message: 'Instituição não encontrada.',
+        });
       }
-      this._instituicoes.update(instituicoes => {
+      this._instituicoes.update((instituicoes) => {
         const updatedInstituicoes = [...instituicoes];
         updatedInstituicoes.splice(index, 1);
         return updatedInstituicoes;
       });
-      return of({success: true, status: 200, message: 'Instituição deletada com sucesso.'});
+      return of({
+        success: true,
+        status: 200,
+        message: 'Instituição deletada com sucesso.',
+      });
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao deletar instituição.'});
+      return of({
+        success: false,
+        status: 500,
+        message: 'Erro ao deletar instituição.',
+      });
     }
   }
 
-  override getInstituicoesByUsuarioId(userId: number): Observable<OperationResult> {
+  override getInstituicoesByUsuarioId(
+    userId: number
+  ): Observable<OperationResult> {
     try {
-      const instituicoes = this._instituicoes().filter(i => i.id_usuario === userId);
+      const instituicoes = this._instituicoes().filter(
+        (i) => i.id_usuario === userId
+      );
       if (instituicoes.length > 0) {
-        return of({success: true, status: 200, data: instituicoes});
+        return of({ success: true, status: 200, data: instituicoes });
       } else {
-        return of({success: false, status: 404, message: 'Instituição não encontrada.'});
+        return of({
+          success: false,
+          status: 404,
+          message: 'Instituição não encontrada.',
+        });
       }
     } catch (error) {
-      return of({success: false, status: 500, message: 'Erro ao buscar instituição por usuário.'});
+      return of({
+        success: false,
+        status: 500,
+        message: 'Erro ao buscar instituição por usuário.',
+      });
     }
   }
 }
