@@ -99,11 +99,11 @@ export class MockedInstituicaoService extends AbstractInstituicaoService {
     }
   }
 
-  override getInstituicaoByUsuarioId(userId: number): Observable<OperationResult> {
+  override getInstituicoesByUsuarioId(userId: number): Observable<OperationResult> {
     try {
-      const instituicao = this._instituicoes().find(i => i.id_usuario === userId);
-      if (instituicao) {
-        return of({success: true, status: 200, data: instituicao});
+      const instituicoes = this._instituicoes().filter(i => i.id_usuario === userId);
+      if (instituicoes.length > 0) {
+        return of({success: true, status: 200, data: instituicoes});
       } else {
         return of({success: false, status: 404, message: 'Instituição não encontrada.'});
       }

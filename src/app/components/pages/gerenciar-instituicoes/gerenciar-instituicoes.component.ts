@@ -72,7 +72,7 @@ export class GerenciarInstituicoesComponent {
     if (currentUser) {
       try {
         await firstValueFrom(
-          this.instituicaoService.getInstituicaoByUsuarioId(currentUser.id)
+          this.instituicaoService.getInstituicoesByUsuarioId(currentUser.id)
         );
       } catch (error) {
         console.error('Error loading user institutions:', error);

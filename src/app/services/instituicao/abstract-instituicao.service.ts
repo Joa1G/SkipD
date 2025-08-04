@@ -10,5 +10,5 @@ export abstract class AbstractInstituicaoService {
   abstract addInstituicao(instituicao: Omit<Instituicao, 'id'>): Observable<OperationResult>;
   abstract updateInstituicao(instituicao: Instituicao): Observable<OperationResult>;
   abstract deleteInstituicao(id: number): Observable<OperationResult>;
-  abstract getInstituicaoByUsuarioId(userId: number): Observable<OperationResult>;
+  abstract getInstituicoesByUsuarioId(userId: number): Observable<OperationResult>;
 }
