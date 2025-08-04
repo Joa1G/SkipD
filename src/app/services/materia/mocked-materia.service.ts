@@ -13,16 +13,7 @@ export class MockedMateriaService extends AbstractMateriaService {
   private serviceInstituicoes = inject(AbstractInstituicaoService);
   private instituicoes = this.serviceInstituicoes.instituicoes;
 
-  override materias = computed(() => this._materias());
-
-  override getMaterias(): Observable<OperationResult> {
-    try {
-      const materias = this.materias();
-      return of({success: true, status: 200, data: materias});
-    } catch (error) {
-      return of({success: false, status: 500, data: 'Erro ao buscar matérias.'});
-    }
-  }
+  materias = computed(() => this._materias());
 
   override getMateriaById(id: number): Observable<OperationResult> {
     try {
@@ -141,18 +132,4 @@ export class MockedMateriaService extends AbstractMateriaService {
       return of({success: false, status: 500, data: 'Erro ao atualizar status.'});
     }
   }
-
-  override getDiasHorasComAula(id: number): Observable<OperationResult> {
-    try {
-      const materia = this._materias().find(m => m.id === id);
-      if (!materia) {
-        return of({success: false, status: 404, data: 'Matéria não encontrada.'});
-      }
-      const aulasHoras = materia.aulasDaSemana;
-      return of({success: true, status: 200, data: aulasHoras});
-    } catch (error) {
-      return of({success: false, status: 500, data: 'Erro ao buscar dias e horas com aula.'});
-    }
-  }
-
 }
