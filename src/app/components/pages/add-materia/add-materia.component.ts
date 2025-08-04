@@ -169,7 +169,7 @@ export class AddMateriaComponents{
     const currentUser = this.authService.currentUser();
     if (currentUser) {
       try {
-        await firstValueFrom(this.serviceInstituicao.getInstituicaoByUsuarioId(currentUser.id));
+        await firstValueFrom(this.serviceInstituicao.getInstituicoesByUsuarioId(currentUser.id));
       } catch (error) {
         console.error('Error loading user institutions:', error);
       }

@@ -149,7 +149,7 @@ export class MockedUsuarioService extends AbstractUsuarioService {
   override getInstituicoesByUsuarioId(id: number): Observable<OperationResult> {
     try {
       return new Observable<OperationResult>((observer) => {
-        this._instituicaoService.getInstituicaoByUsuarioId(id).subscribe({
+        this._instituicaoService.getInstituicoesByUsuarioId(id).subscribe({
           next: (instituicoes) => {
             if (instituicoes.success && instituicoes.data) {
               observer.next({

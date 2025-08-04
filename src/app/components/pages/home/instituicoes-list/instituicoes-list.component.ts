@@ -50,7 +50,7 @@ export class InstituicoesListComponents {
     if (currentUser) {
       try {
         await firstValueFrom(
-          this.serviceInstituicao.getInstituicaoByUsuarioId(currentUser.id)
+          this.serviceInstituicao.getInstituicoesByUsuarioId(currentUser.id)
         );
       } catch (error) {
         console.error('Error loading user institutions:', error);
