@@ -37,6 +37,8 @@ export class InstituicoesListComponents {
 
   showPremiumDialog = false;
 
+  qtdTotalDeInstituicoes = 0
+
   instituicoesDoUsuario = computed(() => {
     const currentUser = this.authService.getCurrentUser();
     const todasInstituicoes = this.serviceInstituicao.instituicoes();
@@ -48,6 +50,8 @@ export class InstituicoesListComponents {
     const instituicoesDoUsuario = todasInstituicoes.filter(
       (instituicao) => instituicao.id_usuario === currentUser.id
     );
+
+    this.qtdTotalDeInstituicoes = instituicoesDoUsuario.length
 
     // Se o usuário não for premium, retorna apenas a primeira instituição
     if (!this.isPremiumUser()) {

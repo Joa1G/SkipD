@@ -32,6 +32,7 @@ export class GerenciarInstituicoesComponent {
   showSuccessDeleteInstituicao: boolean = false;
   showSuccessCleanInstituicao: boolean = false;
   selectedInstituicaoId: number | null = null;
+  qtdTotalDeInstituicoes = 0
 
   showDeleteMessage(instituicaoId: number) {
     this.selectedInstituicaoId = instituicaoId;
@@ -69,9 +70,18 @@ export class GerenciarInstituicoesComponent {
       return [];
     }
 
-    return todasInstituicoes.filter(
+    const instituicoesDoUsuario = todasInstituicoes.filter(
       (instituicao) => instituicao.id_usuario === currentUser.id
     );
+
+    this.qtdTotalDeInstituicoes = instituicoesDoUsuario.length
+
+    // Se o usuário não for premium, retorna apenas a primeira instituição
+    if (!this.isPremiumUser()) {
+      return instituicoesDoUsuario.slice(0, 1);
+    }
+
+    return instituicoesDoUsuario;
   });
 
   private async loadUserInstituicoes() {
