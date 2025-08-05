@@ -6,3 +6,8 @@ export interface Usuario {
   isPremium: boolean;
   urlFoto: string;
 }
+
+export interface UsuarioLogin {
+  email: string;
+  senha: string;
+}
