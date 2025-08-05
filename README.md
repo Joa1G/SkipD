@@ -2,6 +2,8 @@
 
 O **SkipD** é uma aplicação web moderna e intuitiva desenvolvida em Angular para ajudar estudantes a gerenciar sua frequência escolar e acadêmica de forma eficiente. Com o SkipD, você pode acompanhar suas faltas, monitorar seu status em cada matéria e evitar reprovações por frequência.
 
+## Acesse em: skipd.com.br
+
 ## 🚀 Funcionalidades
 
 ### 📊 **Gestão de Frequência**
