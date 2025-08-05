@@ -60,7 +60,7 @@ export class InstituicaoService extends AbstractInstituicaoService {
 
   override getInstituicaoById(id: number): Observable<OperationResult> {
     return this.http
-      .get(`${environment.apiUrl}/institution/${id}`, { observe: 'response' })
+      .get(`${environment.apiUrl}/instituition/${id}`, { observe: 'response' })
       .pipe(
         map((response) => {
           console.log('Resposta getInstituicaoById:', response);
@@ -116,12 +116,12 @@ export class InstituicaoService extends AbstractInstituicaoService {
     };
 
     console.log('Enviando requisição para API:', {
-      url: `${environment.apiUrl}/institution/${userId}`,
+      url: `${environment.apiUrl}/instituition/${userId}`,
       data: dataToSend,
     });
 
     return this.http
-      .post(`${environment.apiUrl}/institution/${userId}`, dataToSend, {
+      .post(`${environment.apiUrl}/instituition/${userId}`, dataToSend, {
         observe: 'response',
       })
       .pipe(
@@ -171,7 +171,7 @@ export class InstituicaoService extends AbstractInstituicaoService {
     };
 
     return this.http
-      .put(`${environment.apiUrl}/institution/${instituicao.id}`, dataToSend, {
+      .put(`${environment.apiUrl}/instituition/${instituicao.id}`, dataToSend, {
         observe: 'response',
       })
       .pipe(
@@ -192,7 +192,7 @@ export class InstituicaoService extends AbstractInstituicaoService {
 
   override deleteInstituicao(id: number): Observable<OperationResult> {
     return this.http
-      .delete(`${environment.apiUrl}/institution/${id}`, {
+      .delete(`${environment.apiUrl}/instituition/${id}`, {
         observe: 'response',
       })
       .pipe(
@@ -215,7 +215,7 @@ export class InstituicaoService extends AbstractInstituicaoService {
   ): Observable<OperationResult> {
     console.log('Buscando instituições para userId:', userId);
     return this.http
-      .get(`${environment.apiUrl}/institution/all/${userId}`, {
+      .get(`${environment.apiUrl}/instituition/all/${userId}`, {
         observe: 'response',
       })
       .pipe(
