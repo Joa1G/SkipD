@@ -1,0 +1,269 @@
+@use "sass:color";
+
+// Importando as variáveis do design system
+$font-main: "Roboto", sans-serif;
+
+// Cores do Tema Principal
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #e0e0e0;
+$color-muted: #a0a0b0;
+
+// Cores de Status
+$color-success: #22c55e;
+$color-warning: #eab308;
+$color-danger: #ef4444;
+$color-info: #3b82f6;
+
+// Animações e Bordas
+$transition-speed: 0.3s;
+$transition-ease: ease-in-out;
+$radius: 12px;
+$radius-sm: 8px;
+
+.error-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba($color-bg-dark, 0.3);
+
+  // Efeito de blur no fundo
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+
+  // Animação de fade-in/out
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-speed $transition-ease,
+    visibility $transition-speed $transition-ease;
+
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.error-dialog-box {
+  background-color: $color-bg-light;
+  border-radius: $radius;
+  border: 1px solid $color-border;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  font-family: $font-main;
+
+  // Animação de "pop-in"
+  transform: scale(0.95);
+  transition: transform $transition-speed $transition-ease;
+
+  .error-dialog-overlay.is-visible & {
+    transform: scale(1);
+  }
+}
+
+.error-dialog-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: $color-muted;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $color-text;
+  }
+}
+
+.error-dialog-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .error-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+
+    // Cores baseadas no tipo de erro
+    &--generic {
+      color: $color-danger;
+    }
+
+    &--server {
+      color: #ff5722; // Laranja para erros de servidor
+    }
+
+    &--not-found {
+      color: $color-warning; // Amarelo para não encontrado
+    }
+
+    &--auth {
+      color: #ff9800; // Laranja escuro para autenticação
+    }
+
+    &--client {
+      color: $color-danger; // Vermelho para erros do cliente
+    }
+  }
+
+  // Background baseado no tipo de erro
+  &--generic {
+    background-color: rgba($color-danger, 0.15);
+  }
+
+  &--server {
+    background-color: rgba(#ff5722, 0.15);
+  }
+
+  &--not-found {
+    background-color: rgba($color-warning, 0.15);
+  }
+
+  &--auth {
+    background-color: rgba(#ff9800, 0.15);
+  }
+
+  &--client {
+    background-color: rgba($color-danger, 0.15);
+  }
+}
+
+.error-dialog-header {
+  margin-bottom: 1.5rem;
+
+  .error-dialog-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $color-text;
+    margin: 0 0 0.5rem;
+  }
+
+  .error-dialog-message {
+    font-size: 1rem;
+    color: $color-muted;
+    line-height: 1.5;
+    margin: 0 0 0.5rem;
+  }
+
+  .error-dialog-code {
+    font-size: 0.875rem;
+    color: rgba($color-muted, 0.7);
+    margin: 0;
+    font-family: "Courier New", monospace;
+    background-color: rgba($color-bg-dark, 0.5);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+  }
+}
+
+.error-dialog-footer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
+
+  // quando só tiver 1 botão, expande pras 2 colunas
+  > .error-dialog-btn:only-child {
+    grid-column: 1 / -1;
+  }
+}
+
+.error-dialog-btn {
+  padding: 0.75rem 1rem;
+  border-radius: $radius-sm;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  &--retry {
+    background: linear-gradient(
+      90deg,
+      $color-gradient-start,
+      $color-gradient-end
+    );
+    color: white;
+    border: none;
+
+    &:hover {
+      background: linear-gradient(
+        90deg,
+        color.adjust($color-gradient-start, $lightness: -8%),
+        color.adjust($color-gradient-end, $lightness: -8%)
+      );
+    }
+  }
+
+  &--close {
+    background-color: transparent;
+    border-color: $color-border;
+    color: $color-text;
+
+    &:hover {
+      background-color: rgba($color-primary, 0.1);
+      border-color: $color-primary;
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 480px) {
+  .error-dialog-box {
+    padding: 1.5rem;
+    max-width: 95%;
+    margin: 1rem;
+  }
+
+  .error-dialog-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .error-dialog-btn {
+    width: 100%;
+  }
+
+  .error-dialog-icon {
+    width: 56px;
+    height: 56px;
+
+    .error-icon {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+    }
+  }
+}

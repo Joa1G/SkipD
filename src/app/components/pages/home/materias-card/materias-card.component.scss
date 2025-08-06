@@ -20,6 +20,10 @@ $transition-ease: ease-in-out;
 $radius: 12px;
 $radius-sm: 6px;
 
+// Breakpoints
+$breakpoint-xs: 480px;
+$breakpoint-sm: 768px;
+
 .materia-card {
   width: 320px;
   height: 210px;
@@ -33,28 +37,69 @@ $radius-sm: 6px;
   transition: all $transition-speed $transition-ease;
   justify-content: space-between;
 
+  // Mobile: cartão responsivo com tamanhos melhores
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    width: calc(100% - 24px);
+    height: 200px;
+    margin: 12px;
+    max-width: 350px;
+  }
+
+  @media (max-width: #{$breakpoint-xs - 1px}) {
+    width: calc(100% - 16px);
+    height: 180px;
+    margin: 8px;
+    max-width: none;
+    border-radius: $radius-sm;
+  }
+
   &:hover {
     transform: translateY(-4px);
     border-color: $color-primary;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     cursor: pointer;
+
+    // Mobile: reduzir transform no hover
+    @media (max-width: #{$breakpoint-xs - 1px}) {
+      transform: translateY(-2px);
+    }
   }
 
   mat-card-title {
     font-size: 1.2rem;
     font-weight: 700;
+
+    // Mobile: título menor
+    @media (max-width: #{$breakpoint-sm - 1px}) {
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: #{$breakpoint-xs - 1px}) {
+      font-size: 1rem;
+    }
   }
 
   mat-card-content {
     p {
       margin-top: 16px;
       margin-bottom: 8px;
+
+      // Mobile: margens reduzidas
+      @media (max-width: #{$breakpoint-xs - 1px}) {
+        margin-top: 12px;
+        margin-bottom: 6px;
+      }
     }
     .status,
     .faltas-title {
       font-weight: 500;
       font-size: 0.875rem;
       color: $color-text;
+
+      // Mobile: texto menor
+      @media (max-width: #{$breakpoint-xs - 1px}) {
+        font-size: 0.8rem;
+      }
     }
 
     mat-progress-bar {
@@ -62,6 +107,12 @@ $radius-sm: 6px;
       border-radius: $radius-sm;
       height: 8px;
       background-color: $color-border;
+
+      // Mobile: barra um pouco menor
+      @media (max-width: #{$breakpoint-xs - 1px}) {
+        height: 6px;
+        margin-top: 6px;
+      }
     }
   }
 
@@ -70,22 +121,45 @@ $radius-sm: 6px;
     justify-content: flex-end;
     padding: 0 16px 16px;
 
+    // Mobile: padding reduzido
+    @media (max-width: #{$breakpoint-xs - 1px}) {
+      padding: 0 12px 12px;
+    }
+
     button {
       flex-grow: 0;
       width: auto;
       padding: 6px 20px;
       border: none;
       border-radius: $radius;
-      background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
+      background: linear-gradient(
+        90deg,
+        $color-gradient-start,
+        $color-gradient-end
+      );
       color: white;
       font-weight: 600;
       font-size: 0.875rem;
       cursor: pointer;
-      transition: transform $transition-speed $transition-ease, box-shadow $transition-speed $transition-ease;
+      transition: transform $transition-speed $transition-ease,
+        box-shadow $transition-speed $transition-ease;
+
+      // Mobile: botão maior para touch e ajustes
+      @media (max-width: #{$breakpoint-xs - 1px}) {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+        min-height: 36px;
+        border-radius: $radius-sm;
+      }
 
       &:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+        // Mobile: reduzir transform no hover
+        @media (max-width: #{$breakpoint-xs - 1px}) {
+          transform: translateY(-1px);
+        }
       }
 
       &:disabled {
@@ -107,11 +181,10 @@ $radius-sm: 6px;
       color: $color-success;
     }
     mat-card-content {
-      .status{
+      .status {
         color: $color-success;
       }
     }
-
   }
 
   // Status Risco
@@ -122,7 +195,7 @@ $radius-sm: 6px;
       color: $color-warning;
     }
     mat-card-content {
-      .status{
+      .status {
         color: $color-warning;
       }
     }
@@ -136,7 +209,7 @@ $radius-sm: 6px;
       color: $color-danger;
     }
     mat-card-content {
-      .status{
+      .status {
         color: $color-danger;
       }
     }

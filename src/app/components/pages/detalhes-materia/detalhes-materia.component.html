@@ -41,7 +41,7 @@
 
       <button
         class="btn btn-primary btn-full-width"
-        (click)="adicionarFalta(materiaId, 1)"
+        (click)="abrirDialogFalta()"
         [disabled]="!instituicao || materia!.faltas >= limiteFaltas()"
       >
         <span class="material-icons">add</span>
@@ -132,3 +132,12 @@
   </div>
 </ng-template>
 }
+
+<app-falta-selector-dialog
+  [(isVisible)]="showFaltaDialog"
+  [materia]="materia?.nome || ''"
+  [faltasAtuais]="materia?.faltas || 0"
+  [faltasMaximas]="limiteFaltas()"
+  (quantidadeSelecionada)="adicionarFalta($event)"
+>
+</app-falta-selector-dialog>

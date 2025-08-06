@@ -1,0 +1,267 @@
+@use "sass:color";
+
+// Cores do Tema Principal
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #e0e0e0;
+$color-muted: #a0a0b0;
+$color-surface: #2a2a41;
+$color-background: #1e1e2f;
+
+// Cores de Status
+$color-success: #22c55e;
+$color-warning: #eab308;
+$color-danger: #ef4444;
+$color-info: #3b82f6;
+
+// Bordas e outros
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 16px;
+$breakpoint-xs: 576px;
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.dialog-box {
+  background-color: $color-surface;
+  border-radius: $radius-lg;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 480px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+
+  .is-visible & {
+    transform: scale(1);
+  }
+
+  @media (max-width: #{$breakpoint-xs - 1px}) {
+    width: 95%;
+    max-width: none;
+  }
+}
+
+.dialog-header {
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid $color-border;
+  position: relative;
+
+  .dialog-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $color-text;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+  }
+
+  .dialog-subtitle {
+    font-size: 1rem;
+    color: $color-muted;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .dialog-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: $color-muted;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-sm;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $color-border;
+      color: $color-text;
+    }
+  }
+}
+
+.dialog-content {
+  padding: 24px;
+}
+
+.faltas-info {
+  margin-bottom: 24px;
+
+  .faltas-status {
+    font-size: 1rem;
+    color: $color-text;
+    margin: 0 0 8px 0;
+  }
+
+  .faltas-disponiveis {
+    font-size: 0.875rem;
+    color: $color-success;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .faltas-limite {
+    font-size: 0.875rem;
+    color: $color-danger;
+    margin: 0;
+    font-weight: 500;
+  }
+}
+
+.quantidade-selector {
+  label {
+    display: block;
+    font-weight: 500;
+    color: $color-text;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+  }
+}
+
+.quantidade-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 20px;
+  background-color: $color-background;
+  border-radius: $radius-md;
+  padding: 4px;
+  border: 1px solid $color-border;
+
+  .btn-counter {
+    background-color: $color-primary;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-sm;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover:not(:disabled) {
+      background-color: color.adjust($color-primary, $lightness: -10%);
+      transform: scale(1.05);
+    }
+
+    &:disabled {
+      background-color: $color-muted;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  .quantidade-input {
+    background: none;
+    border: none;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $color-text;
+    width: 80px;
+    height: 40px;
+    outline: none;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type="number"] {
+      appearance: textfield;
+      -moz-appearance: textfield;
+    }
+  }
+}
+
+.dialog-footer {
+  padding: 16px 24px 24px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  border-top: 1px solid $color-border;
+
+  @media (max-width: #{$breakpoint-xs - 1px}) {
+    flex-direction: column;
+  }
+}
+
+.dialog-btn {
+  padding: 12px 24px;
+  border-radius: $radius-md;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  outline: none;
+  min-width: 100px;
+
+  &--cancel {
+    background-color: $color-background;
+    color: $color-text;
+    border: 1px solid $color-border;
+
+    &:hover {
+      background-color: $color-border;
+    }
+  }
+
+  &--confirm {
+    background-color: $color-primary;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: color.adjust($color-primary, $lightness: -8%);
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      background-color: $color-muted;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+
+  @media (max-width: #{$breakpoint-xs - 1px}) {
+    width: 100%;
+    min-width: auto;
+  }
+}
