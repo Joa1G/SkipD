@@ -1,7 +1,5 @@
-// src/app/components/pages/insights/calendar-weekly/calendar-weekly.component.scss
 @use "sass:color";
 
-// --- VARIÁVEIS (Mantendo sua paleta original) ---
 $font-color: #C0A6FA;
 $font-main: "Roboto", sans-serif;
 $color-primary: #8a2be2;
@@ -12,12 +10,10 @@ $color-muted: #a0a0b0;
 $radius: 12px;
 $radius-sm: 8px;
 
-// Cores de status para os eventos
 $color-success: #6ad48f;
 $color-warning: #ffcc00;
 $color-failed: #d93a3a;
 
-// --- ESTILOS DO COMPONENTE ---
 .calendar-section {
   background-color: $color-bg-light;
   border-radius: $radius;
@@ -64,7 +60,7 @@ $color-failed: #d93a3a;
   display: flex;
   align-items: center;
   gap: 10px;
-  border-left: 4px solid transparent; // Borda que mudará de cor
+  border-left: 4px solid transparent;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
 
@@ -74,12 +70,11 @@ $color-failed: #d93a3a;
   }
 
   .icon {
-    flex-shrink: 0; // Impede que o ícone seja esmagado
+    flex-shrink: 0;
     display: flex;
     align-items: center;
   }
 
-  // Variações de cor para os eventos
   &.success {
     border-left-color: $color-success;
     .icon { color: $color-success; }
@@ -96,7 +91,6 @@ $color-failed: #d93a3a;
   }
 }
 
-// Responsividade para telas menores
 @media (max-width: 992px) {
   .calendar-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -111,9 +105,9 @@ $color-failed: #d93a3a;
 
 @media (max-width: 576px) {
   .calendar-grid {
-    grid-template-columns: 1fr; // Empilha os dias verticalmente
+    grid-template-columns: 1fr; 
   }
   .calendar-header {
-    display: none; // Esconde os cabeçalhos para não poluir a visualização móvel
+    display: none;
   }
 }

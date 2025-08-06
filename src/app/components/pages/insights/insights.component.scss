@@ -1,7 +1,5 @@
-// src/app/components/pages/insights/insights.component.scss
 @use "sass:color";
 
-// --- VARIÁVEIS (Mantendo sua paleta original) ---
 $font-color: #C0A6FA;
 $font-main: "Roboto", sans-serif;
 $color-bg-dark: #1e1e2f;
@@ -9,12 +7,10 @@ $color-bg-light: #2a2a41;
 $color-text: #e0e0e0;
 $radius: 12px;
 
-// Cores de status para os ícones dos cards
 $color-success: #6ad48f;
 $color-warning: #ffcc00;
 $color-failed: #d93a3a;
 
-// --- ESTILOS DA PÁGINA DE INSIGHTS ---
 .insights-container {
   width: 100%;
   max-width: 1200px;
@@ -25,7 +21,7 @@ $color-failed: #d93a3a;
 }
 
 .useful-insights {
-  padding: 16px 0; // Adiciona um respiro vertical
+  padding: 16px 0;
 
   h2 {
     color: $font-color;
@@ -42,7 +38,7 @@ $color-failed: #d93a3a;
 }
 
 .insight-card {
-  flex: 1 1 300px; // Permite que os cards cresçam e quebrem a linha
+  flex: 1 1 300px;
   background-color: $color-bg-light;
   border-radius: $radius;
   padding: 24px;
@@ -52,9 +48,22 @@ $color-failed: #d93a3a;
   gap: 16px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
+  border-left: 5px solid transparent;
+  box-sizing: border-box;
+
   &:hover {
     transform: translateY(-3px) scale(1.02);
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  }
+
+  &.success {
+    border-left-color: $color-success;
+  }
+  &.warning {
+    border-left-color: $color-warning;
+  }
+  &.failed {
+    border-left-color: $color-failed;
   }
 
   .icon {
