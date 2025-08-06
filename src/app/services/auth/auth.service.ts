@@ -1,16 +1,22 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Observable, BehaviorSubject, map, catchError, of } from 'rxjs';
 import { environment } from '../../../../environments/environments';
 import { Usuario } from '../../models/usuario/usuario.model';
 import { UsuarioLogin } from '../../models/usuario/usuario.model';
 import { OperationResult } from '../../models/operation-result.model';
+import { ErrorDialogService } from '../error-dialog.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
+  private errorDialogService = inject(ErrorDialogService);
   private currentUserSubject = new BehaviorSubject<Usuario | null>(null);
   private tokenSubject = new BehaviorSubject<string | null>(null);
 
@@ -44,42 +50,71 @@ export class AuthService {
     formData.append('username', credentials.email); // API usa 'username' para email
     formData.append('password', credentials.senha);
 
-    return this.http.post<any>(`${environment.apiUrl}/token`, formData).pipe(
-      map((response) => {
-        if (response.access_token && response.usuario) {
-          // Mapear campos da API se necessário
-          if (response.usuario.is_premium !== undefined) {
-            response.usuario.isPremium = response.usuario.is_premium;
+    // Headers para indicar que queremos tratar erros manualmente
+    const headers = new HttpHeaders().set('X-Skip-Error-Dialog', 'true');
+
+    return this.http
+      .post<any>(`${environment.apiUrl}/token`, formData, { headers })
+      .pipe(
+        map((response) => {
+          if (response.access_token && response.usuario) {
+            // Mapear campos da API se necessário
+            if (response.usuario.is_premium !== undefined) {
+              response.usuario.isPremium = response.usuario.is_premium;
+            }
+
+            // Salvar token e usuário
+            localStorage.setItem('token', response.access_token);
+            localStorage.setItem(
+              'currentUser',
+              JSON.stringify(response.usuario)
+            );
+
+            this._currentUser.set(response.usuario);
+            this.currentUserSubject.next(response.usuario);
+            this.tokenSubject.next(response.access_token);
+
+            return {
+              success: true,
+              status: 200,
+              data: response,
+            };
+          }
+          return {
+            success: false,
+            status: 401,
+            message: 'Credenciais inválidas',
+          };
+        }),
+        catchError((error: HttpErrorResponse) => {
+          // Tratar erros específicos de login
+          if (error.status === 401) {
+            this.errorDialogService.showError({
+              title: 'Login Inválido',
+              message:
+                'Email ou senha incorretos. Verifique suas credenciais e tente novamente.',
+              errorCode: 401,
+              showTryAgain: false,
+            });
+          } else if (error.status === 422) {
+            this.errorDialogService.showValidationError(
+              error.error?.detail || 'Dados de login inválidos.',
+              422
+            );
+          } else {
+            // Para outros erros, usar o tratamento padrão
+            this.errorDialogService.handleHttpError(error, () =>
+              this.login(credentials).subscribe()
+            );
           }
 
-          // Salvar token e usuário
-          localStorage.setItem('token', response.access_token);
-          localStorage.setItem('currentUser', JSON.stringify(response.usuario));
-
-          this._currentUser.set(response.usuario);
-          this.currentUserSubject.next(response.usuario);
-          this.tokenSubject.next(response.access_token);
-
-          return {
-            success: true,
-            status: 200,
-            data: response,
-          };
-        }
-        return {
-          success: false,
-          status: 401,
-          message: 'Credenciais inválidas',
-        };
-      }),
-      catchError((error: HttpErrorResponse) =>
-        of({
-          success: false,
-          status: error.status || 500,
-          message: error.error?.detail || 'Erro ao fazer login',
+          return of({
+            success: false,
+            status: error.status || 500,
+            message: error.error?.detail || 'Erro ao fazer login',
+          });
         })
-      )
-    );
+      );
   }
 
   logout(): void {
@@ -185,13 +220,18 @@ export class AuthService {
           data: updatedUser,
         };
       }),
-      catchError((error: HttpErrorResponse) =>
-        of({
+      catchError((error: HttpErrorResponse) => {
+        // Tratar erro de atualização de usuário
+        this.errorDialogService.handleHttpError(error, () =>
+          this.refreshUserData().subscribe()
+        );
+
+        return of({
           success: false,
           status: error.status || 500,
           message: error.error?.detail || 'Erro ao atualizar dados do usuário',
-        })
-      )
+        });
+      })
     );
   }
 }

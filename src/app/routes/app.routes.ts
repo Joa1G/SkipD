@@ -12,6 +12,7 @@ import { premiumGuard } from '../guards/premium.guard';
 import { ContaSettingsComponent } from '../components/pages/conta-settings/conta-settings.component';
 import { GerenciarInstituicoesComponent } from '../components/pages/gerenciar-instituicoes/gerenciar-instituicoes.component';
 import { instituicaoGuard } from '../guards/instituicao.guard';
+import { ErrorExamplesComponent } from '../components/pages/error-examples/error-examples.component';
 
 export const routes: Routes = [
   {
@@ -73,5 +74,5 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
-  },
+  }
 ];

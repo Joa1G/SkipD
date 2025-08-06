@@ -11,6 +11,7 @@ import {
   computed,
   Signal,
   WritableSignal,
+  inject,
 } from '@angular/core';
 import {
   catchError,
@@ -23,9 +24,12 @@ import {
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
 import { AbstractInstituicaoService } from '../instituicao/abstract-instituicao.service';
+import { ErrorDialogService } from '../error-dialog.service';
 
 @Injectable()
 export class MateriaService extends AbstractMateriaService {
+  private errorDialogService = inject(ErrorDialogService);
+
   constructor(
     private http: HttpClient,
     private serviceInstituicoes: AbstractInstituicaoService
@@ -101,13 +105,18 @@ export class MateriaService extends AbstractMateriaService {
             status: response.status,
           };
         }),
-        catchError((error: HttpErrorResponse) =>
-          of({
+        catchError((error: HttpErrorResponse) => {
+          // Exibir diálogo de erro específico para busca de matéria por ID
+          this.errorDialogService.handleHttpError(error, () =>
+            this.getMateriaById(id).subscribe()
+          );
+
+          return of({
             success: false,
             data: error.message,
             status: error.status,
-          })
-        )
+          });
+        })
       );
   }
 
@@ -128,13 +137,18 @@ export class MateriaService extends AbstractMateriaService {
           data: response.body,
           status: response.status,
         })),
-        catchError((error: HttpErrorResponse) =>
-          of({
+        catchError((error: HttpErrorResponse) => {
+          // Exibir diálogo de erro específico para adicionar matéria
+          this.errorDialogService.handleHttpError(error, () =>
+            this.addMateria(materia).subscribe()
+          );
+
+          return of({
             success: false,
             data: error.message,
             status: error.status,
-          })
-        )
+          });
+        })
       );
   }
 
@@ -149,13 +163,18 @@ export class MateriaService extends AbstractMateriaService {
           data: response.body,
           status: response.status,
         })),
-        catchError((error: HttpErrorResponse) =>
-          of({
+        catchError((error: HttpErrorResponse) => {
+          // Exibir diálogo de erro específico para atualizar matéria
+          this.errorDialogService.handleHttpError(error, () =>
+            this.updateMateria(materia).subscribe()
+          );
+
+          return of({
             success: false,
             data: error.message,
             status: error.status,
-          })
-        )
+          });
+        })
       );
   }
 
@@ -168,13 +187,18 @@ export class MateriaService extends AbstractMateriaService {
           data: response.body,
           status: response.status,
         })),
-        catchError((error: HttpErrorResponse) =>
-          of({
+        catchError((error: HttpErrorResponse) => {
+          // Exibir diálogo de erro específico para deletar matéria
+          this.errorDialogService.handleHttpError(error, () =>
+            this.deleteMateria(id).subscribe()
+          );
+
+          return of({
             success: false,
             data: error.message,
             status: error.status,
-          })
-        )
+          });
+        })
       );
   }
 
@@ -209,13 +233,18 @@ export class MateriaService extends AbstractMateriaService {
             status: response.status,
           };
         }),
-        catchError((error: HttpErrorResponse) =>
-          of({
+        catchError((error: HttpErrorResponse) => {
+          // Exibir diálogo de erro específico para buscar matérias por instituição
+          this.errorDialogService.handleHttpError(error, () =>
+            this.getMateriasByInstituicaoId(idInstituicao).subscribe()
+          );
+
+          return of({
             success: false,
             data: error.message,
             status: error.status,
-          })
-        )
+          });
+        })
       );
   }
 

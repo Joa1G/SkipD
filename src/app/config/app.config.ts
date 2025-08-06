@@ -13,9 +13,11 @@ import {
   provideHttpClient,
   withFetch,
   withInterceptors,
+  HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { authInterceptor } from '../interceptors/auth.interceptor';
 import { loadingInterceptor } from '../interceptors/loading.interceptor';
+import { ErrorInterceptor } from '../interceptors/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +29,11 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([authInterceptor, loadingInterceptor]),
       withFetch()
     ),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
+    },
     instituicaoProvider,
     materiaProvider,
     usuarioProvider,
