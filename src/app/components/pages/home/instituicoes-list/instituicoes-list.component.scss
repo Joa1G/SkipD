@@ -69,7 +69,7 @@ $breakpoint-sm: 768px;
 
 .instituicoes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 370px));
+  grid-template-columns: repeat(auto-fill, minmax(340px, auto));
   margin-bottom: 10px;
   border-bottom: 1px solid $color-border;
   place-items: center;
