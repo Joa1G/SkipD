@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { CalendarWeeklyComponent } from './calendar-weekly/calendar-weekly.component';
-import { InsightsService } from '../../../services/insights/insights.service';
 import { AbstractInsightsService } from '../../../services/insights/abstract-insights.service';
+import { AbstractInstituicaoService } from '../../../services/instituicao/abstract-instituicao.service';
+import { AbstractMateriaService } from '../../../services/materia/abstract-materia.service';
 
 @Component({
   selector: 'app-insights',
@@ -12,11 +13,20 @@ import { AbstractInsightsService } from '../../../services/insights/abstract-ins
   templateUrl: './insights.component.html',
   styleUrls: ['./insights.component.scss'],
 })
-export class InsightsComponent {
+
+export class InsightsComponent implements OnInit {
   private insightsService = inject(AbstractInsightsService);
   insights = this.insightsService.insights;
 
+  private instituicaoService = inject(AbstractInstituicaoService);
+  private materiaService = inject(AbstractMateriaService);
+
   diasDaSemana = ['domingo', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
+
+  async ngOnInit() {
+    await this.instituicaoService.refresh();
+    await this.materiaService.refresh();
+  }
 
   get riscoMensagem() {
     const emRisco = this.insights().materiasEmRisco;
