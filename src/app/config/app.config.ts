@@ -37,7 +37,7 @@ export const appConfig: ApplicationConfig = {
     },
     instituicaoProvider,
     materiaProvider,
-    usuarioProvider,, 
+    usuarioProvider, 
     insightsProvider
   ],
 };
