@@ -240,6 +240,14 @@ export class MateriaService extends AbstractMateriaService {
             status: 404,
           });
         }
+      }),
+      switchMap((updateResult) => {
+        if (updateResult.success) {
+          // Após atualizar as faltas com sucesso, atualiza o status
+          return this.updateStatus(id);
+        } else {
+          return of(updateResult);
+        }
       })
     );
   }
