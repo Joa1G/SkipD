@@ -5,7 +5,8 @@ import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { OperationResult } from '../../../models/operation-result.model';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
 import { MatIcon } from '@angular/material/icon';
-import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
+import { UsuarioLogin } from '../../../models/usuario/usuario.model';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ import { MockedAuthService } from '../../../services/auth/mocked-auth.service';
 export class LoginComponents {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private authService = inject(MockedAuthService);
+  private authService = inject(AuthService);
 
   showPassword = false;
   submitted = false;
@@ -48,7 +49,12 @@ export class LoginComponents {
     const email = formValue.email!;
     const password = formValue.password!;
 
-    this.authService.login(email, password).subscribe({
+    const credentials: UsuarioLogin = {
+      email: email,
+      senha: password
+    };
+
+    this.authService.login(credentials).subscribe({
       next: (result: OperationResult) => {
         if (result.success) {
           this.router.navigate(['/home'])

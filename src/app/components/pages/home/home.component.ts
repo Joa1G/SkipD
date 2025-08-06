@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from '../../header/header.component';
+import { HeaderComponent } from '../../shared/header/header.component';
 import { InstituicoesListComponents } from './instituicoes-list/instituicoes-list.component';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { MatIcon } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -12,7 +11,6 @@ import { RouterModule } from '@angular/router';
     HeaderComponent,
     CommonModule,
     MatCardModule,
-    MatIcon,
     InstituicoesListComponents,
     RouterModule,
   ],

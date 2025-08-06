@@ -1,9 +1,6 @@
 <div class="instituicoes-list">
   @for (instituicao of instituicoesDoUsuario(); track instituicao.id) {
-    <h2 class="instituicoes-title">{{ instituicao.nome }}</h2>
-    @if(getMateriasPorInstituicao(instituicao.id).length === 0) {
-      <p class="no-materia">Nenhuma matéria cadastrada para esta instituição.</p>
-    }
+    <h2 class="instituicoes-title"><mat-icon>school</mat-icon> {{ instituicao.nome }}</h2>
     <div class="instituicoes-grid">
       @for (materia of materias(); track materia.id) {
         @if (materia.idInstituicao === instituicao.id) {
@@ -14,6 +11,27 @@
           ></app-materias-card>
         }
       }
+      <button class="add-materia-button" routerLink="/add-materia/{{ instituicao.id }}">
+        <mat-icon class="add-icon">add_circle</mat-icon><span>Adicionar Matéria</span>
+      </button>
     </div>
+    @if(instituicoesDoUsuario().length < qtdTotalDeInstituicoes){
+      <p class="other-ins">Você possui outras instituições, torne-se premium para acessá-las</p>
+    }
+  }
+  @if(isPremiumUser()){
+    <button class="add-instituicao-button" routerLink="/add-instituicao">
+      <mat-icon class="add-icon">add</mat-icon><span>Adicionar Instituição</span>
+    </button>
+  }@else {
+    <button class="add-instituicao-button premium" (click)="showPremiumMessage()">
+      <mat-icon class="add-icon">diamond</mat-icon><span>Adicionar Instituição</span>
+    </button>
   }
 </div>
+
+@if(showPremiumDialog){
+  <app-premium-dialog
+    (visibleChange)="showPremiumDialog = $event"
+  ></app-premium-dialog>
+}

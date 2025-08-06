@@ -14,4 +14,12 @@ $color-gradient-end: #8a2be2;
     $color-gradient-start,
     $color-gradient-end
   );
+
+  p{
+    color: white;
+    text-align: center;
+    line-height: 32px;
+    margin: 0;
+    font-size: 14px;
+  }
 }

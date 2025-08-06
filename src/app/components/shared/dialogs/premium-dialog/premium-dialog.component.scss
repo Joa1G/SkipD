@@ -46,14 +46,8 @@ $radius-sm: 8px; // Raio menor para botões de diálogo
   -webkit-backdrop-filter: blur(5px);
 
   // Animação de fade-in/out
-  opacity: 0;
-  visibility: hidden;
+  opacity: 1;
   transition: opacity $transition-speed $transition-ease, visibility $transition-speed $transition-ease;
-
-  &.is-visible {
-    opacity: 1;
-    visibility: visible;
-  }
 }
 
 // A caixa do diálogo
@@ -73,8 +67,23 @@ $radius-sm: 8px; // Raio menor para botões de diálogo
   transform: scale(0.95);
   transition: transform $transition-speed $transition-ease;
 
-  .is-visible & {
-    transform: scale(1);
+  &.--logo {
+    .dialog-icon {
+      font-size: 3rem;
+      background-color: transparent;
+      font-family: "Jaro", sans-serif;
+    }
+    .dialog-btn--confirm {
+      background: linear-gradient(
+      90deg,
+      #f59e0b,
+      #fbbf24
+    );
+    color: #000;
+    }
+    h2 {
+      color: $color-muted;
+    }
   }
 }
 
@@ -124,13 +133,6 @@ $radius-sm: 8px; // Raio menor para botões de diálogo
   margin: 0 0 0.5rem;
 }
 
-.dialog-message {
-  font-size: 1rem;
-  color: $color-muted;
-  line-height: 1.5;
-  margin: 0;
-}
-
 // Container dos botões
 .dialog-footer {
   display: grid;
@@ -160,71 +162,5 @@ $radius-sm: 8px; // Raio menor para botões de diálogo
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  }
-}
-
-// Botão de cancelar
-.dialog-btn--cancel {
-  background-color: transparent;
-  border-color: $color-border;
-  color: $color-text;
-
-  &:hover {
-    background-color: rgba($color-primary, 0.1);
-    border-color: $color-primary;
-  }
-}
-
-// Botão de confirmar (padrão e variações)
-.dialog-btn--confirm {
-  color: white;
-  border: none;
-}
-
-
-// --- LÓGICA DE ESTILO POR TIPO DE DIÁLOGO ---
-
-.dialog-box--warning {
-  .dialog-icon {
-    background-color: rgba($color-danger, 0.15);
-    mat-icon { color: $color-danger; }
-  }
-  .dialog-btn--confirm {
-    background-color: $color-danger;
-    &:hover { background-color: color.adjust($color-danger, $lightness: -8%); }
-  }
-}
-
-.dialog-box--success {
-  .dialog-icon {
-    background-color: rgba($color-success, 0.15);
-    mat-icon { color: $color-success; }
-  }
-  .dialog-btn--confirm {
-    background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
-  }
-}
-
-.dialog-box--info {
-  .dialog-icon {
-    background-color: rgba($color-warning, 0.15);
-    mat-icon { color: $color-warning; }
-  }
-  .dialog-btn--confirm {
-    background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
-  }
-}
-
-.dialog-box--logo {
-  .dialog-icon {
-    font-size: 3rem;
-    background-color: transparent;
-    font-family: "Jaro", sans-serif;
-  }
-  .dialog-btn--confirm {
-    background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
-  }
-  h2 {
-    color: $color-success;
   }
 }

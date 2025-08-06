@@ -1,0 +1,245 @@
+$font-color: #c0a6fa;
+$font-main: "Roboto", sans-serif;
+$color-primary: #8a2be2;
+$color-gradient-start: #4a00e0;
+$color-gradient-end: #8a2be2;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-border: #383854;
+$color-text: #e0e0e0;
+$color-muted: #a0a0b0;
+$transition-speed: 0.3s;
+$transition-ease: ease-in-out;
+$radius: 12px;
+$radius-sm: 6px;
+
+.gi-container {
+  min-height: calc(100vh - 96px);
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gi-content {
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  background-color: $color-bg-dark;
+  border-radius: $radius;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  padding: 40px 40px 40px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gi-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  width: 100%;
+  .spacer {
+    flex-grow: 1;
+  }
+  border-bottom: 1px solid $color-border;
+}
+
+.back-icon {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $color-text;
+  cursor: pointer;
+  font-size: 2rem;
+  height: 2rem;
+  width: 2rem;
+  &:hover {
+    color: #a78bfa;
+  }
+}
+
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #a78bfa;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 0 auto;
+  margin-left: 40px;
+}
+
+.gi-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn {
+  padding: 14px;
+  border: none;
+  border-radius: $radius;
+  font-family: $font-main;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform $transition-speed $transition-ease,
+    box-shadow $transition-speed $transition-ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+.add-instituicao-button {
+  @extend .btn; // Herda os estilos base do .btn
+  gap: 8px;
+  width: 200px;
+  height: 44px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  font-size: 0.8rem;
+  padding: 0 20px; // Ajuste no padding para altura fixa
+  background: linear-gradient(
+    90deg,
+    $color-gradient-start,
+    $color-gradient-end
+  );
+  color: $color-text;
+
+  .add-icon {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.premium {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    color: #000;
+
+    .add-icon {
+      color: #000;
+    }
+  }
+}
+
+.i-card {
+  width: 100%;
+  min-height: 80px;
+  margin: 15px 0;
+  background-color: $color-bg-light;
+  color: $color-text;
+  border-radius: $radius;
+  border: 1px solid $color-border;
+  font-family: $font-main;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all $transition-speed $transition-ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+
+  .i-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-grow: 1;
+
+    .i-card-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: $color-text;
+      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+      mat-icon{
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .i-card-faltas {
+      font-size: 0.9rem;
+      color: $color-muted;
+      font-weight: 500;
+
+      .faltas-percentage {
+        color: white;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .i-card-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    .action-button {
+      @extend .btn;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      min-width: 80px;
+      height: 36px;
+
+      mat-icon {
+        font-size: 1rem;
+        width: 1rem;
+        height: 1rem;
+        line-height: 1rem;
+      }
+
+      &.edit {
+        background: linear-gradient(90deg, $color-gradient-start, $color-gradient-end);
+        color: white;
+      }
+
+      &.clean {
+        background: #555879;
+        color: #fff;
+      }
+
+      &.delete {
+        background: linear-gradient(90deg, #dc2626, #ef4444);
+        color: white;
+      }
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .i-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+
+    .i-card-header {
+      align-items: center;
+      text-align: center;
+    }
+
+    .i-card-actions {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.other-ins{
+  color: #fbbf24;
+}

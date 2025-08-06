@@ -1,0 +1,107 @@
+<app-header></app-header>
+<div class="gi-container">
+  <div class="gi-content">
+    <div class="gi-header">
+      <mat-icon class="back-icon" (click)="onClickBackArrow()"
+        >arrow_back_ios</mat-icon
+      >
+      <h1 class="page-title">Gerenciar Instituições</h1>
+      <span class="spacer"></span>
+      @if(isPremiumUser()){
+      <button class="add-instituicao-button" routerLink="/add-instituicao">
+        <mat-icon class="add-icon">add</mat-icon
+        ><span>Adicionar Instituição</span>
+      </button>
+      }@else {
+      <button
+        class="add-instituicao-button premium"
+        (click)="showPremiumMessage()"
+      >
+        <mat-icon class="add-icon">diamond</mat-icon
+        ><span>Adicionar Instituição</span>
+      </button>
+      }
+    </div>
+
+    @for(instituicao of instituicoesDoUsuario(); track instituicao.id) {
+      <div class="gi-body">
+        <div class="i-card">
+          <div class="i-card-header">
+            <div class="i-card-title"><mat-icon>school</mat-icon> {{instituicao.nome}}</div>
+            <div class="i-card-faltas">
+              Limite de Faltas: <span class="faltas-percentage">{{instituicao.percentual_limite_faltas * 100}}%</span>
+            </div>
+          </div>
+          <div class="i-card-actions">
+            <button class="action-button edit" routerLink="/edit-instituicao/{{instituicao.id}}">
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button class="action-button clean" (click)="showCleanMessage(instituicao.id)">
+              <mat-icon>cleaning_services</mat-icon>
+              <span>Limpar</span>
+            </button>
+            @if(instituicoesDoUsuario().length > 1) {
+              <button class="action-button delete" (click)="showDeleteMessage(instituicao.id)">
+                <mat-icon>delete</mat-icon>
+                <span>Excluir</span>
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+      @if(instituicoesDoUsuario().length < qtdTotalDeInstituicoes){
+        <p class="other-ins">Você possui outras instituições, torne-se premium para acessá-las</p>
+      }
+    }
+  </div>
+</div>
+
+@if(showPremiumDialog){
+  <app-premium-dialog
+  (visibleChange)="showPremiumDialog = $event"
+  ></app-premium-dialog>
+}
+<app-dialog
+  [title]="'Deseja excluir esta instituição?'"
+  [message]="'Esta ação não pode ser desfeita. Todas as matérias associadas a esta instituição serão removidas e excluirá a instituição.'"
+  [confirmText]="'Excluir'"
+  [dialogType]="'warning'"
+  (confirmAction)="deleteInstituicao(selectedInstituicaoId!)"
+  [isVisible]="showDeleteDialog"
+  (isVisibleChange)="showDeleteDialog = $event"
+  [route]="['photo_delete']"
+></app-dialog>
+
+<app-dialog
+  [title]="'Sucesso'"
+  [message]="'A instituição foi excluída com sucesso. Todas as matérias associadas foram removidas.'"
+  [confirmText]="'OK'"
+  [dialogType]="'confirmation'"
+  [isVisible]="showSuccessDeleteInstituicao"
+  (isVisibleChange)="showSuccessDeleteInstituicao = $event"
+  [showCancelButton]="false"
+  [route]="['success-edit-name']"
+></app-dialog>
+
+<app-dialog
+  [title]="'Deseja limpar as matérias desta instituição?'"
+  [message]="'Esta ação removerá todas as matérias associadas a esta instituição.'"
+  [confirmText]="'Limpar'"
+  [dialogType]="'warning'"
+  (confirmAction)="clearMaterias(selectedInstituicaoId!)"
+  [isVisible]="showCleanDialog"
+  (isVisibleChange)="showCleanDialog = $event"
+  [route]="['photo_delete']"
+></app-dialog>
+
+<app-dialog
+  [title]="'Sucesso'"
+  [message]="'A instituição foi limpa com sucesso. Todas as matérias associadas foram removidas.'"
+  [confirmText]="'OK'"
+  [dialogType]="'confirmation'"
+  [isVisible]="showSuccessCleanInstituicao"
+  (isVisibleChange)="showSuccessCleanInstituicao = $event"
+  [showCancelButton]="false"
+  [route]="['success-edit-name']"
+></app-dialog>

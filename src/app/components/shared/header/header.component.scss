@@ -41,14 +41,16 @@ a {
 
     .insights-link {
       color: $font-color;
+      font-size: 1rem;
       display: flex;
       align-items: center;
       gap: 5px;
+      cursor: pointer;
 
       .insights-icon {
-        font-size: 24px;
-        width: 24px;
-        height: 24px;
+        font-size: 1rem;
+        width: 1rem;
+        height: 1rem;
         color: $font-color;
       }
 
@@ -80,6 +82,13 @@ a {
       width: 36px;
       height: 36px;
       color: $font-color;
+    }
+
+    .user-profile-image {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
     }
 
     .user-profile-button:hover {

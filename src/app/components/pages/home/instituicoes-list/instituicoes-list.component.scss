@@ -24,17 +24,22 @@ $radius-sm: 6px;
   margin-bottom: 30px;
 }
 .instituicoes-title {
-  font-size: 1.5em;
+  font-size: 1.5rem;
+  gap: 10px;
   color: $font-color;
   font-family: "Roboto", sans-serif;
   margin-left: 25px;
+  display: flex;
+  align-items: center;
+
+
 }
 
 .instituicoes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, auto));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 370px));
   margin-bottom: 10px;
-   border-bottom: 1px solid $color-border;
+  border-bottom: 1px solid $color-border;
   place-items: center;
   padding-bottom: 20px;
 }
@@ -45,7 +50,7 @@ $radius-sm: 6px;
   font-family: "Roboto", sans-serif;
   color: #c62828;
   margin-top: 20px;
-  margin-left: 15px;
+  margin-left: 35px;
 }
 
 .no-institutions,
@@ -70,4 +75,89 @@ $radius-sm: 6px;
   background-color: #fff3cd;
   border: 1px solid #ffeaa7;
   border-radius: 8px;
+}
+
+.btn {
+  padding: 14px;
+  border: none;
+  border-radius: $radius;
+  font-family: $font-main;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform $transition-speed $transition-ease,
+  box-shadow $transition-speed $transition-ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+.add-instituicao-button {
+  @extend .btn; // Herda os estilos base do .btn
+  gap: 8px;
+  width: 300px;
+  height: 44px;
+  margin-left: 20px;
+  margin-top: 10px;
+  font-size: 1rem;
+  padding: 0 20px; // Ajuste no padding para altura fixa
+  background: linear-gradient(
+    90deg,
+    $color-gradient-start,
+    $color-gradient-end
+  );
+  color: $color-text;
+
+  .add-icon {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.premium {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    color: #000;
+
+    .add-icon {
+      color: #000;
+    }
+  }
+}
+
+.add-materia-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 320px;
+  height: 210px;
+  margin: 15px 15px;
+  background-color: $color-bg-light;
+  color: $color-text;
+  border-radius: $radius;
+  border: 1px solid $color-border;
+  font-family: $font-main;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all $transition-speed $transition-ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: $color-primary;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    color: $color-primary;
+  }
+}
+
+.other-ins{
+  color: #fbbf24;
 }

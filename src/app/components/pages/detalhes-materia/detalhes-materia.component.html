@@ -1,106 +1,134 @@
 <app-header></app-header>
 @if(materia){
-  <div class="content">
-    <div class="details-card">
-      <header class="details-header">
+<div class="content">
+  <div class="details-card">
+    <header class="details-header">
+      <div class="details-title">
+        <mat-icon class="back-icon" (click)="onClickBackArrow()"
+          >arrow_back_ios</mat-icon
+        >
         <h1>Detalhes da Matéria</h1>
-        <h2>{{ materia!.nome }}</h2>
-      </header>
+      </div>
+      <h2>{{ materia!.nome }}</h2>
+    </header>
 
-      <main class="details-body">
+    <main class="details-body">
+      <div class="info-box">
+        <h3>{{ instituicao?.nome || "Carregando..." }}</h3>
+      </div>
+      <div class="info-grid">
         <div class="info-box">
-          <h3>{{ instituicao!.nome }}</h3>
+          Carga Horária: {{ materia!.cargaHorariaTotal }}h
         </div>
-        <div class="info-grid">
-          <div class="info-box">
-            Carga Horária: {{ materia!.cargaHorariaTotal }}h
-          </div>
-          <div class="info-box info-faltas">
-            Faltas: {{ materia.faltas }}/{{ limiteFaltas() }}
-          </div>
-          <div
-            class="info-box info-status"
-            [ngClass]="{
-              'status-aprovado': materia!.status === 'Aprovado',
-              'status-risco': materia!.status === 'Risco',
-              'status-reprovado': materia!.status === 'Reprovado'
-            }">
-            STATUS: {{ materia!.status }}
-          </div>
+        @if(instituicao) {
+        <div class="info-box info-faltas">
+          Faltas: {{ materia.faltas }}/{{ limiteFaltas() }}
         </div>
+        } @else {
+        <div class="info-box info-faltas">Faltas: {{ materia.faltas }}/...</div>
+        }
+        <div
+          class="info-box info-status"
+          [ngClass]="{
+            'status-aprovado': materia!.status === 'Aprovado',
+            'status-risco': materia!.status === 'Risco',
+            'status-reprovado': materia!.status === 'Reprovado'
+          }"
+        >
+          STATUS: {{ materia!.status }}
+        </div>
+      </div>
 
-        <button class="btn btn-primary btn-full-width" (click)="adicionarFalta(materiaId, 1)" [disabled]="materia!.faltas >= limiteFaltas()">
-          <span class="material-icons">add</span>
-          Adicionar Falta
-        </button>
+      <button
+        class="btn btn-primary btn-full-width"
+        (click)="adicionarFalta(materiaId, 1)"
+        [disabled]="!instituicao || materia!.faltas >= limiteFaltas()"
+      >
+        <span class="material-icons">add</span>
+        Adicionar Falta
+      </button>
 
-        <div class="weekly-schedule">
-          <div class="schedule-title">
-            <span class="material-icons">calendar_today</span>
-            <h3>Aulas na Semana</h3>
-          </div>
-          <div class="days-grid">
-            @for (dia of semanaDays; track dia.day) {
-              <div class="day-cell" [class.has-class]="dia.qtdHoras > 0">
-
-                @if (dia.qtdHoras > 0) {
-                  <span class="material-icons">auto_stories</span>
-                } @else {
-                  <span class="material-icons">class</span>
-                }
-
-                @if (dia.qtdHoras > 0) {
-                  <span class="day-hours">{{ dia.qtdHoras }} {{ dia.qtdHoras === 1 ? 'hora' : 'horas' }}</span>
-                } @else {
-                  <span class="day-hours">Sem Aulas</span>
-                }
-
-                <span class="day-name">{{ dia.day }}</span>
-              </div>
+      @if(isPremiumUser()){
+      <div class="weekly-schedule">
+        <div class="schedule-title">
+          <mat-icon class="material-icons">calendar_today</mat-icon>
+          <h3>Aulas na Semana</h3>
+        </div>
+        <div class="days-grid">
+          @for (dia of semanaDays; track dia.day) {
+          <div class="day-cell" [class.has-class]="dia.qtdHoras > 0">
+            @if (dia.qtdHoras > 0) {
+            <span class="material-icons">auto_stories</span>
+            } @else {
+            <span class="material-icons">class</span>
+            } @if (dia.qtdHoras > 0) {
+            <span class="day-hours"
+              >{{ dia.qtdHoras }}
+              {{ dia.qtdHoras === 1 ? "hora" : "horas" }}</span
+            >
+            } @else {
+            <span class="day-hours">Sem Aulas</span>
             }
+
+            <span class="day-name">{{ dia.day }}</span>
           </div>
+          }
         </div>
-      </main>
+      </div>
+      }@else {
+      <div class="weekly-schedule">
+        <div class="schedule-title">
+          <mat-icon class="material-icons">diamond</mat-icon>
+          <h3>Aulas na Semana</h3>
+        </div>
+        <p class="premium-message">
+          <mat-icon>lock</mat-icon>
+          Acesso exclusivo para usuários <mat-icon>diamond</mat-icon>Premium.
+        </p>
+      </div>
+      }
+    </main>
 
-      <footer class="details-footer">
-        <button class="btn btn-delete" (click)="onClickDeleteMateria()">
-          <span class="material-icons">delete</span>
-          Excluir Matéria
-        </button>
-        <button class="btn btn-edit" (click)="onClickEditMateria()">
-          <span class="material-icons">edit</span>
-          Editar Matéria
-        </button>
-      </footer>
-    </div>
+    <footer class="details-footer">
+      <button class="btn btn-delete" (click)="onClickDeleteMateria()">
+        <span class="material-icons">delete</span>
+        Excluir Matéria
+      </button>
+      <button class="btn btn-edit" (click)="onClickEditMateria()">
+        <span class="material-icons">edit</span>
+        Editar Matéria
+      </button>
+    </footer>
   </div>
+</div>
 
-  <app-dialog
-    [title]="'Excluir Matéria'"
-    [message]="'Tem certeza que deseja excluir esta matéria? Esta ação não pode ser desfeita.'"
-    [confirmText]="'Excluir'"
-    [dialogType]="'warning'"
-    [isVisible]="showDeleteDialog"
-    (isVisibleChange)="showDeleteDialog = $event"
-    (confirmAction)="excluirMateria()"
-    [route]="['/home']"
-  ></app-dialog>
+<app-dialog
+  [title]="'Excluir Matéria'"
+  [message]="
+    'Tem certeza que deseja excluir esta matéria? Esta ação não pode ser desfeita.'
+  "
+  [confirmText]="'Excluir'"
+  [dialogType]="'warning'"
+  [isVisible]="showDeleteDialog"
+  (isVisibleChange)="showDeleteDialog = $event"
+  (confirmAction)="excluirMateria()"
+  [route]="['/home']"
+></app-dialog>
 
-  <app-dialog
-    [title]="'Editar Matéria'"
-    [message]="'Tem certeza que deseja editar esta matéria?'"
-    [confirmText]="'Editar'"
-    [dialogType]="'info'"
-    [isVisible]="showEditDialog"
-    (isVisibleChange)="showEditDialog = $event"
-    [route]="['edit-materia', materiaId]"
-  ></app-dialog>
+<app-dialog
+  [title]="'Editar Matéria'"
+  [message]="'Tem certeza que deseja editar esta matéria?'"
+  [confirmText]="'Editar'"
+  [dialogType]="'info'"
+  [isVisible]="showEditDialog"
+  (isVisibleChange)="showEditDialog = $event"
+  [route]="['edit-materia', materiaId]"
+></app-dialog>
 
 }@else {
-  <ng-template #loading>
-    <div class="details-card">
-      <p>Carregando detalhes da matéria...</p>
-    </div>
-  </ng-template>
+<ng-template #loading>
+  <div class="details-card">
+    <p>Carregando detalhes da matéria...</p>
+  </div>
+</ng-template>
 }
-
