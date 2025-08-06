@@ -10,10 +10,17 @@ import { CommonModule, Location } from '@angular/common';
 import { DialogComponent } from '../../shared/dialogs/dialog.component';
 import { AuthService } from '../../../services/auth/auth.service';
 import { MatIcon } from '@angular/material/icon';
+import { FaltaSelectorDialogComponent } from '../../shared/dialogs/falta-selector-dialog/falta-selector-dialog.component';
 
 @Component({
   selector: 'app-detalhes-materia',
-  imports: [HeaderComponent, CommonModule, DialogComponent, MatIcon],
+  imports: [
+    HeaderComponent,
+    CommonModule,
+    DialogComponent,
+    MatIcon,
+    FaltaSelectorDialogComponent,
+  ],
   templateUrl: './detalhes-materia.component.html',
   styleUrl: './detalhes-materia.component.scss',
 })
@@ -27,6 +34,7 @@ export class DetalhesMateriaComponent {
 
   showDeleteDialog: boolean = false;
   showEditDialog: boolean = false;
+  showFaltaDialog: boolean = false;
   deleteRequested: boolean = false;
   isPremiumUser = computed(
     () => this.authService.currentUser()?.isPremium ?? false
@@ -131,10 +139,14 @@ export class DetalhesMateriaComponent {
     );
   }
 
-  async adicionarFalta(idMateria: number, quantidade: number) {
+  abrirDialogFalta(): void {
+    this.showFaltaDialog = true;
+  }
+
+  async adicionarFalta(quantidade: number) {
     try {
       const result = await firstValueFrom(
-        this.serviceMateria.addFalta(idMateria, { quantidade })
+        this.serviceMateria.addFalta(this.materiaId, { quantidade })
       );
       if (result.success) {
         console.log('Falta adicionada com sucesso');
