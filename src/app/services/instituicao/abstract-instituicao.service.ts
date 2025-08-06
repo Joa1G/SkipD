@@ -1,14 +1,20 @@
-import { Signal } from '@angular/core'
+import { Signal } from '@angular/core';
 import { Instituicao } from '../../models/instituicao/instituicao.model';
 import { Observable } from 'rxjs';
 import { OperationResult } from '../../models/operation-result.model';
 
 export abstract class AbstractInstituicaoService {
   abstract instituicoes: Signal<Instituicao[]>;
-  abstract getInstituicoes(): Observable<OperationResult>;
+  abstract refresh(): Promise<void>;
   abstract getInstituicaoById(id: number): Observable<OperationResult>;
-  abstract addInstituicao(instituicao: Omit<Instituicao, 'id'>): Observable<OperationResult>;
-  abstract updateInstituicao(instituicao: Instituicao): Observable<OperationResult>;
+  abstract addInstituicao(
+    instituicao: Omit<Instituicao, 'id'>
+  ): Observable<OperationResult>;
+  abstract updateInstituicao(
+    instituicao: Instituicao
+  ): Observable<OperationResult>;
   abstract deleteInstituicao(id: number): Observable<OperationResult>;
-  abstract getInstituicaoByUsuarioId(userId: number): Observable<OperationResult>;
+  abstract getInstituicoesByUsuarioId(
+    userId: number
+  ): Observable<OperationResult>;
 }

@@ -1,59 +1,156 @@
-# SkipD
+# <img src="public/skipdicon.ico" width="32" height="32"> SkipD - Sistema de Controle de Frequência Acadêmica
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
+O **SkipD** é uma aplicação web moderna e intuitiva desenvolvida em Angular para ajudar estudantes a gerenciar sua frequência escolar e acadêmica de forma eficiente. Com o SkipD, você pode acompanhar suas faltas, monitorar seu status em cada matéria e evitar reprovações por frequência.
 
-## Development server
+## Acesse em: [skipd.com.br](https://skipd.com.br)
 
-To start a local development server, run:
+## 🚀 Funcionalidades
 
-```bash
-ng serve
+### 📊 **Gestão de Frequência**
+
+- Controle de faltas por matéria
+- Cálculo automático do status (Aprovado/Risco/Reprovado)
+- Visualização do percentual de faltas em tempo real
+- Limite personalizado de faltas por instituição
+
+### 🏫 **Gerenciamento de Instituições**
+
+- Cadastro e edição de instituições de ensino
+- Configuração de limite de faltas específico por instituição
+- Múltiplas instituições por usuário
+
+### 📖 **Controle de Matérias**
+
+- Cadastro completo de matérias com carga horária
+- Edição e exclusão de matérias
+- Visualização detalhada por matéria
+- Histórico de faltas
+
+### 👤 **Sistema de Usuários**
+
+- Cadastro e autenticação segura
+- Perfil personalizado do usuário
+- Configurações de conta
+
+### 🎯 **Recursos Premium**
+
+- Cronograma semanal de aulas
+- Planejamento de horários por dia da semana
+- Recursos avançados de visualização
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Frontend**: Angular 20+ com TypeScript
+- **UI/UX**: Angular Material Design
+- **Estilização**: SCSS com design responsivo
+- **Arquitetura**: Componentes modulares e serviços injetáveis
+- **Guards**: Proteção de rotas e controle de acesso
+- **Interceptors**: Gerenciamento de requisições HTTP
+
+## 📁 Estrutura do Projeto
+
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+src/
+├── app/
+│   ├── components/          # Componentes da aplicação
+│   │   ├── pages/          # Páginas principais
+│   │   └── shared/         # Componentes compartilhados
+│   ├── guards/             # Guards de proteção de rotas
+│   ├── interceptors/       # Interceptors HTTP
+│   ├── models/             # Interfaces e modelos de dados
+│   ├── services/           # Serviços da aplicação
+│   └── routes/             # Configuração de rotas
+├── environments/           # Configurações de ambiente
+└── styles.scss            # Estilos globais
 ```
+## 📱 Funcionalidades por Tela
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 🏠 **Tela Inicial (Home)**
 
-```bash
-ng generate --help
-```
+- Visualização de todas as matérias por instituição
+- Cards informativos com status visual
+- Adição rápida de faltas
+- Navegação para detalhes das matérias
 
-## Building
+![HomeScrenshot](./screenshots/home.png)
 
-To build the project run:
+### 📋 **Detalhes da Matéria**
 
-```bash
-ng build
-```
+- Informações completas da matéria
+- Histórico de faltas
+- Cronograma semanal (Premium)
+- Opções de edição e exclusão
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+![DetalhesScreenshot](./screenshots/detalhes-materia.png)
 
-## Running unit tests
+### ➕ **Cadastro de Matérias**
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- Formulário completo com validações
+- Seleção de instituição
+- Configuração de cronograma semanal (Premium)
+- Cálculo automático de carga horária
 
-```bash
-ng test
-```
+![AddMateriaScreenshot](./screenshots/adicionar-materia.png)
 
-## Running end-to-end tests
+### 🏫 **Gerenciamento de Instituições**
 
-For end-to-end (e2e) testing, run:
+- Lista de todas as instituições do usuário
+- Edição de configurações
+- Exclusão com limpeza de matérias associadas
 
-```bash
-ng e2e
-```
+![GerenciarInstituicoes](./screenshots/gerenciar-instituicoes.png)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### 👤 **Configurações de Conta**
 
-## Additional Resources
+- Edição de dados pessoais
+- Alteração de senha
+- Configurações de preferências
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+![PerfilScreenshot](./screenshots/perfil-usuario.png)
+![ConfiguracoesConta](./screenshots/configuracoes-conta.png)
+
+## 🎨 Design e UX
+
+O SkipD foi desenvolvido com foco na experiência do usuário, apresentando:
+
+- Interface limpa e moderna
+- Design responsivo para todos os dispositivos
+- Feedback visual claro para diferentes status
+- Navegação intuitiva
+- Tema consistente com a identidade visual
+
+## 🔒 Segurança
+
+- Autenticação segura de usuários
+- Guards de proteção de rotas
+- Validação de formulários
+- Interceptors para gerenciamento de requisições
+
+## 🚀 Próximas Funcionalidades
+
+- [ ] Notificações push para avisos de faltas
+- [ ] Relatórios de frequência
+- [ ] Sincronização com calendários
+- [ ] Modo escuro
+- [ ] Exportação de dados
+
+## 👥 Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para:
+
+- Reportar bugs
+- Sugerir novas funcionalidades
+- Enviar pull requests
+- Melhorar a documentação
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+
+## 🤝 Suporte
+
+Se você encontrar algum problema ou tiver dúvidas, abra uma issue no repositório ou entre em contato com a equipe de desenvolvimento.
+
+---
+
+**Desenvolvido com ❤️ para ajudar estudantes a manterem o controle de sua frequência acadêmica.**

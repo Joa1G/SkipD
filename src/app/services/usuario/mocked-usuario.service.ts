@@ -149,7 +149,7 @@ export class MockedUsuarioService extends AbstractUsuarioService {
   override getInstituicoesByUsuarioId(id: number): Observable<OperationResult> {
     try {
       return new Observable<OperationResult>((observer) => {
-        this._instituicaoService.getInstituicaoByUsuarioId(id).subscribe({
+        this._instituicaoService.getInstituicoesByUsuarioId(id).subscribe({
           next: (instituicoes) => {
             if (instituicoes.success && instituicoes.data) {
               observer.next({
@@ -236,11 +236,18 @@ export class MockedUsuarioService extends AbstractUsuarioService {
     try {
       const usuario = this._usuarios().find((u) => u.id === id);
       if (usuario) {
-        return of({ success: true, status: 200, data: usuario.urlFoto });
+        const urlFoto = usuario.urlFoto || '';
+        return of({
+          success: true,
+          status: 200,
+          data: urlFoto.trim(),
+          message: urlFoto.trim() === '' ? 'URL da foto está vazia' : undefined,
+        });
       } else {
         return of({
           success: false,
           status: 404,
+          data: '',
           message: 'Usuário não encontrado.',
         });
       }
@@ -253,7 +260,10 @@ export class MockedUsuarioService extends AbstractUsuarioService {
     }
   }
 
-  override updateUrlFoto(id: number, urlFoto: string): Observable<OperationResult> {
+  override updateUrlFoto(
+    id: number,
+    urlFoto: string
+  ): Observable<OperationResult> {
     try {
       this._usuarios.update((usuarios) => {
         const index = usuarios.findIndex((u) => u.id === id);
@@ -264,7 +274,11 @@ export class MockedUsuarioService extends AbstractUsuarioService {
           throw new Error('Usuário não encontrado.');
         }
       });
-      return of({ success: true, status: 200, message: 'URL da foto atualizada com sucesso.' });
+      return of({
+        success: true,
+        status: 200,
+        message: 'URL da foto atualizada com sucesso.',
+      });
     } catch (error) {
       return of({ success: false, status: 500, data: error });
     }

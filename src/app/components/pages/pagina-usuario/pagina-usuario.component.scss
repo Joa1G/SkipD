@@ -29,7 +29,7 @@ $radius-sm: 6px;
   background-color: $color-bg-dark;
   border-radius: $radius;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  padding: 20px 40px 20px 40px;
+  padding: 40px 40px 40px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -178,7 +178,7 @@ $radius-sm: 6px;
   font-weight: 700;
   cursor: pointer;
   transition: transform $transition-speed $transition-ease,
-    box-shadow $transition-speed $transition-ease;
+  box-shadow $transition-speed $transition-ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
