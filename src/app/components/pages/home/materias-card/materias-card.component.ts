@@ -4,10 +4,16 @@ import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { Router } from '@angular/router';
+import { FaltaSelectorDialogComponent } from '../../../shared/dialogs/falta-selector-dialog/falta-selector-dialog.component';
 
 @Component({
   selector: 'app-materias-card',
-  imports: [MatCardModule, CommonModule, MatProgressBar],
+  imports: [
+    MatCardModule,
+    CommonModule,
+    MatProgressBar,
+    FaltaSelectorDialogComponent,
+  ],
   templateUrl: './materias-card.component.html',
   styleUrl: './materias-card.component.scss',
 })
@@ -20,6 +26,7 @@ export class MateriasCardComponents {
   }>();
 
   router = inject(Router);
+  showFaltaDialog = false;
 
   faltasPercentage(): number {
     if (!this.materia || this.materia.cargaHorariaTotal === 0) {
@@ -47,9 +54,14 @@ export class MateriasCardComponents {
     }
   }
 
-  adicionarFalta(qtd: number) {
+  abrirDialogFalta(event: Event): void {
+    event.stopPropagation();
+    this.showFaltaDialog = true;
+  }
+
+  adicionarFalta(quantidade: number): void {
     if (!this.materia) return;
-    this.faltaAdicionada.emit({ idMateria: this.materia.id, quantidade: qtd });
+    this.faltaAdicionada.emit({ idMateria: this.materia.id, quantidade });
   }
 
   navigateToDetails(id: number) {

@@ -1,4 +1,4 @@
-$font-color: #C0A6FA;
+$font-color: #c0a6fa;
 $font-main: "Roboto", sans-serif;
 $color-primary: #8a2be2;
 $color-gradient-start: #4a00e0;
@@ -13,7 +13,11 @@ $transition-ease: ease-in-out;
 $radius: 12px;
 $radius-sm: 6px;
 
-.instituicoes-list{
+// Breakpoints
+$breakpoint-xs: 480px;
+$breakpoint-sm: 768px;
+
+.instituicoes-list {
   width: 80%;
   margin: 0 auto;
   background-color: $color-bg-dark;
@@ -22,7 +26,24 @@ $radius-sm: 6px;
   padding: 20px;
   margin-top: 20px;
   margin-bottom: 30px;
+
+  // Mobile: largura total e padding reduzido
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    width: 95%;
+    padding: 16px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    border-radius: $radius-sm;
+  }
+
+  @media (max-width: #{$breakpoint-xs - 1px}) {
+    width: 100%;
+    margin: 15px 0 20px 0;
+    padding: 12px;
+    border-radius: 0;
+  }
 }
+
 .instituicoes-title {
   font-size: 1.5rem;
   gap: 10px;
@@ -32,7 +53,18 @@ $radius-sm: 6px;
   display: flex;
   align-items: center;
 
+  // Mobile: título menor e margem reduzida
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    font-size: 1.25rem;
+    margin-left: 16px;
+    gap: 8px;
+  }
 
+  @media (max-width: #{$breakpoint-xs - 1px}) {
+    font-size: 1.125rem;
+    margin-left: 8px;
+    gap: 6px;
+  }
 }
 
 .instituicoes-grid {
@@ -42,6 +74,21 @@ $radius-sm: 6px;
   border-bottom: 1px solid $color-border;
   place-items: center;
   padding-bottom: 20px;
+
+  // Mobile: grid responsivo com melhor alinhamento
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 12px;
+    padding-bottom: 16px;
+    justify-items: stretch;
+  }
+
+  @media (max-width: #{$breakpoint-xs - 1px}) {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding-bottom: 12px;
+    justify-items: stretch;
+  }
 }
 
 .no-materia {
@@ -86,7 +133,7 @@ $radius-sm: 6px;
   font-weight: 700;
   cursor: pointer;
   transition: transform $transition-speed $transition-ease,
-  box-shadow $transition-speed $transition-ease;
+    box-shadow $transition-speed $transition-ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,6 +158,24 @@ $radius-sm: 6px;
     $color-gradient-end
   );
   color: $color-text;
+
+  // Mobile: botão responsivo
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    width: 280px;
+    margin-left: 16px;
+    font-size: 0.9rem;
+    height: 48px; // Altura maior para touch
+    padding: 0 16px;
+  }
+
+  @media (max-width: #{$breakpoint-xs - 1px}) {
+    width: calc(100% - 16px);
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: 0.875rem;
+    height: 48px;
+    padding: 0 16px;
+  }
 
   .add-icon {
     font-size: 1.25rem;
@@ -149,6 +214,24 @@ $radius-sm: 6px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: all $transition-speed $transition-ease;
 
+  // Mobile: botão responsivo com mesmo tamanho dos cartões
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    width: calc(100% - 24px);
+    height: 200px;
+    margin: 12px;
+    max-width: 350px;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: #{$breakpoint-xs - 1px}) {
+    width: calc(100% - 16px);
+    height: 180px;
+    margin: 8px;
+    max-width: none;
+    font-size: 0.875rem;
+    gap: 6px;
+  }
+
   &:hover {
     transform: translateY(-4px);
     border-color: $color-primary;
@@ -158,6 +241,6 @@ $radius-sm: 6px;
   }
 }
 
-.other-ins{
+.other-ins {
   color: #fbbf24;
 }

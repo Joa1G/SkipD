@@ -12,6 +12,8 @@ import { premiumGuard } from '../guards/premium.guard';
 import { ContaSettingsComponent } from '../components/pages/conta-settings/conta-settings.component';
 import { GerenciarInstituicoesComponent } from '../components/pages/gerenciar-instituicoes/gerenciar-instituicoes.component';
 import { instituicaoGuard } from '../guards/instituicao.guard';
+import { ErrorExamplesComponent } from '../components/pages/error-examples/error-examples.component';
+import { InsightsComponent } from '../components/pages/insights/insights.component';
 
 export const routes: Routes = [
   {
@@ -42,7 +44,17 @@ export const routes: Routes = [
   {
     path: 'add-instituicao',
     component: AddInstituicaoComponent,
-    canActivate: [authGuard, premiumGuard],
+    canActivate: [authGuard, premiumGuard], // Mantive o premiumGuard da sua branch
+  },
+  {
+    path: 'edit-instituicao/:id',
+    component: AddInstituicaoComponent,
+    canActivate: [authGuard, instituicaoGuard],
+  },
+  {
+    path: 'gerenciar-instituicoes',
+    component: GerenciarInstituicoesComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'edit-instituicao/:id',
@@ -70,8 +82,13 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'insights',
+    component: InsightsComponent,
+    canActivate: [authGuard],
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
-  },
+  }
 ];

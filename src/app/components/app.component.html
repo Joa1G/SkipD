@@ -2,4 +2,9 @@
   <router-outlet></router-outlet>
 </div>
 <app-footer></app-footer>
-
+<app-loading
+  [isVisible]="loadingService.isLoading()"
+  [message]="loadingService.loadingMessage()"
+>
+</app-loading>
+<app-global-error-dialog></app-global-error-dialog>

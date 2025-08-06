@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap");
 
 * {
   margin: 0;
@@ -6,12 +6,13 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
-  background-color: #1A1A26;
+  background-color: #1a1a26;
   overflow-x: hidden;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
   color: white;
   margin: 0;
 }
@@ -31,3 +32,109 @@ app-root {
   flex: 1;
 }
 
+/* =================================================================== */
+/* RESPONSIVE BREAKPOINTS GLOBAIS
+/* =================================================================== */
+
+// Definindo breakpoints consistentes para todo o projeto
+$breakpoint-xs: 480px; // Extra small devices (phones)
+$breakpoint-sm: 768px; // Small devices (tablets)
+$breakpoint-md: 1024px; // Medium devices (small laptops)
+$breakpoint-lg: 1200px; // Large devices (desktops)
+
+// Mixins para media queries
+@mixin mobile-only {
+  @media (max-width: #{$breakpoint-xs - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet-and-mobile {
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet-only {
+  @media (min-width: #{$breakpoint-xs}) and (max-width: #{$breakpoint-sm - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop-and-up {
+  @media (min-width: #{$breakpoint-sm}) {
+    @content;
+  }
+}
+
+/* =================================================================== */
+/* UTILITÁRIOS RESPONSIVOS GLOBAIS
+/* =================================================================== */
+
+// Correções para inputs touch-friendly
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+  @include mobile-only {
+    font-size: 16px !important; // Previne zoom no iOS
+    min-height: 44px; // Touch target mínimo
+  }
+}
+
+// Botões touch-friendly
+button,
+.btn,
+a[role="button"] {
+  @include mobile-only {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+// Scroll suave em mobile
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+// Correção para tap highlight no iOS
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+// Classe utilitária para ocultar elementos em mobile
+.hide-mobile {
+  @include mobile-only {
+    display: none !important;
+  }
+}
+
+// Classe utilitária para mostrar elementos apenas em mobile
+.show-mobile {
+  display: none !important;
+
+  @include mobile-only {
+    display: block !important;
+  }
+}
+
+// Classe utilitária para mostrar elementos apenas em mobile (inline)
+.show-mobile-inline {
+  display: none !important;
+
+  @include mobile-only {
+    display: inline !important;
+  }
+}
+
+// Classe utilitária para mostrar elementos apenas em mobile (flex)
+.show-mobile-flex {
+  display: none !important;
+
+  @include mobile-only {
+    display: flex !important;
+  }
+}

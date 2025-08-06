@@ -1,6 +1,10 @@
 $color-gradient-start: #4a00e0;
 $color-gradient-end: #8a2be2;
 
+// Breakpoints
+$breakpoint-xs: 480px;
+$breakpoint-sm: 768px;
+
 :host {
   display: block;
   margin-top: auto;
@@ -15,11 +19,24 @@ $color-gradient-end: #8a2be2;
     $color-gradient-end
   );
 
-  p{
+  // Mobile: footer ligeiramente maior
+  @media (max-width: #{$breakpoint-xs - 1px}) {
+    height: 36px;
+  }
+
+  p {
     color: white;
     text-align: center;
     line-height: 32px;
     margin: 0;
     font-size: 14px;
+    padding: 0 16px;
+
+    // Mobile: ajustar line-height e texto menor
+    @media (max-width: #{$breakpoint-xs - 1px}) {
+      line-height: 36px;
+      font-size: 13px;
+      padding: 0 12px;
+    }
   }
 }

@@ -8,14 +8,17 @@ import {
   computed,
   Signal,
   WritableSignal,
+  inject,
 } from '@angular/core';
 import { Observable, of, map, catchError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
+import { ErrorDialogService } from '../error-dialog.service';
 
 @Injectable()
 export class UsuarioService extends AbstractUsuarioService {
   private _usuarios: WritableSignal<Usuario[]> = signal<Usuario[]>([]);
+  private errorDialogService = inject(ErrorDialogService);
 
   override usuarios: Signal<Usuario[]> = computed(() => this._usuarios());
 
@@ -65,13 +68,18 @@ export class UsuarioService extends AbstractUsuarioService {
             status: response.status,
           };
         }),
-        catchError((error: HttpErrorResponse) =>
-          of({
+        catchError((error: HttpErrorResponse) => {
+          // Exibir diálogo de erro específico para buscar usuários
+          this.errorDialogService.handleHttpError(error, () =>
+            this.getUsuarios().subscribe()
+          );
+
+          return of({
             success: false,
             data: error.message,
             status: error.status,
-          })
-        )
+          });
+        })
       );
   }
 

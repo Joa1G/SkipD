@@ -1,0 +1,49 @@
+<div class="error-dialog-overlay" [ngClass]="turnDialogVisible()">
+  <div
+    class="error-dialog-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="error-dialog-title"
+  >
+    <button
+      class="error-dialog-close-btn"
+      (click)="closeDialog()"
+      aria-label="Fechar"
+    >
+      &times;
+    </button>
+
+    <div [ngClass]="['error-dialog-icon', getIconContainerClass()]">
+      <mat-icon [ngClass]="['error-icon', getErrorIconClass()]">{{
+        getErrorIcon()
+      }}</mat-icon>
+    </div>
+
+    <div class="error-dialog-header">
+      <h2 class="error-dialog-title" id="error-dialog-title">
+        {{ getErrorTitle() }}
+      </h2>
+      <p class="error-dialog-message">{{ message }}</p>
+      @if(errorCode) {
+      <p class="error-dialog-code">Código: {{ errorCode }}</p>
+      }
+    </div>
+
+    <div class="error-dialog-footer">
+      @if(showTryAgain) {
+      <button
+        class="error-dialog-btn error-dialog-btn--retry"
+        (click)="onTryAgain()"
+      >
+        Tentar Novamente
+      </button>
+      }
+      <button
+        class="error-dialog-btn error-dialog-btn--close"
+        (click)="closeDialog()"
+      >
+        Fechar
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+@use "sass:color";
+
+$font-color: #C0A6FA;
+$font-main: "Roboto", sans-serif;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-text: #e0e0e0;
+$radius: 12px;
+
+$color-success: #6ad48f;
+$color-warning: #ffcc00;
+$color-failed: #d93a3a;
+
+.insights-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 16px;
+  font-family: $font-main;
+  color: $font-color;
+}
+
+.useful-insights {
+  padding: 16px 0;
+
+  h2 {
+    color: $font-color;
+    font-weight: bold;
+    margin-bottom: 24px;
+    font-size: 1.5rem;
+  }
+}
+
+.insights-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.insight-card {
+  flex: 1 1 300px;
+  background-color: $color-bg-light;
+  border-radius: $radius;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  border-left: 5px solid transparent;
+  box-sizing: border-box;
+
+  &:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  }
+
+  &.success {
+    border-left-color: $color-success;
+  }
+  &.warning {
+    border-left-color: $color-warning;
+  }
+  &.failed {
+    border-left-color: $color-failed;
+  }
+
+  .icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+
+    // Aplica a cor correspondente ao ícone
+    &.success { color: $color-success; }
+    &.warning { color: $color-warning; }
+    &.failed { color: $color-failed; }
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: $color-text;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+// Responsividade para os cards
+@media (max-width: 768px) {
+  .insights-cards {
+    flex-direction: column;
+  }
+}
