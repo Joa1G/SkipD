@@ -1,7 +1,7 @@
 import { Injectable, computed, inject } from '@angular/core';
 import { AbstractMateriaService } from '../materia/abstract-materia.service';
 import { AbstractInstituicaoService } from '../instituicao/abstract-instituicao.service';
-import { MockedAuthService } from '../auth/mocked-auth.service';
+import { AuthService } from '../auth/auth.service';
 import { Materia } from '../../models/materia/materia.model';
 import { DiaSemana } from '../../models/materia/materia.model';
 import { AbstractInsightsService, InsightData } from './abstract-insights.service';
@@ -10,7 +10,7 @@ import { AbstractInsightsService, InsightData } from './abstract-insights.servic
 export class InsightsService extends AbstractInsightsService {
   private materiaService = inject(AbstractMateriaService);
   private instituicaoService = inject(AbstractInstituicaoService);
-  private authService = inject(MockedAuthService);
+  private authService = inject(AuthService);
 
   private materias = this.materiaService.materias;
   private instituicoes = this.instituicaoService.instituicoes;
