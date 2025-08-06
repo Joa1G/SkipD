@@ -1,7 +1,11 @@
 $color-gradient-start: #4a00e0;
 $color-gradient-end: #8a2be2;
 $font-color: #ffffff;
-$hover-color: #C0A6FA;
+$hover-color: #c0a6fa;
+
+// Breakpoints
+$breakpoint-xs: 480px;
+$breakpoint-sm: 768px;
 
 a {
   text-decoration: none;
@@ -16,6 +20,13 @@ a {
   height: 64px;
   display: flex;
   align-items: center;
+  padding: 0 16px;
+
+  // Mobile adjustments
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    height: 56px;
+    padding: 0 12px;
+  }
 
   .logo-link {
     color: $font-color;
@@ -28,6 +39,15 @@ a {
     font-family: "Jaro", sans-serif;
     color: $font-color;
     font-size: 2.5rem;
+
+    // Mobile: logo menor
+    @media (max-width: #{$breakpoint-sm - 1px}) {
+      font-size: 1.8rem;
+    }
+
+    @media (max-width: #{$breakpoint-xs - 1px}) {
+      font-size: 1.5rem;
+    }
   }
 
   .spacer {
@@ -39,6 +59,15 @@ a {
     align-items: center;
     gap: 20px;
 
+    // Mobile: reduzir gap
+    @media (max-width: #{$breakpoint-sm - 1px}) {
+      gap: 12px;
+    }
+
+    @media (max-width: #{$breakpoint-xs - 1px}) {
+      gap: 8px;
+    }
+
     .insights-link {
       color: $font-color;
       font-size: 1rem;
@@ -47,34 +76,63 @@ a {
       gap: 5px;
       cursor: pointer;
 
+      // Mobile: ocultar texto, mostrar só o ícone
+      @media (max-width: #{$breakpoint-xs - 1px}) {
+        span {
+          display: none;
+        }
+        gap: 0;
+      }
+
       .insights-icon {
         font-size: 1rem;
         width: 1rem;
         height: 1rem;
         color: $font-color;
+
+        // Mobile: ícone maior para touch
+        @media (max-width: #{$breakpoint-xs - 1px}) {
+          font-size: 1.2rem;
+          width: 1.2rem;
+          height: 1.2rem;
+        }
       }
 
       span {
         font-family: "Roboto", sans-serif;
         font-weight: 700;
+
+        // Tablet: texto menor
+        @media (max-width: #{$breakpoint-sm - 1px}) {
+          font-size: 0.875rem;
+        }
       }
 
       &:hover {
         color: $hover-color;
         .insights-icon {
-            color: $hover-color;
+          color: $hover-color;
         }
       }
     }
 
     .profile-link {
-        color: $font-color;
-        &:hover {
-            color: $hover-color;
-        }
-        border: none;
-        background: none;
-        cursor: pointer;
+      color: $font-color;
+      &:hover {
+        color: $hover-color;
+      }
+      border: none;
+      background: none;
+      cursor: pointer;
+
+      // Mobile: área de toque maior
+      @media (max-width: #{$breakpoint-xs - 1px}) {
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
 
     .user-profile-button {
@@ -82,6 +140,13 @@ a {
       width: 36px;
       height: 36px;
       color: $font-color;
+
+      // Mobile: botão menor mas com área de toque adequada
+      @media (max-width: #{$breakpoint-xs - 1px}) {
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+      }
     }
 
     .user-profile-image {
@@ -89,6 +154,12 @@ a {
       height: 36px;
       border-radius: 50%;
       object-fit: cover;
+
+      // Mobile: imagem menor
+      @media (max-width: #{$breakpoint-xs - 1px}) {
+        width: 32px;
+        height: 32px;
+      }
     }
 
     .user-profile-button:hover {
