@@ -38,7 +38,9 @@ export class MateriaService extends AbstractMateriaService {
   }
 
   private _materias: WritableSignal<Materia[]> = signal<Materia[]>([]);
-  materias: Signal<Materia[]> = computed(() => this._materias());
+  materias: Signal<Materia[]> = computed(() =>
+    this._materias().sort((a, b) => a.nome.localeCompare(b.nome))
+  );
 
   // Função para converter de MateriaAPI para Materia (formato interno)
   private convertFromAPI(materiaAPI: MateriaAPI): Materia {

@@ -25,7 +25,9 @@ export class MockedMateriaService extends AbstractMateriaService {
   private serviceInstituicoes = inject(AbstractInstituicaoService);
   private instituicoes = this.serviceInstituicoes.instituicoes;
 
-  materias = computed(() => this._materias());
+  materias = computed(() =>
+    this._materias().sort((a, b) => a.nome.localeCompare(b.nome))
+  );
 
   override getMateriaById(id: number): Observable<OperationResult> {
     try {

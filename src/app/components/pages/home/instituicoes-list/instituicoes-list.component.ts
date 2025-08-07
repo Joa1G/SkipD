@@ -37,7 +37,7 @@ export class InstituicoesListComponents {
 
   showPremiumDialog = false;
 
-  qtdTotalDeInstituicoes = 0
+  qtdTotalDeInstituicoes = 0;
 
   instituicoesDoUsuario = computed(() => {
     const currentUser = this.authService.getCurrentUser();
@@ -51,7 +51,7 @@ export class InstituicoesListComponents {
       (instituicao) => instituicao.id_usuario === currentUser.id
     );
 
-    this.qtdTotalDeInstituicoes = instituicoesDoUsuario.length
+    this.qtdTotalDeInstituicoes = instituicoesDoUsuario.length;
 
     // Se o usuário não for premium, retorna apenas a primeira instituição
     if (!this.isPremiumUser()) {
@@ -118,9 +118,9 @@ export class InstituicoesListComponents {
   }
 
   getMateriasPorInstituicao(idInstituicao: number) {
-    return this.materias().filter(
-      (m: Materia) => m.idInstituicao === idInstituicao
-    );
+    return this.materias()
+      .filter((m: Materia) => m.idInstituicao === idInstituicao)
+      .sort((a, b) => a.nome.localeCompare(b.nome));
   }
 
   showPremiumMessage() {
