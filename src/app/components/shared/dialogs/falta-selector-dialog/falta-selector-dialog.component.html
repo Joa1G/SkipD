@@ -56,7 +56,10 @@
           [min]="1"
           [max]="faltasDisponiveis"
           class="quantidade-input"
-          readonly
+          (input)="onQuantidadeChange($event)"
+          (blur)="validateQuantidade()"
+          (focus)="onFocus($event)"
+          (keypress)="onKeyPress($event)"
         />
 
         <button

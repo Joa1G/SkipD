@@ -55,4 +55,64 @@ export class FaltaSelectorDialogComponent {
       this.quantidadeFaltas--;
     }
   }
+
+  onQuantidadeChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const value = parseInt(target.value, 10);
+
+    // Se for um número válido, atualiza a quantidade
+    if (!isNaN(value) && value > 0) {
+      this.quantidadeFaltas = value;
+    } else if (target.value === '' || target.value === '0') {
+      // Se o campo estiver vazio ou for 0, define como 1
+      this.quantidadeFaltas = 1;
+    }
+
+    // Sempre valida após a mudança
+    this.validateQuantidade();
+  }
+
+  validateQuantidade(): void {
+    // Garante que o valor está dentro dos limites
+    if (this.quantidadeFaltas < 1) {
+      this.quantidadeFaltas = 1;
+    } else if (this.quantidadeFaltas > this.faltasDisponiveis) {
+      this.quantidadeFaltas = this.faltasDisponiveis;
+    }
+
+    // Garante que seja um número inteiro
+    this.quantidadeFaltas = Math.floor(this.quantidadeFaltas);
+  }
+
+  onKeyPress(event: KeyboardEvent): void {
+    // Permite apenas números e teclas de controle (backspace, delete, etc.)
+    const allowedKeys = [
+      'Backspace',
+      'Delete',
+      'Tab',
+      'Escape',
+      'Enter',
+      'Home',
+      'End',
+      'ArrowLeft',
+      'ArrowRight',
+      'Clear',
+      'Copy',
+      'Paste',
+    ];
+    if (allowedKeys.indexOf(event.key) !== -1) {
+      return;
+    }
+
+    // Bloqueia qualquer tecla que não seja número
+    if (event.key < '0' || event.key > '9') {
+      event.preventDefault();
+    }
+  }
+
+  onFocus(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    // Seleciona todo o texto quando o campo receber foco
+    target.select();
+  }
 }
