@@ -3,6 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { DiaSemana } from '../../../../models/materia/materia.model';
+
+interface DiaAula {
+  nome: string;
+  value: DiaSemana;
+  horas: number;
+}
 
 @Component({
   selector: 'app-falta-selector-dialog',
@@ -16,13 +23,44 @@ export class FaltaSelectorDialogComponent {
   @Input() materia: string = '';
   @Input() faltasAtuais: number = 0;
   @Input() faltasMaximas: number = 0;
+  @Input() isPremium: boolean = false;
+  @Input() aulasDaSemana: Record<DiaSemana, number> = {
+    domingo: 0,
+    segunda: 0,
+    terca: 0,
+    quarta: 0,
+    quinta: 0,
+    sexta: 0,
+    sabado: 0,
+  };
   @Output() isVisibleChange = new EventEmitter<boolean>();
   @Output() quantidadeSelecionada = new EventEmitter<number>();
 
   quantidadeFaltas: number = 1;
+  diaSelecionado: DiaSemana | null = null;
 
   get faltasDisponiveis(): number {
     return Math.max(0, this.faltasMaximas - this.faltasAtuais);
+  }
+
+  get diasComAula(): DiaAula[] {
+    const diasSemana: Array<{ nome: string; value: DiaSemana }> = [
+      { nome: 'Domingo', value: 'domingo' },
+      { nome: 'Segunda-feira', value: 'segunda' },
+      { nome: 'Terça-feira', value: 'terca' },
+      { nome: 'Quarta-feira', value: 'quarta' },
+      { nome: 'Quinta-feira', value: 'quinta' },
+      { nome: 'Sexta-feira', value: 'sexta' },
+      { nome: 'Sábado', value: 'sabado' },
+    ];
+
+    return diasSemana
+      .filter((dia) => this.aulasDaSemana[dia.value] > 0)
+      .map((dia) => ({
+        nome: dia.nome,
+        value: dia.value,
+        horas: this.aulasDaSemana[dia.value],
+      }));
   }
 
   turnDialogVisible(): string {
@@ -32,6 +70,16 @@ export class FaltaSelectorDialogComponent {
   closeDialog(): void {
     this.isVisibleChange.emit(false);
     this.quantidadeFaltas = 1; // Reset para o valor padrão
+    this.diaSelecionado = null; // Reset dia selecionado
+  }
+
+  onDiaChange(): void {
+    if (this.diaSelecionado && this.isPremium) {
+      const horasDoDia = this.aulasDaSemana[this.diaSelecionado];
+      if (horasDoDia > 0) {
+        this.quantidadeFaltas = Math.min(horasDoDia, this.faltasDisponiveis);
+      }
+    }
   }
 
   confirmarAdicao(): void {
@@ -54,5 +102,65 @@ export class FaltaSelectorDialogComponent {
     if (this.quantidadeFaltas > 1) {
       this.quantidadeFaltas--;
     }
+  }
+
+  onQuantidadeChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const value = parseInt(target.value, 10);
+
+    // Se for um número válido, atualiza a quantidade
+    if (!isNaN(value) && value > 0) {
+      this.quantidadeFaltas = value;
+    } else if (target.value === '' || target.value === '0') {
+      // Se o campo estiver vazio ou for 0, define como 1
+      this.quantidadeFaltas = 1;
+    }
+
+    // Sempre valida após a mudança
+    this.validateQuantidade();
+  }
+
+  validateQuantidade(): void {
+    // Garante que o valor está dentro dos limites
+    if (this.quantidadeFaltas < 1) {
+      this.quantidadeFaltas = 1;
+    } else if (this.quantidadeFaltas > this.faltasDisponiveis) {
+      this.quantidadeFaltas = this.faltasDisponiveis;
+    }
+
+    // Garante que seja um número inteiro
+    this.quantidadeFaltas = Math.floor(this.quantidadeFaltas);
+  }
+
+  onKeyPress(event: KeyboardEvent): void {
+    // Permite apenas números e teclas de controle (backspace, delete, etc.)
+    const allowedKeys = [
+      'Backspace',
+      'Delete',
+      'Tab',
+      'Escape',
+      'Enter',
+      'Home',
+      'End',
+      'ArrowLeft',
+      'ArrowRight',
+      'Clear',
+      'Copy',
+      'Paste',
+    ];
+    if (allowedKeys.indexOf(event.key) !== -1) {
+      return;
+    }
+
+    // Bloqueia qualquer tecla que não seja número
+    if (event.key < '0' || event.key > '9') {
+      event.preventDefault();
+    }
+  }
+
+  onFocus(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    // Seleciona todo o texto quando o campo receber foco
+    target.select();
   }
 }

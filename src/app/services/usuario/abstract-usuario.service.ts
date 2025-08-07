@@ -16,4 +16,5 @@ export abstract class AbstractUsuarioService {
   abstract getUrlFotoById(id: number): Observable<OperationResult>;
   abstract updateUrlFoto(id: number, urlFoto: string): Observable<OperationResult>;
   abstract isEmailInUse(email: string): Observable<OperationResult>;
+  abstract changePassword(userId: number, oldPassword: string, newPassword: string): Observable<OperationResult>;
 }

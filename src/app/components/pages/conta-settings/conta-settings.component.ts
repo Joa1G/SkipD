@@ -13,25 +13,8 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { AsyncValidatorFn, AbstractControl } from '@angular/forms';
 import { passwordMatchValidator } from '../cadastro/cadastro.component';
-import { catchError, map, of } from 'rxjs';
 import { effect } from '@angular/core';
-
-export const oldPasswordMatchValidator = (
-  authService: AuthService
-): AsyncValidatorFn => {
-  return (control: AbstractControl) => {
-    if (!control.value) {
-      return of(null);
-    }
-    // Supondo que o serviço tenha um método para verificar a senha
-    return authService.verifyPassword(control.value).pipe(
-      map((isMatch) => (isMatch ? null : { oldPasswordIncorrect: true })),
-      catchError(() => of({ oldPasswordIncorrect: true }))
-    );
-  };
-};
 
 @Component({
   selector: 'app-conta-settings',
@@ -53,6 +36,7 @@ export class ContaSettingsComponent {
   isEditPasswordDialogVisible = false;
   submittedPassword = false;
   showPassword = false;
+  oldPasswordError = false;
   showSucessEditNameDialog = false;
   showSucessEditEmailDialog = false;
   showSucessEditPasswordDialog = false;
@@ -75,15 +59,11 @@ export class ContaSettingsComponent {
 
   formPassword = new FormGroup(
     {
-      old_password: new FormControl(
-        '',
-        [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(20),
-        ],
-        [oldPasswordMatchValidator(this.authService)]
-      ),
+      old_password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(20),
+      ]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
@@ -118,6 +98,14 @@ export class ContaSettingsComponent {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
+  }
+
+  clearOldPasswordError() {
+    this.oldPasswordError = false;
+  }
+
+  clearEmailSubmittedFlag() {
+    this.submittedEmail = false;
   }
 
   changePremiumStateOfUser() {
@@ -303,35 +291,56 @@ export class ContaSettingsComponent {
     this.isEditPasswordDialogVisible = false;
     this.formPassword.reset();
     this.submittedPassword = false;
+    this.oldPasswordError = false;
   }
 
   submitPasswordChange() {
     this.submittedPassword = true;
+    this.oldPasswordError = false;
+
     if (this.formPassword.invalid) {
       return;
     }
 
     const user = this.authService.getCurrentUser();
-    const updatedUser = {
-      ...user!,
-      senha: this.formPassword.value.password!,
-    };
+    const userId = user!.id;
+    const oldPassword = this.formPassword.value.old_password!;
+    const newPassword = this.formPassword.value.password!;
+
     if (user) {
-      this.userService.updateUsuario(updatedUser).subscribe({
-        next: (result) => {
-          if (result.success) {
-            console.log('Password updated successfully');
-            this.authService.updateCurrentUser(result.data);
-            this.isEditPasswordDialogVisible = false;
-            this.formPassword.reset();
-            this.submittedPassword = false;
-            this.showSucessEditPasswordDialog = true;
-          } else {
-            console.error('Failed to update password:', result.message);
+      // Primeiro, verificar se a senha atual está correta
+      this.authService.verifyPassword(oldPassword).subscribe({
+        next: (isMatch) => {
+          if (!isMatch) {
+            this.oldPasswordError = true;
+            return;
           }
+
+          // Se a senha atual está correta, proceder com a mudança
+          this.userService
+            .changePassword(userId, oldPassword, newPassword)
+            .subscribe({
+              next: (result) => {
+                if (result.success) {
+                  console.log('Password updated successfully');
+                  this.authService.updateCurrentUser(result.data);
+                  this.isEditPasswordDialogVisible = false;
+                  this.formPassword.reset();
+                  this.submittedPassword = false;
+                  this.oldPasswordError = false;
+                  this.showSucessEditPasswordDialog = true;
+                } else {
+                  console.error('Failed to update password:', result.message);
+                }
+              },
+              error: (error) => {
+                console.error('Error updating password:', error);
+              },
+            });
         },
         error: (error) => {
-          console.error('Error updating password:', error);
+          console.error('Error verifying current password:', error);
+          this.oldPasswordError = true;
         },
       });
     } else {

@@ -301,4 +301,8 @@ export class MockedUsuarioService extends AbstractUsuarioService {
       });
     }
   }
+
+  override changePassword(userId: number, oldPassword: string, newPassword: string): Observable<OperationResult>{
+    return of()
+  };
 }
