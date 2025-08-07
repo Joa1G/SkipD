@@ -1,6 +1,6 @@
 @use "sass:color";
 
-$font-color: #C0A6FA;
+$font-color: #c0a6fa;
 $font-main: "Roboto", sans-serif;
 $color-primary: #8a2be2;
 $color-bg-dark: #1e1e2f;
@@ -26,6 +26,26 @@ $color-failed: #d93a3a;
     font-weight: bold;
     margin-bottom: 24px;
     font-size: 1.5rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px;
+    margin-bottom: 20px;
   }
 }
 
@@ -48,6 +68,15 @@ $color-failed: #d93a3a;
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  @media (max-width: 768px) {
+    min-height: 120px;
+  }
+
+  @media (max-width: 576px) {
+    min-height: auto;
+    padding: 8px 0;
+  }
 }
 
 .event {
@@ -74,41 +103,140 @@ $color-failed: #d93a3a;
     flex-shrink: 0;
     display: flex;
     align-items: center;
+
+    @media (max-width: 768px) {
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  span:not(.icon) {
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 0.75rem;
+    }
   }
 
   &.success {
     border-left-color: $color-success;
-    .icon { color: $color-success; }
+    .icon {
+      color: $color-success;
+    }
   }
 
   &.warning {
     border-left-color: $color-warning;
-    .icon { color: $color-warning; }
+    .icon {
+      color: $color-warning;
+    }
   }
 
   &.failed {
     border-left-color: $color-failed;
-    .icon { color: $color-failed; }
+    .icon {
+      color: $color-failed;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 8px 10px;
+    gap: 8px;
+    height: 80px;
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 576px) {
+    padding: 10px;
+    height: auto;
+    min-height: 60px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px;
+    gap: 8px;
+    min-height: 50px;
   }
 }
 
 @media (max-width: 992px) {
   .calendar-grid {
     grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
   }
 }
 
 @media (max-width: 768px) {
   .calendar-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .calendar-header {
+    font-size: 0.8rem;
+    padding-bottom: 8px;
   }
 }
 
 @media (max-width: 576px) {
   .calendar-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
+
   .calendar-header {
     display: none;
+  }
+
+  .calendar-day {
+    border: 1px solid rgba(192, 166, 250, 0.1);
+    border-radius: $radius-sm;
+    padding: 12px;
+    background-color: rgba(42, 42, 65, 0.3);
+    position: relative;
+  }
+
+  .calendar-day::before {
+    content: attr(data-day);
+    display: block;
+    font-weight: 500;
+    color: $color-muted;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    text-transform: capitalize;
+    border-bottom: 1px solid rgba(192, 166, 250, 0.1);
+    padding-bottom: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-section {
+    border-radius: 8px;
+  }
+
+  .calendar-grid {
+    gap: 8px;
+  }
+
+  .calendar-day {
+    padding: 10px;
   }
 }
