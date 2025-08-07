@@ -18,6 +18,7 @@ import {
 import { authInterceptor } from '../interceptors/auth.interceptor';
 import { loadingInterceptor } from '../interceptors/loading.interceptor';
 import { ErrorInterceptor } from '../interceptors/error.interceptor';
+import { insightsProvider } from '../services/insights/insights.provider.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -36,6 +37,7 @@ export const appConfig: ApplicationConfig = {
     },
     instituicaoProvider,
     materiaProvider,
-    usuarioProvider,
+    usuarioProvider, 
+    insightsProvider
   ],
 };

@@ -240,16 +240,31 @@ input[type="text"] {
   }
 }
 
+.forgot {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: $color-primary;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: filter $transition-speed $transition-ease;
+  font-weight: 600;
+  font-family: inherit;
+  text-align: right;
+  margin-top: -10px;
+  max-width: 140px;
+
+  &:hover {
+    filter: brightness(1.2);
+    text-decoration: underline;
+  }
+}
+
 .forgot-password-container {
   display: flex;
   justify-content: flex-end; // Alinha o link à direita
   // Puxa para mais perto do campo de senha
-}
-
-.forgot {
-  text-align: right;
-  margin-top: -10px; // Puxa para mais perto do campo de senha
-  max-width: 140px;
 }
 
 .register-link {

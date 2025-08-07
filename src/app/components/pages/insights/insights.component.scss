@@ -1,0 +1,170 @@
+@use "sass:color";
+
+$font-color: #c0a6fa;
+$font-main: "Roboto", sans-serif;
+$color-bg-dark: #1e1e2f;
+$color-bg-light: #2a2a41;
+$color-text: #e0e0e0;
+$radius: 12px;
+
+$color-success: #6ad48f;
+$color-warning: #ffcc00;
+$color-failed: #d93a3a;
+
+.insights-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 16px;
+  font-family: $font-main;
+  color: $font-color;
+
+  @media (max-width: 768px) {
+    margin: 10px auto;
+    padding: 0 12px;
+  }
+}
+
+.useful-insights {
+  padding: 16px 0;
+
+  h2 {
+    color: $font-color;
+    font-weight: bold;
+    margin-bottom: 24px;
+    font-size: 1.5rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+  }
+}
+
+.insights-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  @media (max-width: 768px) {
+    gap: 16px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 12px;
+  }
+}
+
+.insight-card {
+  flex: 1 1 300px;
+  background-color: $color-bg-light;
+  border-radius: $radius;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  border-left: 5px solid transparent;
+  box-sizing: border-box;
+
+  &:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  }
+
+  &.success {
+    border-left-color: $color-success;
+  }
+  &.warning {
+    border-left-color: $color-warning;
+  }
+  &.failed {
+    border-left-color: $color-failed;
+  }
+
+  .icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+
+    // Aplica a cor correspondente ao ícone
+    &.success {
+      color: $color-success;
+    }
+    &.warning {
+      color: $color-warning;
+    }
+    &.failed {
+      color: $color-failed;
+    }
+
+    @media (max-width: 480px) {
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: $color-text;
+    line-height: 1.5;
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 0.85rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex: 1 1 100%;
+    padding: 20px;
+    gap: 14px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px;
+    gap: 12px;
+    flex-direction: row;
+    align-items: flex-start;
+
+    &:hover {
+      transform: translateY(-2px) scale(1.01);
+    }
+  }
+}
+
+// Responsividade para os cards
+@media (max-width: 768px) {
+  .insights-cards {
+    flex-direction: column;
+  }
+
+  .insights-container {
+    padding: 0 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .insights-container {
+    margin: 5px auto;
+    padding: 0 8px;
+  }
+
+  .useful-insights {
+    padding: 12px 0;
+  }
+}

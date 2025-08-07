@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-falta-selector-dialog',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatButtonModule],
+  imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule],
   templateUrl: './falta-selector-dialog.component.html',
   styleUrl: './falta-selector-dialog.component.scss',
 })

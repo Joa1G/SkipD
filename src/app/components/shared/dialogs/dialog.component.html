@@ -1,21 +1,36 @@
 <div class="dialog-overlay" [ngClass]="turnDialogVisible()">
-
-  <div class="dialog-box" [ngClass]="dialogTypeClass()" role="dialog" aria-modal="true" aria-labelledby="dialog-title-1">
-
-    @if(dialogType !== 'confirmation' && dialogType !== 'logo') {
-      <button class="dialog-close-btn" (click)="closeDialog()" aria-label="Fechar">&times;</button>
+  <div
+    class="dialog-box"
+    [ngClass]="dialogTypeClass()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="dialog-title-1"
+  >
+    @if(dialogType !== 'confirmation' && dialogType !== 'logo' && dialogType !==
+    'construction') {
+    <button
+      class="dialog-close-btn"
+      (click)="closeDialog()"
+      aria-label="Fechar"
+    >
+      &times;
+    </button>
     }
 
     <div class="dialog-icon">
       @if(dialogType === 'info'){
-        <mat-icon>info</mat-icon>
+      <mat-icon>info</mat-icon>
       }@else if(dialogType === 'warning'){
-        <mat-icon>warning</mat-icon>
-      }
-      @else if(dialogType === 'confirmation'){
-        <mat-icon>check_circle</mat-icon>
-      }@else if(dialogType === 'logo'){
-          SkipD
+      <mat-icon>warning</mat-icon>
+      } @else if(dialogType === 'confirmation'){
+      <mat-icon>check_circle</mat-icon>
+      }@else if(dialogType === 'logo'){ SkipD }@else if(dialogType ===
+      'construction'){
+      <img
+        src="fazendo-o-l-chorando.gif"
+        alt="Em construção"
+        class="construction-icon"
+      />
       }
     </div>
 
@@ -26,10 +41,26 @@
 
     <div class="dialog-footer">
       @if(showCancelButton){
-        <button class="dialog-btn dialog-btn--cancel" [ngClass]="cancelTypeClass()" (click)="closeDialog()">{{ cancelText }}</button>
+      <button
+        class="dialog-btn dialog-btn--cancel"
+        [ngClass]="cancelTypeClass()"
+        (click)="closeDialog()"
+      >
+        {{ cancelText }}
+      </button>
       }
-      <button class="dialog-btn dialog-btn--confirm" (click)="isExcluirDialog ? emitConfirmAction() : isLogoutDialog ? emitConfirmActionInLogout() : useRouter()">{{ confirmText }}</button>
+      <button
+        class="dialog-btn dialog-btn--confirm"
+        (click)="
+          isExcluirDialog
+            ? emitConfirmAction()
+            : isLogoutDialog
+            ? emitConfirmActionInLogout()
+            : useRouter()
+        "
+      >
+        {{ confirmText }}
+      </button>
     </div>
-
   </div>
 </div>

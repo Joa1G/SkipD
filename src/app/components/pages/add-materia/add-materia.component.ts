@@ -84,15 +84,15 @@ export class AddMateriaComponents {
     id: new FormControl<number | null>(null),
     nome: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
     }),
     cargaHorariaTotal: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.min(1)],
     }),
     faltas: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.min(0)],
     }),
     is_dom_checked: new FormControl(false, { nonNullable: true }),
     is_seg_checked: new FormControl(false, { nonNullable: true }),

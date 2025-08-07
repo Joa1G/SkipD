@@ -1,17 +1,10 @@
+export type DiaSemana = 'domingo' | 'segunda' | 'terca' | 'quarta' | 'quinta' | 'sexta' | 'sabado';
 export interface Materia {
   id: number;
   nome: string;
   cargaHorariaTotal: number;
   faltas: number;
   status: 'Aprovado' | 'Risco' | 'Reprovado';
-  aulasDaSemana: {
-    domingo: number;
-    segunda: number;
-    terca: number;
-    quarta: number;
-    quinta: number;
-    sexta: number;
-    sabado: number;
-  };
+  aulasDaSemana: Record<DiaSemana, number>;
   idInstituicao: number;
 }

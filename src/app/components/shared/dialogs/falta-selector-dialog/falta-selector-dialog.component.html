@@ -5,66 +5,69 @@
     aria-modal="true"
     aria-labelledby="dialog-title"
   >
-    <div class="dialog-header">
-      <h2 class="dialog-title" id="dialog-title">Adicionar Faltas</h2>
-      <p class="dialog-subtitle">{{ materia }}</p>
-      <button
-        class="dialog-close-btn"
-        (click)="closeDialog()"
-        aria-label="Fechar"
-      >
-        &times;
-      </button>
+    <button
+      class="dialog-close-btn"
+      (click)="closeDialog()"
+      aria-label="Fechar"
+    >
+      &times;
+    </button>
+
+    <div class="dialog-icon">
+      <mat-icon>add_circle</mat-icon>
     </div>
 
-    <div class="dialog-content">
-      <div class="faltas-info">
-        <p class="faltas-status">
-          Faltas atuais: <strong>{{ faltasAtuais }}</strong> /
-          {{ faltasMaximas }}
-        </p>
-        <p class="faltas-disponiveis" *ngIf="faltasDisponiveis > 0">
-          Você pode faltar mais <strong>{{ faltasDisponiveis }}</strong> vez(es)
-        </p>
-        <p class="faltas-limite" *ngIf="faltasDisponiveis === 0">
-          Limite de faltas atingido
-        </p>
-      </div>
+    <div class="dialog-header">
+      <h2 class="dialog-title" id="dialog-title">Adicionar Faltas</h2>
+      <p class="dialog-message">{{ materia }}</p>
+    </div>
 
-      <div class="quantidade-selector" *ngIf="faltasDisponiveis > 0">
-        <label for="quantidade-faltas">Quantidade de faltas a adicionar:</label>
+    <div class="faltas-info">
+      <p class="faltas-status">
+        Faltas atuais: <strong>{{ faltasAtuais }}</strong> /
+        {{ faltasMaximas }}
+      </p>
+      <p class="faltas-disponiveis" *ngIf="faltasDisponiveis > 0">
+        Você pode faltar mais <strong>{{ faltasDisponiveis }}</strong> vez(es)
+      </p>
+      <p class="faltas-limite" *ngIf="faltasDisponiveis === 0">
+        Limite de faltas atingido
+      </p>
+    </div>
 
-        <div class="quantidade-control">
-          <button
-            type="button"
-            class="btn-counter"
-            (click)="decrementarQuantidade()"
-            [disabled]="quantidadeFaltas <= 1"
-            aria-label="Diminuir quantidade"
-          >
-            -
-          </button>
+    <div class="quantidade-selector" *ngIf="faltasDisponiveis > 0">
+      <label for="quantidade-faltas">Quantidade de faltas a adicionar:</label>
 
-          <input
-            type="number"
-            id="quantidade-faltas"
-            [(ngModel)]="quantidadeFaltas"
-            [min]="1"
-            [max]="faltasDisponiveis"
-            class="quantidade-input"
-            readonly
-          />
+      <div class="quantidade-control">
+        <button
+          type="button"
+          class="btn-counter"
+          (click)="decrementarQuantidade()"
+          [disabled]="quantidadeFaltas <= 1"
+          aria-label="Diminuir quantidade"
+        >
+          -
+        </button>
 
-          <button
-            type="button"
-            class="btn-counter"
-            (click)="incrementarQuantidade()"
-            [disabled]="quantidadeFaltas >= faltasDisponiveis"
-            aria-label="Aumentar quantidade"
-          >
-            +
-          </button>
-        </div>
+        <input
+          type="number"
+          id="quantidade-faltas"
+          [(ngModel)]="quantidadeFaltas"
+          [min]="1"
+          [max]="faltasDisponiveis"
+          class="quantidade-input"
+          readonly
+        />
+
+        <button
+          type="button"
+          class="btn-counter"
+          (click)="incrementarQuantidade()"
+          [disabled]="quantidadeFaltas >= faltasDisponiveis"
+          aria-label="Aumentar quantidade"
+        >
+          +
+        </button>
       </div>
     </div>
 
