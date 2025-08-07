@@ -260,12 +260,12 @@ $radius-sm: 8px; // Raio menor para botões de diálogo
 
 .dialog-box--construction {
   .dialog-icon {
-    background-color: rgba($color-warning, 0.15);
+    background-color: transparent;
     width: 140px;
     height: 140px;
     .construction-icon {
-      width: 120px;
-      height: 120px;
+      width: 150px;
+      height: 150px;
       object-fit: contain;
     }
   }

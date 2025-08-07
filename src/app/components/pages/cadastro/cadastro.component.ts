@@ -8,13 +8,12 @@ import {
   AbstractControl,
   ValidationErrors,
   ValidatorFn,
-  AsyncValidatorFn,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { AbstractInstituicaoService } from '../../../services/instituicao/abstract-instituicao.service';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
-import { catchError, firstValueFrom, map, of } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Instituicao } from '../../../models/instituicao/instituicao.model';
 import { DialogComponent } from '../../shared/dialogs/dialog.component';
 
@@ -24,26 +23,6 @@ export const passwordMatchValidator: ValidatorFn = (
   const password = group.get('password')?.value;
   const confirmPassword = group.get('confirmPassword')?.value;
   return password === confirmPassword ? null : { passwordMismatch: true };
-};
-
-export const emailInUseValidator = (
-  usuarioService: AbstractUsuarioService
-): AsyncValidatorFn => {
-  return (control: AbstractControl) => {
-    if (!control.value) {
-      return of(null);
-    }
-
-    return usuarioService.isEmailInUse(control.value).pipe(
-      map((result) => {
-        if (result.success && result.data) {
-          return { emailInUse: true };
-        }
-        return null;
-      }),
-      catchError(() => of(null))
-    );
-  };
 };
 
 @Component({
@@ -80,11 +59,7 @@ export class CadastroComponents {
         Validators.minLength(3),
         Validators.maxLength(30),
       ]),
-      email: new FormControl(
-        '',
-        [Validators.required, Validators.email],
-        [emailInUseValidator(this.serviceUsuario)]
-      ),
+      email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
@@ -166,9 +141,35 @@ export class CadastroComponents {
     }
   }
 
+  async checkEmailInUse(email: string): Promise<boolean> {
+    try {
+      const result = await firstValueFrom(
+        this.serviceUsuario.isEmailInUse(email)
+      );
+      return result.success && result.data;
+    } catch (error) {
+      console.error('Erro ao verificar email:', error);
+      return false;
+    }
+  }
+
   async onSubmit() {
     this.submitted = true;
+
+    // Primeira validação - campos básicos
     if (this.cadastroForm.invalid) {
+      this.incorretFormField = true;
+      this.submitted = false;
+      return;
+    }
+
+    // Segunda validação - verificar se email já está em uso
+    const emailInUse = await this.checkEmailInUse(
+      this.cadastroForm.value.email!
+    );
+    if (emailInUse) {
+      // Adiciona erro personalizado ao campo email
+      this.cadastroForm.get('email')?.setErrors({ emailInUse: true });
       this.incorretFormField = true;
       this.submitted = false;
       return;
@@ -220,12 +221,9 @@ export class CadastroComponents {
       return 'is-invalid';
     } else if (field!.hasError('email') && field!.dirty) {
       return 'is-invalid';
-    } else if (field!.hasError('emailInUse') && this.incorretFormField) {
+    } else if (field!.hasError('emailInUse')) {
       return 'is-invalid';
-    } else if (
-      (field!.valid && field!.dirty) ||
-      (field!.hasError('emailInUse') && !this.incorretFormField)
-    ) {
+    } else if (field!.valid && field!.dirty) {
       return 'is-valid';
     } else {
       return '';
@@ -235,6 +233,11 @@ export class CadastroComponents {
   changeIncorrectFormField() {
     if (this.cadastroForm.valid) {
       this.incorretFormField = false;
+    }
+    // Limpa o erro de email em uso quando o usuário digita
+    const emailControl = this.cadastroForm.get('email');
+    if (emailControl?.hasError('emailInUse')) {
+      emailControl.setErrors(null);
     }
   }
 }
