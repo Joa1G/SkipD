@@ -3,6 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { DiaSemana } from '../../../../models/materia/materia.model';
+
+interface DiaAula {
+  nome: string;
+  value: DiaSemana;
+  horas: number;
+}
 
 @Component({
   selector: 'app-falta-selector-dialog',
@@ -16,13 +23,44 @@ export class FaltaSelectorDialogComponent {
   @Input() materia: string = '';
   @Input() faltasAtuais: number = 0;
   @Input() faltasMaximas: number = 0;
+  @Input() isPremium: boolean = false;
+  @Input() aulasDaSemana: Record<DiaSemana, number> = {
+    domingo: 0,
+    segunda: 0,
+    terca: 0,
+    quarta: 0,
+    quinta: 0,
+    sexta: 0,
+    sabado: 0,
+  };
   @Output() isVisibleChange = new EventEmitter<boolean>();
   @Output() quantidadeSelecionada = new EventEmitter<number>();
 
   quantidadeFaltas: number = 1;
+  diaSelecionado: DiaSemana | null = null;
 
   get faltasDisponiveis(): number {
     return Math.max(0, this.faltasMaximas - this.faltasAtuais);
+  }
+
+  get diasComAula(): DiaAula[] {
+    const diasSemana: Array<{ nome: string; value: DiaSemana }> = [
+      { nome: 'Domingo', value: 'domingo' },
+      { nome: 'Segunda-feira', value: 'segunda' },
+      { nome: 'Terça-feira', value: 'terca' },
+      { nome: 'Quarta-feira', value: 'quarta' },
+      { nome: 'Quinta-feira', value: 'quinta' },
+      { nome: 'Sexta-feira', value: 'sexta' },
+      { nome: 'Sábado', value: 'sabado' },
+    ];
+
+    return diasSemana
+      .filter((dia) => this.aulasDaSemana[dia.value] > 0)
+      .map((dia) => ({
+        nome: dia.nome,
+        value: dia.value,
+        horas: this.aulasDaSemana[dia.value],
+      }));
   }
 
   turnDialogVisible(): string {
@@ -32,6 +70,16 @@ export class FaltaSelectorDialogComponent {
   closeDialog(): void {
     this.isVisibleChange.emit(false);
     this.quantidadeFaltas = 1; // Reset para o valor padrão
+    this.diaSelecionado = null; // Reset dia selecionado
+  }
+
+  onDiaChange(): void {
+    if (this.diaSelecionado && this.isPremium) {
+      const horasDoDia = this.aulasDaSemana[this.diaSelecionado];
+      if (horasDoDia > 0) {
+        this.quantidadeFaltas = Math.min(horasDoDia, this.faltasDisponiveis);
+      }
+    }
   }
 
   confirmarAdicao(): void {

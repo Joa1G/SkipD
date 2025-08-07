@@ -27,15 +27,39 @@
         Faltas atuais: <strong>{{ faltasAtuais }}</strong> /
         {{ faltasMaximas }}
       </p>
-      <p class="faltas-disponiveis" *ngIf="faltasDisponiveis > 0">
+      @if (faltasDisponiveis > 0) {
+      <p class="faltas-disponiveis">
         Você pode faltar mais <strong>{{ faltasDisponiveis }}</strong> vez(es)
       </p>
-      <p class="faltas-limite" *ngIf="faltasDisponiveis === 0">
-        Limite de faltas atingido
-      </p>
+      } @if (faltasDisponiveis === 0) {
+      <p class="faltas-limite">Limite de faltas atingido</p>
+      }
     </div>
 
-    <div class="quantidade-selector" *ngIf="faltasDisponiveis > 0">
+    <!-- Seção Premium: Seletor de dia -->
+    @if (isPremium && faltasDisponiveis > 0 && diasComAula.length > 0) {
+    <div class="dia-selector">
+      <label for="dia-select">Selecione o dia da falta</label>
+      <select
+        id="dia-select"
+        name="dia-select"
+        [(ngModel)]="diaSelecionado"
+        (change)="onDiaChange()"
+        class="dia-select"
+      >
+        <option value="">Seleção manual</option>
+        @for (dia of diasComAula; track dia.value) {
+        <option [value]="dia.value">{{ dia.nome }} ({{ dia.horas }}h)</option>
+        }
+      </select>
+      @if (!diaSelecionado) {
+      <p class="premium-info">
+        Você pode selecionar o dia da aula para auto-preenchimento
+      </p>
+      }
+    </div>
+    } @if (faltasDisponiveis > 0) {
+    <div class="quantidade-selector">
       <label for="quantidade-faltas">Quantidade de faltas a adicionar:</label>
 
       <div class="quantidade-control">
@@ -73,6 +97,7 @@
         </button>
       </div>
     </div>
+    }
 
     <div class="dialog-footer">
       <button class="dialog-btn dialog-btn--cancel" (click)="closeDialog()">

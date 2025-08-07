@@ -32,6 +32,18 @@
   [materia]="materia?.nome || ''"
   [faltasAtuais]="materia?.faltas || 0"
   [faltasMaximas]="faltasPermitidas()"
+  [isPremium]="isPremiumUser()"
+  [aulasDaSemana]="
+    materia?.aulasDaSemana || {
+      domingo: 0,
+      segunda: 0,
+      terca: 0,
+      quarta: 0,
+      quinta: 0,
+      sexta: 0,
+      sabado: 0
+    }
+  "
   (quantidadeSelecionada)="adicionarFalta($event)"
 >
 </app-falta-selector-dialog>

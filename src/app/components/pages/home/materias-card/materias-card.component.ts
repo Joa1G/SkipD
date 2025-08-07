@@ -1,10 +1,18 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { Materia } from '../../../../models/materia/materia.model';
-import { MatCardModule } from '@angular/material/card';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  computed,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { Materia } from '../../../../models/materia/materia.model';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { Router } from '@angular/router';
 import { FaltaSelectorDialogComponent } from '../../../shared/dialogs/falta-selector-dialog/falta-selector-dialog.component';
+import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-materias-card',
@@ -25,8 +33,13 @@ export class MateriasCardComponents {
     quantidade: number;
   }>();
 
+  private authService = inject(AuthService);
   router = inject(Router);
   showFaltaDialog = false;
+
+  isPremiumUser = computed(
+    () => this.authService.currentUser()?.isPremium ?? false
+  );
 
   faltasPercentage(): number {
     if (!this.materia || this.materia.cargaHorariaTotal === 0) {
