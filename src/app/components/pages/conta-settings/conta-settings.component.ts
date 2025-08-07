@@ -312,12 +312,12 @@ export class ContaSettingsComponent {
     }
 
     const user = this.authService.getCurrentUser();
-    const updatedUser = {
-      ...user!,
-      senha: this.formPassword.value.password!,
-    };
+    const userId = user!.id
+    const oldPassword = this.formPassword.value.old_password!
+    const newPassword = this.formPassword.value.password!
+;
     if (user) {
-      this.userService.updateUsuario(updatedUser).subscribe({
+      this.userService.changePassword(userId, oldPassword, newPassword).subscribe({
         next: (result) => {
           if (result.success) {
             console.log('Password updated successfully');

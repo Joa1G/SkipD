@@ -373,7 +373,7 @@ export class UsuarioService extends AbstractUsuarioService {
   }
 
   // Método adicional para alterar senha
-  changePassword(
+  override changePassword(
     userId: number,
     oldPassword: string,
     newPassword: string
