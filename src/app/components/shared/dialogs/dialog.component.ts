@@ -8,7 +8,7 @@ import { Location } from '@angular/common';
   selector: 'app-dialog',
   imports: [CommonModule, RouterModule, MatIcon],
   templateUrl: './dialog.component.html',
-  styleUrl: './dialog.component.scss'
+  styleUrl: './dialog.component.scss',
 })
 export class DialogComponent {
   @Input() title: string = '';
@@ -18,7 +18,12 @@ export class DialogComponent {
   @Input() isVisible: boolean = false;
   @Output() isVisibleChange = new EventEmitter<boolean>();
   @Input() route: any[] = [''];
-  @Input() dialogType: 'info' | 'warning' | 'confirmation' | 'logo' = 'info';
+  @Input() dialogType:
+    | 'info'
+    | 'warning'
+    | 'confirmation'
+    | 'logo'
+    | 'construction' = 'info';
   @Input() showCancelButton: boolean = true;
   @Output() confirmAction = new EventEmitter<boolean>();
 
@@ -32,7 +37,12 @@ export class DialogComponent {
   }
 
   setExcluirDialog() {
-    if (this.confirmText === 'Excluir' || this.confirmText === 'Cancelar' || this.confirmText === 'Deletar' || this.confirmText === 'Limpar') {
+    if (
+      this.confirmText === 'Excluir' ||
+      this.confirmText === 'Cancelar' ||
+      this.confirmText === 'Deletar' ||
+      this.confirmText === 'Limpar'
+    ) {
       this.isExcluirDialog = true;
     } else if (this.confirmText === 'Sair') {
       this.isLogoutDialog = true;
@@ -47,29 +57,34 @@ export class DialogComponent {
     this.isVisibleChange.emit(false);
   }
 
-  useRouter(){
-    if(this.route[0] === ''){
+  useRouter() {
+    if (this.route[0] === '') {
       this.location.back();
-    }else if(this.route[0] === 'premium' || this.route[0] === 'success-edit-name' || this.route[0] === 'success-edit-email' || this.route[0] === 'success-edit-password'){
+    } else if (
+      this.route[0] === 'premium' ||
+      this.route[0] === 'success-edit-name' ||
+      this.route[0] === 'success-edit-email' ||
+      this.route[0] === 'success-edit-password' ||
+      this.route[0] === 'forgot-password-close'
+    ) {
       this.isVisibleChange.emit(false);
-    }else{
+    } else {
       this.router.navigate(this.route);
     }
   }
 
   emitConfirmAction() {
     this.confirmAction.emit(true);
-    if(this.route[0] === 'cancel-premium'){
+    if (this.route[0] === 'cancel-premium') {
       this.isVisibleChange.emit(false);
-    } else if(this.route[0] !== 'photo_delete'){
+    } else if (this.route[0] !== 'photo_delete') {
       this.location.back();
     }
   }
 
-  emitConfirmActionInLogout(){
+  emitConfirmActionInLogout() {
     this.confirmAction.emit(true);
   }
-
 
   dialogTypeClass() {
     switch (this.dialogType) {
@@ -81,10 +96,14 @@ export class DialogComponent {
         return 'dialog-box--success';
       case 'logo':
         return 'dialog-box--logo';
+      case 'construction':
+        return 'dialog-box--construction';
+      default:
+        return 'dialog-box--info';
     }
   }
 
-  cancelTypeClass(){
+  cancelTypeClass() {
     if (this.cancelText === 'Manter') {
       return 'manter-btn';
     }
