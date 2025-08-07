@@ -8,12 +8,13 @@ import {
   AbstractControl,
   ValidationErrors,
   ValidatorFn,
+  AsyncValidatorFn,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { AbstractInstituicaoService } from '../../../services/instituicao/abstract-instituicao.service';
 import { AbstractUsuarioService } from '../../../services/usuario/abstract-usuario.service';
-import { firstValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, map, of } from 'rxjs';
 import { Instituicao } from '../../../models/instituicao/instituicao.model';
 import { DialogComponent } from '../../shared/dialogs/dialog.component';
 
@@ -23,6 +24,26 @@ export const passwordMatchValidator: ValidatorFn = (
   const password = group.get('password')?.value;
   const confirmPassword = group.get('confirmPassword')?.value;
   return password === confirmPassword ? null : { passwordMismatch: true };
+};
+
+export const emailInUseValidator = (
+  usuarioService: AbstractUsuarioService
+): AsyncValidatorFn => {
+  return (control: AbstractControl) => {
+    if (!control.value) {
+      return of(null);
+    }
+
+    return usuarioService.isEmailInUse(control.value).pipe(
+      map((result) => {
+        if (result.success && result.data) {
+          return { emailInUse: true };
+        }
+        return null;
+      }),
+      catchError(() => of(null))
+    );
+  };
 };
 
 @Component({
